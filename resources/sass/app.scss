@@ -1,0 +1,22 @@
+// Font Awesome
+@import "node_modules/font-awesome/scss/font-awesome.scss";
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+// Bootstrap Fileinput
+@import 'node_modules/bootstrap-fileinput/scss/fileinput.scss';
+@import 'node_modules/bootstrap-fileinput/scss/fileinput-rtl.scss';
+@import 'node_modules/bootstrap-fileinput/scss/themes/explorer/theme.scss';
+@import 'node_modules/bootstrap-fileinput/scss/themes/explorer-fas/theme.scss';
