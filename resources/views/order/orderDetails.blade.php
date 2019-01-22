@@ -4,8 +4,6 @@
 
 @section('content')
 
-{{-- {{dd($data)}} --}}
-
 	<div class="row">
 		<div class="col-md-12">
 			<div class="card">
@@ -54,8 +52,12 @@
 						      	</select>
 						    </div>
 						    <div class="form-group col-md-4">
-						      	<label for="inputDeadline">End Date/Deadline</label>
-						      	<input type="datetime-local" id="deadline" name="deadline" class="form-control" value="{{ old('deadline') }}">
+						      	<label for="inputDeadline">
+						      		End Date/Deadline
+						      		<small>(According to Paper Period)</small>
+						      	</label>
+						      	<input type="text" id="deadline" name="deadline" class="form-control" value="{{ Carbon\Carbon::parse($data['period'])->toDateTimeString() }}" disabled="true">
+						      	<input type="hidden" name="deadline" value="{{ Carbon\Carbon::parse($data['period'])->toDateTimeString() }}" />
 						    </div>
 					  	</div>
 					  	<div class="form-row">	

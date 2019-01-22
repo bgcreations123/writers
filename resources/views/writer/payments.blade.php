@@ -6,7 +6,7 @@
 	<!-- Heading Row -->
       <div class="row my-4">
         <div class="col-lg-12 mx-auto">
-			<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<ul class="nav nav-tab" id="myTab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" data-toggle="tab" href="#account" role="tab" aria-controls="account">My Account</a>
 				</li>
@@ -25,44 +25,8 @@
 							My Account
 						</div>
 						<div class="card-body">
-							<h5 class="card-title">Preffered accounts heading</h5>
-							<table class="table">
-							  <thead>
-							    <tr>
-							      <th scope="col">#</th>
-							      <th scope="col">First</th>
-							      <th scope="col">Last</th>
-							      <th scope="col">Action</th>
-							    </tr>
-							  </thead>
-							  <tbody>
-							    <tr>
-							      <th scope="row">1</th>
-							      <td>Mark</td>
-							      <td>Otto</td>
-							      <td>
-							      	<a href="#">View</a>
-							      </td>
-							    </tr>
-							    <tr>
-							      <th scope="row">2</th>
-							      <td>Jacob</td>
-							      <td>Thornton</td>
-							      <td>
-							      	<a href="#">View</a>
-							      </td>
-							    </tr>
-							    <tr>
-							      <th scope="row">3</th>
-							      <td>Larry</td>
-							      <td>the Bird</td>
-							      <td>
-							      	<a href="#">View</a>
-							      </td>
-							    </tr>
-							  </tbody>
-							</table>
-							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
+							<h5 class="card-title">Transactions List</h5>
+							<p>No transactions done yet!</p>
 						</div>
 					</div>
 				</div>
@@ -72,44 +36,35 @@
 							Paid Jobs
 						</div>
 						<div class="card-body">
-							<h5 class="card-title">Preffered accounts heading</h5>
-							<table class="table">
-							  <thead>
-							    <tr>
-							      <th scope="col">#</th>
-							      <th scope="col">First</th>
-							      <th scope="col">Last</th>
-							      <th scope="col">Action</th>
-							    </tr>
-							  </thead>
-							  <tbody>
-							    <tr>
-							      <th scope="row">1</th>
-							      <td>Mark</td>
-							      <td>Otto</td>
-							      <td>
-							      	<a href="#">View</a>
-							      </td>
-							    </tr>
-							    <tr>
-							      <th scope="row">2</th>
-							      <td>Jacob</td>
-							      <td>Thornton</td>
-							      <td>
-							      	<a href="#">View</a>
-							      </td>
-							    </tr>
-							    <tr>
-							      <th scope="row">3</th>
-							      <td>Larry</td>
-							      <td>the Bird</td>
-							      <td>
-							      	<a href="#">View</a>
-							      </td>
-							    </tr>
-							  </tbody>
-							</table>
-							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
+							<h5 class="card-title">All Jobs paid</h5>
+							@if($paidJobs->isEmpty())
+								<p>Sorry, No jobs have been paid yet!</p>
+							@else
+								<table class="table">
+								  <thead>
+								    <tr>
+								      <th scope="col">Unique ID</th>
+								      <th scope="col">Product</th>
+								      <th scope="col">Topic</th>
+								      <th scope="col">Amount</th>
+								      <th scope="col">Action</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								  	@foreach($paidJobs as $job)
+										<tr>
+											<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
+											<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
+											<td>{{ $job->orderDetail->subject }}</td>
+											<td>$ {{ $job->product->job_price }}.00</td>
+											<td>
+												<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
+											</td>
+										</tr>
+								    @endforeach
+								  </tbody>
+								</table>
+							@endif
 						</div>
 					</div>
 				</div>
@@ -119,44 +74,35 @@
 							Unpaid Jobs
 						</div>
 						<div class="card-body">
-							<h5 class="card-title">Preffered accounts heading</h5>
-							<table class="table">
-							  <thead>
-							    <tr>
-							      <th scope="col">#</th>
-							      <th scope="col">First</th>
-							      <th scope="col">Last</th>
-							      <th scope="col">Action</th>
-							    </tr>
-							  </thead>
-							  <tbody>
-							    <tr>
-							      <th scope="row">1</th>
-							      <td>Mark</td>
-							      <td>Otto</td>
-							      <td>
-							      	<a href="#">View</a>
-							      </td>
-							    </tr>
-							    <tr>
-							      <th scope="row">2</th>
-							      <td>Jacob</td>
-							      <td>Thornton</td>
-							      <td>
-							      	<a href="#">View</a>
-							      </td>
-							    </tr>
-							    <tr>
-							      <th scope="row">3</th>
-							      <td>Larry</td>
-							      <td>the Bird</td>
-							      <td>
-							      	<a href="#">View</a>
-							      </td>
-							    </tr>
-							  </tbody>
-							</table>
-							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
+							<h5 class="card-title">All Jobs Unpaid</h5>
+							@if($unPaidJobs->isEmpty())
+								<p>Sorry, No jobs finished yet!</p>
+							@else
+								<table class="table">
+								  <thead>
+								    <tr>
+								      <th scope="col">Unique ID</th>
+								      <th scope="col">Product</th>
+								      <th scope="col">Topic</th>
+								      <th scope="col">Amount</th>
+								      <th scope="col">Action</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								  	@foreach($unPaidJobs as $job)
+										<tr>
+											<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
+											<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
+											<td>{{ $job->orderDetail->subject }}</td>
+											<td>$ {{ $job->product->job_price }}.00</td>
+											<td>
+												<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
+											</td>
+										</tr>
+								    @endforeach
+								  </tbody>
+								</table>
+							@endif
 						</div>
 					</div>
 				</div>

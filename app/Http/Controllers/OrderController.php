@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\{Cart, Product, PaperClassification, PaperPeriod, PaperType, PaperSpacing, PaperLanguage, PaperFormat, Order, OrderDetail};
+use Carbon\Carbon;
 use Session;
 
 class OrderController extends Controller
@@ -21,6 +22,7 @@ class OrderController extends Controller
             'classification' => 'required|not_in:0',
             'period' => 'required|not_in:0',
             'pages' => 'required',
+            'terms' => 'required',
         ]);
 
         $product = Product::where('classification_id', $request->input('classification'))->where('period_id', $request->input('period'))->first();

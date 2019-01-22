@@ -21,4 +21,9 @@ class DefferedJob extends Model
 	{
 	    return $this->belongsTo(Product::class);
 	}
+
+	public function paymentStatus()
+	{
+	    return $this->belongsTo(PaymentStatus::class);
+	}
 }

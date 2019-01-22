@@ -15,11 +15,17 @@
 			<div class="card float-right" style="width: 21.5rem;">
 			  <div class="card-body text-center">
 			    <h5 class="card-title">Deadline</h5>
-			    <p class="card-text">
-            {{ \Carbon\Carbon::parse($orderDetails->deadline)->toDayDateTimeString() }}
-            <br />
-            {{ \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() }}
-          </p>
+            <p class="card-text">
+              @if($orderDetails->orderDetailStatus->status == 'Complete')
+                {{ \Carbon\Carbon::parse($orderDetails->updated_at)->toDayDateTimeString() }}
+                <br />
+                {{ \Carbon\Carbon::parse($orderDetails->updated_at)->diffForHumans() }}
+              @else
+                {{ \Carbon\Carbon::parse($orderDetails->deadline)->toDayDateTimeString() }}
+                <br />
+                {{ \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() }}
+              @endif
+            </p>
 			  </div>
 			</div>
 		</div>
@@ -53,13 +59,13 @@
     <div class="col-md-4">
       <h3 class="my-3 text-center">Job Description</h3>
       <p>{{ str_limit($orderDetails->description, 270) }}</p>
-      @if($orderDetails->order_detail_status_id === 1)
+      @if($orderDetails->orderDetailStatus->status == 'Pending')
         <a href="{{ route('writer.pick', ['id'=>$orderDetails->id]) }}" class="btn btn-primary">Pick</a>
-      @elseif($orderDetails->order_detail_status_id === 2)
+      @elseif($orderDetails->orderDetailStatus->status == 'Processing')
         <a href="{{ route('writer.complete', ['id'=>$orderDetails->id]) }}" class="btn btn-success">Complete</a>
         <a href="{{ route('writer.deffer', ['id'=>$orderDetails->id]) }}" class="btn btn-outline-danger ">Defer</a>
       @endif
-      <a href="{{ route('home') }}" class="btn btn-outline-secondary float-right">back</a>
+      <a href="{{ URL::previous() }}" class="btn btn-outline-secondary float-right">back</a>
     </div>
 
   </div>

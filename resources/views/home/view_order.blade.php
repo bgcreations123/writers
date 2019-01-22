@@ -15,11 +15,17 @@
 			<div class="card float-right" style="width: 21.5rem;">
 			  <div class="card-body text-center">
 			    <h5 class="card-title">Deadline</h5>
-			    <p class="card-text">
-            {{ \Carbon\Carbon::parse($orderDetails->deadline)->toDayDateTimeString() }}
-            <br />
-            {{ \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() }}
-          </p>
+		        <p class="card-text">
+              @if($orderDetails->orderDetailStatus->status == 'Complete')
+                {{ \Carbon\Carbon::parse($orderDetails->updated_at)->toDayDateTimeString() }}
+                <br />
+                {{ \Carbon\Carbon::parse($orderDetails->updated_at)->diffForHumans() }}
+              @else
+                {{ \Carbon\Carbon::parse($orderDetails->deadline)->toDayDateTimeString() }}
+                <br />
+                {{ \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() }}
+              @endif
+            </p>
 			  </div>
 			</div>
 		</div>

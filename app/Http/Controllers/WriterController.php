@@ -32,6 +32,14 @@ class WriterController extends Controller
             return redirect()->back()->with(['error' => 'You can only pick upto 3 jobs.']);
         }
 
+        //Find out if a user is picking own deffered job
+        $defferedJob = DefferedJob::whereNotNull([['order_detail_id', $id], ['writer_id', Auth()->user()->id], ['payment_status_id', 1]]);
+
+        if($defferedJob){
+            // Delete from deffered job table
+            DefferedJob::where([['order_detail_id', $id], ['writer_id', Auth()->user()->id], ['payment_status_id', 1]])->delete();
+        }
+
         // Add into the picked jobs table
         $job = new PickedJob;
         $job->order_detail_id = $id;
@@ -43,7 +51,7 @@ class WriterController extends Controller
         // Update order details status table
         OrderDetail::where('id', $id)->update(['order_detail_status_id' => 2]);
 
-        return redirect()->route('home')->with(['success' => 'You have successfully pick a job.']);
+        return redirect()->route('home')->with(['success' => 'You have successfully picked a job.']);
     }
 
     public function deffer($id)
@@ -59,6 +67,7 @@ class WriterController extends Controller
         $job->order_detail_id = $id;
         $job->writer_id = Auth::user()->id;
         $job->product_id = $orderDetail->product_id;
+        $job->payment_status_id = 1;
 
         $job->save();
 
@@ -68,7 +77,7 @@ class WriterController extends Controller
         // Delete from picked job table
         PickedJob::where('order_detail_id', $id)->delete();
 
-        return redirect()->route('home')->with(['error' => 'You have successfully Deffered a job. You will bear the penalty']);
+        return redirect()->route('home')->with(['error' => 'You have successfully Deffered a job. It comes with a penalty']);
     }
 
     public function complete($id)
@@ -108,7 +117,9 @@ class WriterController extends Controller
 
     public function payments()
     {
-    	return view('writer.payments');
+        $paidJobs = CompletedJob::where([['writer_id', auth()->user()->id], ['payment_status_id', 2]])->get();
+    	$unPaidJobs = CompletedJob::where([['writer_id', auth()->user()->id], ['payment_status_id', 1]])->get();
+        return view('writer.payments', compact('paidJobs', 'unPaidJobs'));
     }
 
     public function viewJob($id)

@@ -24,8 +24,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/view_order/{id}', 'HomeController@viewOrder')->name('home.view_order');
+Route::post('/getPrice', 'HomeController@getPrice')->name('home.getPrice');
 
 Route::group(['middleware' => 'auth'], function () {
+
+	Route::get('/profile', 'HomeController@profile')->name('user.profile');
 
 	Route::post('/order', 'OrderController@newOrder')->name('order.newOrder');
 	Route::get('/order_details', 'OrderController@orderDetails')->name('order.orderDetails');
@@ -49,15 +52,4 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/payments', 'WriterController@payments')->name('writer.payments');
 	Route::get('/view_job/{id}', 'WriterController@viewJob')->name('writer.view_job');
 	
-});
-
-
-Route::get('clear', function() {
-
-   Artisan::call('cache:clear');
-   Artisan::call('config:clear');
-   Artisan::call('view:clear');
-
-   return "Cleared!";
-
 });

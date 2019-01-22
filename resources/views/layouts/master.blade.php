@@ -61,12 +61,6 @@
         @include('layouts._footer')
 
     </div>
-
-    <script type="text/javascript">
-        $('#files').fileinput({
-            theme: 'fa',
-        });
-    </script>
     
 </body>
 </html>

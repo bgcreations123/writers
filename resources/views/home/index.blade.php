@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group col-md-4">
                   <label for="period">Time Period</label>
-                  <select id="period" class="form-control" name="period">
+                  <select id="period" class="form-control" name="period" >
                     <option value="0" selected>Choose...</option>
                     @foreach($paperPeriods as $paperPeriod)
                       <option value="{{ $paperPeriod['id'] }}" {{ (old('period') == $paperPeriod['id']) ? "selected" : "" }}>{{ $paperPeriod['period'] }}</option>

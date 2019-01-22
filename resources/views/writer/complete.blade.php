@@ -17,7 +17,7 @@
 					<form action="{{ route('writer.completeJob', ['id'=>$job->id]) }}" enctype="multipart/form-data" method="post">
 						{{ csrf_field() }}
 						<div class="file-loading">
-				        	<input id="input-b3" name="input-b3[]" type="file" class="file" data-show-upload="false" data-show-caption="true" data-msg-placeholder="Select {files} for upload..." multiple>
+				        	<input id="input-b3" name="input-b3" type="file" class="file" data-show-upload="false" data-show-caption="true" data-msg-placeholder="Select {files} for upload..." multiple>
 						</div>
 				        <br>
 				        <button type="submit" class="btn btn-primary">Submit</button>
@@ -28,3 +28,9 @@
         </div>
     </div>
 @endsection
+
+<script type="text/javascript">
+    $('#input-b3').fileinput({
+        theme: 'fa',
+    });
+</script>
