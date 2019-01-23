@@ -18,7 +18,12 @@
 								<li class="list-group-item">Client Name: {{ $data['client'] }}</li>
 								<li class="list-group-item">Paper Period: {{ $data['period'] }}</li>
 								<li class="list-group-item">Paper Pages: {{ $data['pages'] }}</li>
-								<li class="list-group-item">Price: {{ $data['product']['price'] }}</li>
+								<li class="list-group-item">
+									Price Per Page: $ {{ $data['product']['price'] }}
+								</li>
+								<li class="list-group-item">
+									Total Price: $ {{ $data['product']['price'] * $data['pages'] }}.00
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -27,7 +32,7 @@
 					<hr>
 					<form action="{{ route('order.getAddToCart', [$data['product']['id']]) }}" method="post" enctype="multipart/form-data">
 						{{ csrf_field() }}
-						<input type="hidden" name="product_pages" value="{{ $data['pages'] }}">
+						<input type="hidden" name="pages" value="{{ $data['pages'] }}">
 					  	<div class="form-group">
 				    		<label for="inputTopic">Topic / Subject</label>
 				    		<input type="text" class="form-control" id="topic" placeholder="Topic" name="topic" value="{{ old('topic') }}">

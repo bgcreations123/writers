@@ -53,7 +53,7 @@
 										<th scope="row">{{ $job->uniqueId }}</th>
 										<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
 										<td>{{ $job->subject }}</td>
-										<td>$ {{ $job->product->job_price }}.00</td>
+										<td>$ {{ $job->product->job_price * $job->pages }}.00</td>
 										<td>{{ \Carbon\Carbon::parse($job->deadline)->diffForHumans() }}</td>
 										<td>
 											<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->id]) }}">View Job</a>
@@ -95,7 +95,7 @@
 											<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
 											<td>{{ $job->product['classification']['classification'] }} Paper <br />Under {{ $job->product['period']['period'] }}</td>
 											<td>{{ $job->orderDetail->subject }}</td>
-											<td>$ {{ $job->product['job_price'] }}.00</td>
+											<td>$ {{ $job->product['job_price'] * $job->orderDetail->pages }}.00</td>
 											<td>{{ \Carbon\Carbon::parse($job->orderDetail->deadline)->diffForHumans() }}</td>
 											<td>
 												<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
@@ -136,7 +136,7 @@
 											<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
 											<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
 											<td>{{ $job->orderDetail->subject }}</td>
-											<td>$ {{ $job->product->penalty_price }}.00</td>
+											<td>$ {{ $job->product->penalty_price * $job->orderDetail->pages }}.00</td>
 											<td>{{ $job->paymentStatus->status }}</td>
 											<td>
 												<a class="btn btn-sm btn-outline-secondary" href="#">Pay here</a>

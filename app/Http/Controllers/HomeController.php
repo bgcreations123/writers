@@ -58,7 +58,7 @@ class HomeController extends Controller
 
         // $jobPool = OrderDetail::select('id', 'uniqueId', 'product_id', 'subject', 'deadline')->where([['order_detail_status_id', 1], ['deadline', '>=', Carbon::now()]])->orderBy('created_at', 'desc')->get();
 
-        $jobPool = OrderDetail::select('order_details.id', 'order_details.uniqueId', 'order_details.product_id', 'order_details.subject', 'order_details.deadline')
+        $jobPool = OrderDetail::select('order_details.id', 'order_details.uniqueId', 'order_details.product_id', 'order_details.pages', 'order_details.subject', 'order_details.deadline')
         ->where([['order_detail_status_id', 1], ['deadline', '>=', Carbon::now()]])->leftJoin('deffered_jobs', function ($query) {
                  $query
                  ->on('order_details.id', '=', 'deffered_jobs.order_detail_id')

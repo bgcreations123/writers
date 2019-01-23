@@ -53,10 +53,20 @@
 								  <tbody>
 								  	@foreach($paidJobs as $job)
 										<tr>
-											<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
-											<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
-											<td>{{ $job->orderDetail->subject }}</td>
-											<td>$ {{ $job->product->job_price }}.00</td>
+											<th scope="row">
+												{{ $job->orderDetail->uniqueId }}
+											</th>
+											<td>
+												{{ $job->product->classification->classification }} 
+												Paper <br />Under 
+												{{ $job->product->period->period }}
+											</td>
+											<td>
+												{{ $job->orderDetail->subject }}
+											</td>
+											<td>
+												$ {{ $job->product->job_price * $job->orderDetail->pages }}.00
+											</td>
 											<td>
 												<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
 											</td>
@@ -91,10 +101,20 @@
 								  <tbody>
 								  	@foreach($unPaidJobs as $job)
 										<tr>
-											<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
-											<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
-											<td>{{ $job->orderDetail->subject }}</td>
-											<td>$ {{ $job->product->job_price }}.00</td>
+											<th scope="row">
+												{{ $job->orderDetail->uniqueId }}
+											</th>
+											<td>
+												{{ $job->product->classification->classification }} 
+												Paper <br />Under 
+												{{ $job->product->period->period }}
+											</td>
+											<td>
+												{{ $job->orderDetail->subject }}
+											</td>
+											<td>
+												$ {{ $job->product->job_price * $job->orderDetail->pages }}.00
+											</td>
 											<td>
 												<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
 											</td>

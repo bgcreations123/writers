@@ -11,11 +11,6 @@ use Session;
 
 class OrderController extends Controller
 {
-    public function index()
-    {
-        //
-    }
-
     public function newOrder(Request $request)
     {
         $this->validate($request, [
@@ -95,13 +90,15 @@ class OrderController extends Controller
             );
         }
 
+        $pages = $request->pages;
+
         $product = Product::find($id);
         $oldCart = $request->session()->has('cart') ? $request->session()->get('cart') : null;
 
         $details = serialize(array_replace($request->input(), $fileName));
 
         $cart = new Cart($oldCart);
-        $cart->add($product, $details, $product->id);
+        $cart->add($product, $pages, $details, $product->id);
 
         $request->session()->put('cart', $cart);
 
@@ -177,9 +174,9 @@ class OrderController extends Controller
         if(!Session::has('cart')){
             return view('order.shoppingcart');
         }
+
         $oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
-
         // dd($cart);
 
         return view('order.shoppingcart', ['products' => $cart->items, 'total_price' => $cart->totalPrice, 'total_qty' => $cart->totalQty]);
@@ -234,6 +231,7 @@ class OrderController extends Controller
             $orderDetails->product_id = $product['item']['id'];
             $orderDetails->order_detail_status_id = 1;
             $orderDetails->quantity = $product['qty'];
+            $orderDetails->pages = $product['pages'];
             $orderDetails->subject = $productDetail['topic'];
             $orderDetails->type_id = $productDetail['type'];
             $orderDetails->format_id = $productDetail['format'];

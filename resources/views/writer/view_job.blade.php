@@ -50,7 +50,7 @@
 					<li class="list-group-item">Paper Spacing : {{ $orderDetails->spacing->space }} </li>
 					<li class="list-group-item">Client Name : {{ $orderDetails->order->user->name }}</li>
 					<li class="list-group-item">Job Status : {{ $orderDetails->orderDetailStatus->status }}</li>
-					<li class="list-group-item">Job Price : {{ $orderDetails->product->job_price }}</li>
+					<li class="list-group-item">Job Price : {{ $orderDetails->product->job_price * $orderDetails->pages }}</li>
 				</ul>
     		</div>
     	</div>

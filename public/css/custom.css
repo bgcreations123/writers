@@ -124,9 +124,9 @@ body { padding-top: 85px; }
 }
 
 .shopping-cart .items .product{
-  margin-bottom: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  margin-bottom: 30px;
+  /*padding-top: 20px;*/
+  padding-bottom: 30px;
 }
 
 .shopping-cart .items .product .info{
