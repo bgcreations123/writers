@@ -21,9 +21,7 @@
                 <br />
                 {{ \Carbon\Carbon::parse($orderDetails->updated_at)->diffForHumans() }}
               @else
-                {{ \Carbon\Carbon::parse($orderDetails->deadline)->toDayDateTimeString() }}
-                <br />
-                {{ \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() }}
+                {!! ($orderDetails->deadline < \Carbon\Carbon::now()) ? 'Expired '. \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() : \Carbon\Carbon::parse($orderDetails->deadline)->toDayDateTimeString() .'<br>'. \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() !!}
               @endif
             </p>
 			  </div>

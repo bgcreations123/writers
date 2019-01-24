@@ -80,7 +80,7 @@
                     <a href="{{ route('home.view_order', ['id'=>$pendingOrder->id]) }}">
                       {{ $pendingOrder->subject }}
                     </a> 
-                    ({{ \Carbon\Carbon::parse($pendingOrder->deadline)->diffForHumans() }})
+                    ({{ ($pendingOrder->deadline < \Carbon\Carbon::now()) ? 'Expired '. \Carbon\Carbon::parse($pendingOrder->deadline)->diffForHumans() : \Carbon\Carbon::parse($pendingOrder->deadline)->diffForHumans() }})
                   </li>
                 @endforeach
               </ul>

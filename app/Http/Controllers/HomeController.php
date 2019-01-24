@@ -30,12 +30,13 @@ class HomeController extends Controller
         Session::has('data') ? Session::forget('data') : null;
 
         $pendingOrders = OrderDetail::select('order_details.id', 'order_details.subject', 'order_details.deadline')
-        ->where([['order_details.order_detail_status_id', 1], ['order_details.deadline', '>=', Carbon::now()]])
+        ->where('order_details.order_detail_status_id', 1)
         ->leftJoin('orders', function ($query) {
             $query
             ->on('orders.id', '=', 'order_details.order_id')
             ->where('orders.user_id', '=', auth()->user()->id);
         })
+        ->orderBy('orders.id', 'desc')
         ->get();
 
         $processingOrders = OrderDetail::select('order_details.id', 'order_details.subject', 'order_details.deadline')
