@@ -34,11 +34,13 @@ class Cart
 	public function updateItem($qty, $id)
 	{
 		$workingQty = $qty - $this->items[$id]['qty'];
+		$workingTotalPrice = $this->items[$id]['price'] * $this->items[$id]['pages'];
+
+		// dd(abs($itemPrice));
 
 		$this->items[$id]['qty'] += $workingQty;
-		$this->items[$id]['price'] += $workingQty * $this->items[$id]['item']['price'];
 		$this->totalQty += $workingQty;
-		$this->totalPrice += $workingQty * $this->items[$id]['item']['price'] * $this->items[$id]['item']['pages'];
+		$this->totalPrice += $workingQty * $workingTotalPrice;
 
 		if ($this->items[$id]['qty'] <= 0){
 			unset($this->items[$id]);
