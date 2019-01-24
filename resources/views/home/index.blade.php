@@ -72,21 +72,34 @@
         <div class="col-md-4 mb-4">
           <div class="card h-100">
             <div class="card-body">
-              <h2 class="card-title">Pending Oders ({{ count($pendingOrders) }})</h2>
-              <ul>
-                @foreach($pendingOrders as $pendingOrder)
-                {{-- {{dd('home.view_order', ['id'=>$pendingOrder->id])}} --}}
-                  <li>
-                    <a href="{{ route('home.view_order', ['id'=>$pendingOrder->id]) }}">
-                      {{ $pendingOrder->subject }}
-                    </a> 
-                    ({{ ($pendingOrder->deadline < \Carbon\Carbon::now()) ? 'Expired '. \Carbon\Carbon::parse($pendingOrder->deadline)->diffForHumans() : \Carbon\Carbon::parse($pendingOrder->deadline)->diffForHumans() }})
-                  </li>
-                @endforeach
-              </ul>
+              <div class="card-title d-flex justify-content-between align-items-center">
+                <h5 class="text-primary">
+                  Pending orders
+                </h5>
+                <span class="badge badge-info text-light">
+                  {{ count($pendingOrders) }}
+                </span>
+              </div>
+              @if($pendingOrders->isEmpty())
+                <p>Apply Your Writting Now...</p>
+              @else
+                <ul class="list-group  list-group-flush">
+                  @foreach($pendingOrders as $pendingOrder)
+                    {{-- {{dd('home.view_order', ['id'=>$pendingOrder->id])}} --}}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <a href="{{ route('home.view_order', ['id'=>$pendingOrder->id]) }}">
+                        {{ $pendingOrder->subject }}
+                      </a> 
+                      <span>
+                        {!! ($pendingOrder->deadline < \Carbon\Carbon::now()) ? '<span class="text-danger">Expired</span> '. \Carbon\Carbon::parse($pendingOrder->deadline)->diffForHumans() : \Carbon\Carbon::parse($pendingOrder->deadline)->diffForHumans() !!}
+                      </span>
+                    </li>
+                  @endforeach
+                </ul>
+              @endif
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">More Info</a>
+              {{-- <a href="#" class="btn btn-primary">More Info</a> --}}
             </div>
           </div>
         </div>
@@ -94,21 +107,31 @@
         <div class="col-md-4 mb-4">
           <div class="card h-100">
             <div class="card-body">
-              <h2 class="card-title">Processing orders ({{ count($processingOrders) }})</h2>
-              <ul>
-                @foreach($processingOrders as $processingOrder)
-
-                  <li>
-                    <a href="{{ route('home.view_order', ['id'=>$processingOrder->id]) }}">
-                      {{ $processingOrder->subject }}
-                    </a> 
-                    {{-- ({{ \Carbon\Carbon::parse($processingOrder->deadline)->diffForHumans() }}) --}}
-                  </li>
-                @endforeach
-              </ul>
+              <div class="card-title d-flex justify-content-between align-items-center">
+                <h5 class="text-primary">
+                  Processing orders
+                </h5>
+                <span class="badge badge-info text-light">
+                  {{ count($processingOrders) }}
+                </span>
+              </div>
+              @if($processingOrders->isEmpty())
+                <p>No Orders Processing...</p>
+              @else
+                <ul class="list-group  list-group-flush">
+                  @foreach($processingOrders as $processingOrder)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <a href="{{ route('home.view_order', ['id'=>$processingOrder->id]) }}">
+                        {{ $processingOrder->subject }}
+                      </a> 
+                      {{-- ({{ \Carbon\Carbon::parse($processingOrder->deadline)->diffForHumans() }}) --}}
+                    </li>
+                  @endforeach
+                </ul>
+              @endif
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">More Info</a>
+              {{-- <a href="#" class="btn btn-primary">More Info</a> --}}
             </div>
           </div>
         </div>
@@ -116,20 +139,33 @@
         <div class="col-md-4 mb-4">
           <div class="card h-100">
             <div class="card-body">
-              <h2 class="card-title">Complete Orders ({{ count($completedOrders) }})</h2>
-              <ul>
-                @foreach($completedOrders as $completedOrder)
-                  <li>
-                    <a href="{{ route('home.view_order', ['id'=>$completedOrder->id]) }}">
-                      {{ $completedOrder->subject }}
-                    </a> 
-                    ({{ \Carbon\Carbon::parse($completedOrder->updated_at)->diffForHumans() }})
-                  </li>
-                @endforeach
-              </ul>
+              <div class="card-title d-flex justify-content-between align-items-center">
+                <h5 class="text-primary">
+                  Completed orders
+                </h5>
+                <span class="badge badge-info text-light">
+                  {{ count($completedOrders) }}
+                </span>
+              </div>
+              @if($completedOrders->isEmpty())
+                <p>No Complete Orders...</p>
+              @else
+                <ul class="list-group  list-group-flush">
+                  @foreach($completedOrders as $completedOrder)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <a href="{{ route('home.view_order', ['id'=>$completedOrder->id]) }}">
+                        {{ $completedOrder->subject }}
+                      </a> 
+                      <span>
+                        {{ \Carbon\Carbon::parse($completedOrder->updated_at)->diffForHumans() }}
+                      </span>
+                    </li>
+                  @endforeach
+                </ul>
+              @endif
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">More Info</a>
+              {{-- <a href="#" class="btn btn-primary">More Info</a> --}}
             </div>
           </div>
         </div>
