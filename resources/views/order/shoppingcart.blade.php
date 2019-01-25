@@ -19,10 +19,10 @@
 					</div>
 					<div class="card-body text-dark">
 						<div class="row">
-							<div class="col-md-12 col-lg-8">
+							<div class="col-md-12 col-lg-8 mb-4">
 
 								<div class="container mb-5"> {{-- Begin Table --}}
-									<div class="row py-2 text-center align-items-center border border-primary text-primary">
+									<div class="row py-2 text-center align-items-center border-bottom border-primary text-primary">
 										<div class="col-3">
 											Product
 										</div>
@@ -96,7 +96,7 @@
 				                		<div class="col-md-6 col-sm-6 no-margin-left no-padding-left pull-left">
 						                    <div class="row">
 						                        <div class="col-6">
-						                            <input name="coupon" type="text" class="form-control form-control-sm" placeholder="coupon code">
+						                            <input name="coupon" type="text" class="form-control form-control-sm" placeholder="code">
 						                        </div>
 						                        <div class="col-6">
 						                            <input type="submit" class="btn btn-outline-secondary btn-sm" value="Use coupon">

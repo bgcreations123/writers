@@ -13,7 +13,7 @@
 				<div class="card-body">
 					<h5 class="card-title">New Order Info</h5>
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-lg-4 col-md-12 col-sm-12">
 							<ul class="list-group">
 								<li class="list-group-item">Client Name: {{ $data['client'] }}</li>
 								<li class="list-group-item">Paper Period: {{ $data['period'] }}</li>

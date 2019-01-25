@@ -7,12 +7,12 @@
 {{-- {{dd($orderDetails->order_detail_status_id)}} --}}
 
 	<div class="row">
-		<div class="col-sm my-auto text-center">
+		<div class="col-lg-8 col-md-12 my-auto text-center">
 			<h1>{{ $orderDetails->subject }}</h1>
 			<h6>{{ $orderDetails->product->classification->classification }} Under {{ $orderDetails->product->period->period }}</h6>
 		</div>
-		<div class="col-sm">
-			<div class="card float-right" style="width: 21.5rem;">
+		<div class="col-lg-4 col-md-12">
+			<div class="card">
 			  <div class="card-body text-center">
 			    <h5 class="card-title">Deadline</h5>
             <p class="card-text">
@@ -34,7 +34,7 @@
 
   <div class="row">
 
-    <div class="col-md-8">
+    <div class="col-lg-8 col-md-12">
 		<h3 class="my-3">Job Details</h3>
     	<div class="row">
     		<div class="col-sm">
@@ -50,13 +50,13 @@
 					<li class="list-group-item">Paper Spacing : {{ $orderDetails->spacing->space }} </li>
 					<li class="list-group-item">Client Name : {{ $orderDetails->order->user->name }}</li>
 					<li class="list-group-item">Job Status : {{ $orderDetails->orderDetailStatus->status }}</li>
-					<li class="list-group-item">Job Price : {{ $orderDetails->product->job_price * $orderDetails->pages }}</li>
+					<li class="list-group-item">Job Price : $ {{ $orderDetails->product->job_price * $orderDetails->pages }}.00</li>
 				</ul>
     		</div>
     	</div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-lg-4 col-md-12">
       <h3 class="my-3 text-center">Job Description</h3>
       <p>{{ str_limit($orderDetails->description, 270) }}</p>
       @if($orderDetails->orderDetailStatus->status == 'Pending')

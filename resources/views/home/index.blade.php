@@ -5,8 +5,8 @@
 @section('content')
 
       <!-- Heading Row -->
-      <div class="row my-4">
-        <div class="col-lg-8">
+      <div class="row">
+        <div class="col-lg-8 my-4">
             <form action="{{ route('order.newOrder') }}" method="post">
               {{ csrf_field() }}
               <div class="form-row">
@@ -47,7 +47,7 @@
             </form>
         </div>
         <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
+        <div class="col-lg-4 my-4">
           <h2 class="text-center">Get your Paper written By A Proffessional Writer</h2>
           <p>Place an order Today and Experience writers with the highest satisfaction rates, Lowest prices on the market, Security, confidentiality, and money back guarantee!</p>
           {{-- <a class="btn btn-primary btn-lg" href="#">Call to Action!</a> --}}

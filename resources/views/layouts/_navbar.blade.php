@@ -1,25 +1,35 @@
 <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top">
 
-    <div class="container" style="padding-bottom: 10px;">
-        
-        <img src="{{ Voyager::image(setting('site.logo')) }}" style="width: 7%; position: fixed;">
+    <div class="container">
 
-        <a class="navbar-brand" href="{{ url('/') }}" style="position: fixed; padding: 35px 0 0 47px;">
-            {{ ltrim(setting('site.title'),'W') }}
-        </a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav mr-auto">
-                
-            </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
 
-            <!-- Right Side Of Navbar -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Our Services</a>
+                </li>
+            </ul>
+        </div>
+
+        <img class="d-inline-block align-top" src="{{ Voyager::image(setting('site.logo')) }}" style="width: 4%;">
+
+        <div class="mx-auto order-0">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand mx-auto" href="{{ url('/') }}">
+                <span class="d-none d-block d-md-none">W{{ ltrim(setting('site.title'),'W') }}</span>
+                <span class="d-none d-md-block">{{ ltrim(setting('site.title'),'W') }}</span>
+            </a>
+        </div>
+
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+
             <ul class="navbar-nav ml-auto">
+
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
@@ -31,14 +41,6 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home">Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Our Services</a>
-                    </li>
-
                     @if(auth()->user()->hasRole('Client'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ URL::to('/shoppingcart') }}">
@@ -78,9 +80,11 @@
                             </form>
                         </div>
                     </li>
-                    
+
                 @endguest
+
             </ul>
+
         </div>
 
     </div>
