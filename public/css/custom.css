@@ -31,6 +31,15 @@
   cursor: pointer;
 }
 
+/* Jumbotron Setup */
+.jumbotron-muted{
+    background-color:#ecf0f1;
+    background-image:
+        linear-gradient(165deg, rgba(250, 250, 250, 0),
+        rgba(255, 255, 255, 0) 65%, rgba(38, 38, 38, 0.1) 65.1%,
+        rgba(38, 38, 38, 0.1));
+}
+
 /*Page settings*/
 body { padding-top: 85px; }
 #page {
@@ -78,4 +87,43 @@ body { padding-top: 85px; }
     border-bottom: 0;
     border-right: 1px solid transparent;
     padding-right: 15px;
+}
+
+/* showing price */
+#red-circle {
+  background-color: #61a1d1;
+  border: 1px solid #3989c6;
+  color: #fff;
+  width: 70px;
+  height: 70px;
+}
+.circle-text {
+  position: relative;
+  display: block;
+  border-radius: 50%;
+  text-align: center;
+  min-width: 50px;
+  min-height: 50px;
+}
+
+.center-align {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.pricing-plan-price {
+    font-size: 20px;
+}
+
+.pricing-plan-price>sup {
+    font-size: 50%
+}
+
+.pricing-plan-price>span {
+    font-size: 45%
 }

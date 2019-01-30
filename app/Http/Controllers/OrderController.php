@@ -73,7 +73,9 @@ class OrderController extends Controller
             'deadline' => 'required|after:today',
         ]);
 
-        $fileName = ['file' => $request->file('files')->getClientOriginalName()];
+        $filename = time().$request->file('files')->getClientOriginalName();
+
+        $fileName = ['file' => $filename];
         // dd(array_replace($request->input(), $fileName));
 
         // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
@@ -81,10 +83,10 @@ class OrderController extends Controller
         if ($request->hasFile('files')){
             // Perform uploads
             $uploadedFile = $request->file('files');
-            $filename = time().$uploadedFile->getClientOriginalName();
+            // $filename = time().$uploadedFile->getClientOriginalName();
 
             Storage::disk('local')->putFileAs(
-                'files/'.$filename,
+                'files/'.(int)auth()->user()->id,
                 $uploadedFile,
                 $filename
             );
@@ -196,6 +198,11 @@ class OrderController extends Controller
         ]);
 
         return redirect()->route('home')->with(['success'=> 'Your message has been sent!']);
+    }
+
+    public function paymentMethod()
+    {
+        return view('order.paymentMethod');
     }
 
     public function getCheckout()

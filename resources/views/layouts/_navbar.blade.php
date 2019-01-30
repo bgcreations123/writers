@@ -3,15 +3,7 @@
     <div class="container">
 
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/home">Home</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Our Services</a>
-                </li>
-            </ul>
+            {{ menu('main_menu', 'layouts._nav') }}
         </div>
 
         <img class="d-inline-block align-top" src="{{ Voyager::image(setting('site.logo')) }}" style="width: 4%;">
@@ -63,7 +55,7 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('user.profile') }}">My Profile</a>
+                            <a class="dropdown-item" href="{{ route('user.profile', ['id'=>Auth::user()->id]) }}">My Profile</a>
                             <div class="dropdown-divider"></div>
                             @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('Editor'))
                                 <a class="dropdown-item" href="{{ URL::to('/admin') }}">Back Office</a>

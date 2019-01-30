@@ -77,27 +77,16 @@
   <div class="row">
 
     <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">File</h5>
+          <p class="card-text">
+            <small>name:</small> 
+            {{ $orderDetails->files }}
+          </p>
+          <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', [$orderDetails->files])  }}">Download</a>
+        </div>
+      </div>
     </div>
 
   </div>

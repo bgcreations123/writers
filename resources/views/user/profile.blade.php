@@ -7,7 +7,7 @@
 		<div class="col-sm-3"><!--left col-->
 	          
 			<div class="text-center">
-				<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+				<img src="{{ Voyager::image( $user->avatar ) }}" class="avatar img-circle img-thumbnail" alt="avatar">
 			</div><br>
 			<div class="custom-file">
 				<input type="file" class="custom-file-input" id="customFile">
@@ -16,16 +16,16 @@
 	        
     		<div class="card my-3">
 				<div class="card-header">Website <i class="fa fa-link fa-1x"></i></div>
-				<div class="card-body"><a href="http://bootnipets.com">bootnipets.com</a></div>
+				<div class="card-body"><a href="#">http://your-site-name.com/</a></div>
 			</div>
 	      
-			<ul class="list-group">
+			{{-- <ul class="list-group">
 				<li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
 				<li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125</li>
 				<li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
 				<li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
 				<li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
-			</ul> 
+			</ul>  --}}
 	           
 			<div class="card my-3">
 				<div class="card-header">Social Media</div>
@@ -49,10 +49,10 @@
               <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#menu1">Menu 1</a>
+              <a class="nav-link" data-toggle="tab" href="#menu1">Bio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
+              <a class="nav-link" data-toggle="tab" href="#menu2">Edit</a>
             </li>
           </ul>
         </div>
@@ -60,8 +60,8 @@
           <!-- Tab panes -->
           <div class="tab-content">
             <div id="home" class="container tab-pane active"><br>
-              <h3>HOME</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <h3>{{ $user->name }}</h3>
+              <p>{{ $user->email }}</p>
             </div>
             <div id="menu1" class="container tab-pane fade"><br>
               <h3>Menu 1</h3>

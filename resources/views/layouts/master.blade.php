@@ -32,6 +32,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
+
+    {{-- Favicon --}}
+    <link rel="shortcut icon" href="{{ Voyager::image('settings/writers-fav.ico') }}" type="image/x-icon">
   
 
     <script>
@@ -51,8 +54,8 @@
                 <div id="main">
                     {{-- @include('layouts._app') --}}
                     @include('layouts._navbar')
+                    {{menu('main', 'layouts._navbar')}}
                     @include('layouts._messages')
-
                     @yield('content')
                 </div>
             </div>

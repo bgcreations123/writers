@@ -10,6 +10,7 @@
 		<div class="col-lg-8 col-md-12 my-auto text-center">
 			<h1>{{ $orderDetails->subject }}</h1>
 			<h6>{{ $orderDetails->product->classification->classification }} Under {{ $orderDetails->product->period->period }}</h6>
+      <p>{{ $orderDetails->pages }} Pages</p>
 		</div>
 		<div class="col-lg-4 col-md-12">
 			<div class="card">
@@ -33,7 +34,15 @@
   <div class="row">
 
     <div class="col-lg-8 col-md-12">
-		<h3 class="my-3">Job Details</h3>
+      <div class="d-flex justify-content-between align-items-center">
+        <h3 class="my-3">
+          Job Details
+        </h3>
+        <span class="pr-2">
+          <small>ID:</small> <strong>{{ $orderDetails->uniqueId }}</strong>
+        </span>
+      </div>
+      
     	<div class="row">
     		<div class="col-md-6 my-2">
 				<ul class="list-group">
@@ -60,8 +69,7 @@
       <a href="{{ route('home') }}" class="btn btn-outline-secondary float-right">back</a>
     </div>
 
-  </div>
-  <!-- /.row -->
+  </div> <!-- /.row -->
 
   <!-- Related Projects Row -->
   <h3 class="my-4">Related Documents</h3>
@@ -69,30 +77,19 @@
   <div class="row">
 
     <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">File</h5>
+          <p class="card-text">
+            <small>name:</small> 
+            {{ $orderDetails->files }}
+          </p>
+          <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', [$orderDetails->files])  }}">Download</a>
+        </div>
+      </div>
     </div>
 
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
-
-    <div class="col-md-3 col-sm-6 mb-4">
-      <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-    </div>
-
-  </div>
-  <!-- /.row -->
+  </div> <!-- /.row -->
 
 @endsection

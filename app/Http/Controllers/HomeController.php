@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\{PaperPeriod, PaperClassification, OrderDetail, PickedJob, CompletedJob, DefferedJob};
+use App\{User, PaperPeriod, PaperClassification, OrderDetail, PickedJob, CompletedJob, DefferedJob, Product};
 use Carbon\Carbon;
 use Session;
 
@@ -37,6 +37,7 @@ class HomeController extends Controller
             ->where('orders.user_id', '=', auth()->user()->id);
         })
         ->orderBy('orders.id', 'desc')
+        ->limit(3)
         ->get();
 
         $processingOrders = OrderDetail::select('order_details.id', 'order_details.subject', 'order_details.deadline')
@@ -46,6 +47,7 @@ class HomeController extends Controller
             ->on('orders.id', '=', 'order_details.order_id')
             ->where('orders.user_id', '=', auth()->user()->id);
         })
+        ->limit(3)
         ->get();
 
         $completedOrders = OrderDetail::select('order_details.id', 'order_details.subject', 'order_details.updated_at')
@@ -55,6 +57,7 @@ class HomeController extends Controller
             ->on('orders.id', '=', 'order_details.order_id')
             ->where('orders.user_id', '=', auth()->user()->id);
         })
+        ->limit(3)
         ->get();
 
         // $jobPool = OrderDetail::select('id', 'uniqueId', 'product_id', 'subject', 'deadline')->where([['order_detail_status_id', 1], ['deadline', '>=', Carbon::now()]])->orderBy('created_at', 'desc')->get();
@@ -99,8 +102,23 @@ class HomeController extends Controller
         return view('home.view_order', compact('orderDetails'));
     }
 
-    public function profile()
+    public function profile($id)
     {
-        return view('user.profile');
+        $user = User::find($id);
+
+        // check if user is true
+        if($user->id != (int)auth()->user()->id){
+            return redirect()->back()->with(['error'=> 'Stay in your place!']);
+        }
+
+        return view('user.profile', compact('user'));
+    }
+
+    public function getProduct($cid, $pid)
+    {
+        $product = Product::where([['classification_id', $cid], ['period_id', $pid]])->pluck('price','id');
+        // dd($product);
+
+        return json_encode($product);
     }
 }
