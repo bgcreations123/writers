@@ -40,40 +40,42 @@
 							@if($paidJobs->isEmpty())
 								<p>Sorry, No jobs have been paid yet!</p>
 							@else
-								<table class="table">
-								  <thead>
-								    <tr>
-								      <th scope="col">Unique ID</th>
-								      <th scope="col">Product</th>
-								      <th scope="col">Topic</th>
-								      <th scope="col">Amount</th>
-								      <th scope="col">Action</th>
-								    </tr>
-								  </thead>
-								  <tbody>
-								  	@foreach($paidJobs as $job)
-										<tr>
-											<th scope="row">
-												{{ $job->orderDetail->uniqueId }}
-											</th>
-											<td>
-												{{ $job->product->classification->classification }} 
-												Paper <br />Under 
-												{{ $job->product->period->period }}
-											</td>
-											<td>
-												{{ $job->orderDetail->subject }}
-											</td>
-											<td>
-												$ {{ $job->product->job_price * $job->orderDetail->pages }}.00
-											</td>
-											<td>
-												<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
-											</td>
-										</tr>
-								    @endforeach
-								  </tbody>
-								</table>
+								<div class="table-responsive-md">
+									<table class="table table-hover">
+									  <thead>
+									    <tr>
+									      <th scope="col">Unique ID</th>
+									      <th scope="col">Product</th>
+									      <th scope="col">Topic</th>
+									      <th scope="col">Amount</th>
+									      <th scope="col">Action</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									  	@foreach($paidJobs as $job)
+											<tr>
+												<th scope="row">
+													{{ $job->orderDetail->uniqueId }}
+												</th>
+												<td>
+													{{ $job->product->classification->classification }} 
+													Paper <br />Under 
+													{{ $job->product->period->period }}
+												</td>
+												<td>
+													{{ $job->orderDetail->subject }}
+												</td>
+												<td>
+													$ {{ $job->product->job_price * $job->orderDetail->pages }}.00
+												</td>
+												<td>
+													<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
+												</td>
+											</tr>
+									    @endforeach
+									  </tbody>
+									</table>
+								</div>
 							@endif
 						</div>
 					</div>
@@ -88,40 +90,42 @@
 							@if($unPaidJobs->isEmpty())
 								<p>Sorry, No jobs finished yet!</p>
 							@else
-								<table class="table">
-								  <thead>
-								    <tr>
-								      <th scope="col">Unique ID</th>
-								      <th scope="col">Product</th>
-								      <th scope="col">Topic</th>
-								      <th scope="col">Amount</th>
-								      <th scope="col">Action</th>
-								    </tr>
-								  </thead>
-								  <tbody>
-								  	@foreach($unPaidJobs as $job)
-										<tr>
-											<th scope="row">
-												{{ $job->orderDetail->uniqueId }}
-											</th>
-											<td>
-												{{ $job->product->classification->classification }} 
-												Paper <br />Under 
-												{{ $job->product->period->period }}
-											</td>
-											<td>
-												{{ $job->orderDetail->subject }}
-											</td>
-											<td>
-												$ {{ $job->product->job_price * $job->orderDetail->pages }}.00
-											</td>
-											<td>
-												<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
-											</td>
-										</tr>
-								    @endforeach
-								  </tbody>
-								</table>
+								<div class="table-responsive-md">
+									<table class="table table-hover">
+									  <thead>
+									    <tr>
+									      <th scope="col">Unique ID</th>
+									      <th scope="col">Product</th>
+									      <th scope="col">Topic</th>
+									      <th scope="col">Amount</th>
+									      <th scope="col">Action</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									  	@foreach($unPaidJobs as $job)
+											<tr>
+												<th scope="row">
+													{{ $job->orderDetail->uniqueId }}
+												</th>
+												<td>
+													{{ $job->product->classification->classification }} 
+													Paper <br />Under 
+													{{ $job->product->period->period }}
+												</td>
+												<td>
+													{{ $job->orderDetail->subject }}
+												</td>
+												<td>
+													$ {{ $job->product->job_price * $job->orderDetail->pages }}.00
+												</td>
+												<td>
+													<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
+												</td>
+											</tr>
+									    @endforeach
+									  </tbody>
+									</table>
+								</div>
 							@endif
 						</div>
 					</div>

@@ -71,18 +71,18 @@
 
   </div> <!-- /.row -->
 
-  <!-- Related Projects Row -->
-  <h3 class="my-4">Related Documents</h3>
-
   <div class="row">
 
-    <div class="col-md-3 col-sm-6 mb-4">
+    <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
 
-      <div class="card">
+      <!-- Related Projects Row -->
+      <h3 class="my-4">Related Documents</h3>
+
+      <div class="card col-md-6">
         <div class="card-body">
           <h5 class="card-title">File</h5>
           <p class="card-text">
-            <small>name:</small> 
+            <small>File name:</small>
             {{ $orderDetails->files }}
           </p>
           <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', [$orderDetails->files])  }}">Download</a>
@@ -90,6 +90,32 @@
       </div>
     </div>
 
-  </div> <!-- /.row -->
+    @if($orderDetails->orderDetailStatus->status == 'Complete')
+      <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
+
+        <!-- Finished Jobs Row -->
+        <h3 class="my-4">Finished Documents</h3>
+
+        <div class="card col-md-6">
+          <div class="card-body">
+            <h5 class="card-title">File</h5>
+            @if(empty($completed->files))
+              <p>Sorry, No Evidence/Proof of work!</p>
+            @else
+              <p class="card-text">
+                <small>File name:</small> 
+                {{ $completed->files }}
+              </p>
+              <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', [$completed->files])  }}">
+                Download
+              </a>
+            @endif
+          </div>
+        </div>
+      </div>
+    @endif
+
+  </div>
+  <!-- /.row -->
 
 @endsection

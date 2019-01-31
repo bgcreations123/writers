@@ -11,11 +11,19 @@ slider.oninput = function() {
 // Pricing plan for prices on the home page
 $(document).ready(function() {
 	$('select[name="classification"]').change(function(e){
+
 		var classificationId = $(this).val();
+
+		$('#pricing-plan-price').empty();
+
 		$('select[name="period"]').val('0');
+
 		$('select[name="period"]').prop('disabled', !$(this).val());
+
 		$('select[name="period"]').change(function(e){
+
 			var periodId = $(this).val();
+
 	        if(classificationId && periodId) {
 	            $.ajax({
 	                url: '/getProduct/'+classificationId+'/'+periodId,
@@ -28,7 +36,19 @@ $(document).ready(function() {
 	                success:function(data) {
 	                    $('#pricing-plan-price').empty();
 	                    $.each(data, function(key, value){
-	                        $('#pricing-plan-price').append(value);
+
+                        	document.getElementById("pricing-plan-price").innerHTML = value
+
+                        	slider.value = 1;
+
+                        	output.innerHTML = 1;
+
+	                        slider.onmouseup = function(){
+                        		document.getElementById("pricing-plan-price").innerHTML = slider.value * value
+	                        	// $('#pricing-plan-price').val(slider.value * value);
+	                        	// console.log(slider.value);
+	                        }
+
 	                    });
 	                },
 	                complete: function(){
@@ -38,7 +58,9 @@ $(document).ready(function() {
 	        } else {
 	            $('#pricing-plan-price').empty();
 	        }
+
 		});
+		
 	});
 
 	$(function(){

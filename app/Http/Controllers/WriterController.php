@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\{OrderDetail, PickedJob, CompletedJob, DefferedJob};
 
 class WriterController extends Controller
@@ -95,6 +96,27 @@ class WriterController extends Controller
 
     public function completeJob(Request $request, $id)
     {
+        $this->validate($request, [
+            'files' => 'required',
+        ]);
+
+        $filename = time().$request->file('files')->getClientOriginalName();
+        // dd(array_replace($request->input(), $fileName));
+
+        // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
+
+        if ($request->hasFile('files')){
+            // Perform uploads
+            $uploadedFile = $request->file('files');
+
+            Storage::disk('local')->putFileAs(
+                'files/'.(int)auth()->user()->id,
+                $uploadedFile,
+                $filename
+            );
+        }
+
+        // Identify Picked jobs
         $picked_job = PickedJob::find($id);
 
         // Add into the completed jobs table
@@ -103,6 +125,7 @@ class WriterController extends Controller
         $job->writer_id = $picked_job->writer_id;
         $job->product_id = $picked_job->product_id;
         $job->payment_status_id = 1;
+        $job->files = $filename;
 
         $job->save();
 
@@ -126,7 +149,13 @@ class WriterController extends Controller
     {
         $orderDetails = OrderDetail::find($id);
 
-        return view('writer.view_job', compact('orderDetails'));
+        if($orderDetails->orderDetailStatus->status == 'Complete'){
+            $completed = CompletedJob::where('order_detail_id', $orderDetails->id)->first();
+        }
+
+        // dd($completed);
+
+        return view('writer.view_job', compact('orderDetails', 'completed'));
     }
 
 }

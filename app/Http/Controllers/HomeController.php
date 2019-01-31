@@ -63,7 +63,8 @@ class HomeController extends Controller
         // $jobPool = OrderDetail::select('id', 'uniqueId', 'product_id', 'subject', 'deadline')->where([['order_detail_status_id', 1], ['deadline', '>=', Carbon::now()]])->orderBy('created_at', 'desc')->get();
 
         $jobPool = OrderDetail::select('order_details.id', 'order_details.uniqueId', 'order_details.product_id', 'order_details.pages', 'order_details.subject', 'order_details.deadline')
-        ->where([['order_detail_status_id', 1], ['deadline', '>=', Carbon::now()]])->leftJoin('deffered_jobs', function ($query) {
+        ->where([['order_detail_status_id', 1], ['deadline', '>=', Carbon::now()]])
+        ->leftJoin('deffered_jobs', function ($query) {
                  $query
                  ->on('order_details.id', '=', 'deffered_jobs.order_detail_id')
                  ->where('deffered_jobs.writer_id', '=', auth()->user()->id);
@@ -99,7 +100,11 @@ class HomeController extends Controller
     {
         $orderDetails = OrderDetail::find($id);
 
-        return view('home.view_order', compact('orderDetails'));
+        if($orderDetails->orderDetailStatus->status == 'Complete'){
+            $completed = CompletedJob::where('order_detail_id', $orderDetails->id)->first();
+        }
+
+        return view('home.view_order', compact('orderDetails', 'completed'));
     }
 
     public function profile($id)

@@ -34,34 +34,36 @@
 						<div class="card-body">
 							<h5 class="card-title">Pick A Job</h5>
 							@if($jobPool->isEmpty())
-							<p>Sorry, No jobs in the pool yet!</p>
+								<p>Sorry, No jobs in the pool yet!</p>
 							@else
-							<table class="table">
-							  <thead>
-							    <tr>
-							      <th scope="col">Unique ID</th>
-							      <th scope="col">Product</th>
-							      <th scope="col">Topic</th>
-							      <th scope="col">Wadge Bill</th>
-							      <th scope="col">Deadline</th>
-							      <th scope="col">Action</th>
-							    </tr>
-							  </thead>
-							  <tbody>
-						    	@foreach($jobPool as $job)
-							    	<tr>
-										<th scope="row">{{ $job->uniqueId }}</th>
-										<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
-										<td>{{ $job->subject }}</td>
-										<td>$ {{ $job->product->job_price * $job->pages }}.00</td>
-										<td>{{ \Carbon\Carbon::parse($job->deadline)->diffForHumans() }}</td>
-										<td>
-											<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->id]) }}">View Job</a>
-										</td>
-							    	</tr>
-								@endforeach
-							  </tbody>
-							</table>
+								<div class="table-responsive-md">
+									<table class="table table-hover">
+									  <thead>
+									    <tr>
+									      <th scope="col">Unique ID</th>
+									      <th scope="col">Product</th>
+									      <th scope="col">Topic</th>
+									      <th scope="col">Wadge Bill</th>
+									      <th scope="col">Deadline</th>
+									      <th scope="col">Action</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+								    	@foreach($jobPool as $job)
+									    	<tr>
+												<th scope="row">{{ $job->uniqueId }}</th>
+												<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
+												<td>{{ $job->subject }}</td>
+												<td>$ {{ $job->product->job_price * $job->pages }}.00</td>
+												<td>{{ \Carbon\Carbon::parse($job->deadline)->diffForHumans() }}</td>
+												<td>
+													<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->id]) }}">View Job</a>
+												</td>
+									    	</tr>
+										@endforeach
+									  </tbody>
+									</table>
+								</div>
 							@endif
 							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
 						</div>
@@ -77,33 +79,35 @@
 							@if($pickedJobs->isEmpty())
 								<p>Sorry, No jobs Picked Yet!</p>
 							@else
-								<table class="table">
-								  <thead>
-								    <tr>
-								      <th scope="col">Unique ID</th>
-								      <th scope="col">Product</th>
-								      <th scope="col">Topic</th>
-								      <th scope="col">Wadge Bill</th>
-								      <th scope="col">Deadline</th>
-								      <th scope="col">Action</th>
-								    </tr>
-								  </thead>
-								  <tbody>
-								  	@foreach($pickedJobs as $job)
-								  	{{-- {{dd($job->product->classification->classification)}} --}}
-								    	<tr>
-											<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
-											<td>{{ $job->product['classification']['classification'] }} Paper <br />Under {{ $job->product['period']['period'] }}</td>
-											<td>{{ $job->orderDetail->subject }}</td>
-											<td>$ {{ $job->product['job_price'] * $job->orderDetail->pages }}.00</td>
-											<td>{{ \Carbon\Carbon::parse($job->orderDetail->deadline)->diffForHumans() }}</td>
-											<td>
-												<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
-											</td>
-								    	</tr>
-									@endforeach
-								  </tbody>
-								</table>
+								<div class="table-responsive-md">
+									<table class="table table-hover">
+									  <thead>
+									    <tr>
+									      <th scope="col">Unique ID</th>
+									      <th scope="col">Product</th>
+									      <th scope="col">Topic</th>
+									      <th scope="col">Wadge Bill</th>
+									      <th scope="col">Deadline</th>
+									      <th scope="col">Action</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									  	@foreach($pickedJobs as $job)
+									  	{{-- {{dd($job->product->classification->classification)}} --}}
+									    	<tr>
+												<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
+												<td>{{ $job->product['classification']['classification'] }} Paper <br />Under {{ $job->product['period']['period'] }}</td>
+												<td>{{ $job->orderDetail->subject }}</td>
+												<td>$ {{ $job->product['job_price'] * $job->orderDetail->pages }}.00</td>
+												<td>{{ \Carbon\Carbon::parse($job->orderDetail->deadline)->diffForHumans() }}</td>
+												<td>
+													<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
+												</td>
+									    	</tr>
+										@endforeach
+									  </tbody>
+									</table>
+								</div>
 							@endif
 							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
 						</div>
@@ -119,33 +123,35 @@
 							@if($defferedJobs->isEmpty())
 								<p>No deffered jobs!</p>
 							@else
-								<table class="table">
-								  <thead>
-								    <tr>
-								      <th scope="col">Unique ID</th>
-								      <th scope="col">Product</th>
-								      <th scope="col">Topic</th>
-								      <th scope="col">Penalty</th>
-								      <th scope="col">Payment Status</th>
-								      <th scope="col">Action</th>
-								    </tr>
-								  </thead>
-								  <tbody>
-								  	@foreach($defferedJobs as $job)
-										<tr>
-											<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
-											<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
-											<td>{{ $job->orderDetail->subject }}</td>
-											<td>$ {{ $job->product->penalty_price * $job->orderDetail->pages }}.00</td>
-											<td>{{ $job->paymentStatus->status }}</td>
-											<td>
-												<a class="btn btn-sm btn-outline-secondary" href="#">Pay here</a>
-												<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
-											</td>
-										</tr>
-								    @endforeach
-								  </tbody>
-								</table>
+								<div class="table-responsive-md">
+									<table class="table table-hover">
+									  <thead>
+									    <tr>
+									      <th scope="col">Unique ID</th>
+									      <th scope="col">Product</th>
+									      <th scope="col">Topic</th>
+									      <th scope="col">Penalty</th>
+									      <th scope="col">Payment Status</th>
+									      <th scope="col">Action</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									  	@foreach($defferedJobs as $job)
+											<tr>
+												<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
+												<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
+												<td>{{ $job->orderDetail->subject }}</td>
+												<td>$ {{ $job->product->penalty_price * $job->orderDetail->pages }}.00</td>
+												<td>{{ $job->paymentStatus->status }}</td>
+												<td>
+													<a class="btn btn-sm btn-outline-secondary" href="#">Pay here</a>
+													<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
+												</td>
+											</tr>
+									    @endforeach
+									  </tbody>
+									</table>
+								</div>
 							@endif
 							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
 						</div>
@@ -158,48 +164,50 @@
 						</div>
 						<div class="card-body">
 							<h5 class="card-title">Inbox</h5>
-							<table class="table">
-							  <thead>
-							    <tr>
-							      <th scope="col">#</th>
-							      <th scope="col">First</th>
-							      <th scope="col">Last</th>
-							      <th scope="col">Action</th>
-							    </tr>
-							  </thead>
-							  <tbody>
-							    <tr>
-							      <th scope="row">1</th>
-							      <td>Mark</td>
-							      <td>Otto</td>
-							      <td>
-							      	<a href="#">View</a> | 
-							      	<a href="#">Edit</a> | 
-							      	<a href="#">Delete</a>
-							      </td>
-							    </tr>
-							    <tr>
-							      <th scope="row">2</th>
-							      <td>Jacob</td>
-							      <td>Thornton</td>
-							      <td>
-							      	<a href="#">View</a> | 
-							      	<a href="#">Edit</a> | 
-							      	<a href="#">Delete</a>
-							      </td>
-							    </tr>
-							    <tr>
-							      <th scope="row">3</th>
-							      <td>Larry</td>
-							      <td>the Bird</td>
-							      <td>
-							      	<a href="#">View</a> | 
-							      	<a href="#">Edit</a> | 
-							      	<a href="#">Delete</a>
-							      </td>
-							    </tr>
-							  </tbody>
-							</table>
+							<div class="table-responsive-md">
+								<table class="table table-hover">
+								  <thead>
+								    <tr>
+								      <th scope="col">#</th>
+								      <th scope="col">First</th>
+								      <th scope="col">Last</th>
+								      <th scope="col">Action</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    <tr>
+								      <th scope="row">1</th>
+								      <td>Mark</td>
+								      <td>Otto</td>
+								      <td>
+								      	<a href="#">View</a> | 
+								      	<a href="#">Edit</a> | 
+								      	<a href="#">Delete</a>
+								      </td>
+								    </tr>
+								    <tr>
+								      <th scope="row">2</th>
+								      <td>Jacob</td>
+								      <td>Thornton</td>
+								      <td>
+								      	<a href="#">View</a> | 
+								      	<a href="#">Edit</a> | 
+								      	<a href="#">Delete</a>
+								      </td>
+								    </tr>
+								    <tr>
+								      <th scope="row">3</th>
+								      <td>Larry</td>
+								      <td>the Bird</td>
+								      <td>
+								      	<a href="#">View</a> | 
+								      	<a href="#">Edit</a> | 
+								      	<a href="#">Delete</a>
+								      </td>
+								    </tr>
+								  </tbody>
+								</table>
+							</div>
 							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
 						</div>
 					</div>
