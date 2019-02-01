@@ -62,6 +62,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/payments', 'WriterController@payments')->name('writer.payments');
 	Route::get('/view_job/{id}', 'WriterController@viewJob')->name('writer.view_job');
 	
+	Route::post('/paypal', 'PaymentController@paypal')->name('paypal');
+	Route::get('/status', 'PaymentController@getPaymentStatus')->name('status');
+
 });
 
 

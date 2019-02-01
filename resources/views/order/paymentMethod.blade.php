@@ -4,7 +4,6 @@
 
 @section('content')
 
-
 {{-- {{ dd(Session::get('cart')) }} --}}
 
 	@if(Session::has('cart'))
@@ -88,61 +87,29 @@
 
 											<div class="tab-pane fade" id="nav-tab-paypal">
 												
-												<div id="paypal-button" class="text-center">
-													<p>
-														Paypal is easiest way to pay online
-													</p>
-												</div>
+												<p>
+													Paypal is easiest way to pay online
+												</p>
+
+												<form role="form" method="POST" id="payment-form"  action="{{ route('paypal') }}">
+													{{ csrf_field() }}
+
+													<button class="btn btn-primary btn-block" type="submit">
+														<i class="fab fa-paypal"></i> 
+														Paypal Login  
+													</button>
+
+												</form>
+
 												<p>
 													<strong>
 														Note:
 													</strong> 
 													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
 												</p>
+
 											</div>
-
-											<script src="https://www.paypalobjects.com/api/checkout.js"></script>
-											<script>
-											  paypal.Button.render({
-											    // Configure environment
-											    env: 'sandbox',
-											    client: {
-											      sandbox: 'AXWgKUyaqNSAVWAii8otr33Qma32kog0lLK_dco4EQK9vJRKkOzGQvEwzXhQ3gERdQpjJqbnZtKmTD7g',
-											      production: 'demo_production_client_id'
-											    },
-											    // Customize button (optional)
-											    locale: 'en_US',
-											    style: {
-											      size: 'small',
-											      color: 'gold',
-											      shape: 'pill',
-											    },
-
-											    // Enable Pay Now checkout flow (optional)
-											    commit: true,
-
-											    // Set up a payment
-											    payment: function(data, actions) {
-											      return actions.payment.create({
-											        transactions: [{
-											          amount: {
-											            total: '0.01',
-											            currency: 'USD'
-											          }
-											        }]
-											      });
-											    },
-											    // Execute the payment
-											    onAuthorize: function(data, actions) {
-											      return actions.payment.execute().then(function() {
-											        // Show a confirmation message to the buyer
-											        window.alert('Thank you for your purchase!');
-											      });
-											    }
-											  }, '#paypal-button');
-
-											</script>
-
+											
 											<div class="tab-pane fade" id="nav-tab-bank">
 												<p>Bank accaunt details</p>
 												<dl class="param">

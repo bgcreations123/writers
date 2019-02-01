@@ -15,7 +15,11 @@
 		<div class="col-lg-4 col-md-12">
 			<div class="card">
 			  <div class="card-body text-center">
-			    <h5 class="card-title">Deadline</h5>
+          @if($orderDetails->orderDetailStatus->status == 'Complete')
+            <h5 class="card-title">Completed</h5>
+          @else
+            <h5 class="card-title">Deadline</h5>
+          @endif
 		        <p class="card-text">
               @if($orderDetails->orderDetailStatus->status == 'Complete')
                 {{ \Carbon\Carbon::parse($orderDetails->updated_at)->toDayDateTimeString() }}

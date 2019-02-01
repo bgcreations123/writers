@@ -200,64 +200,24 @@ class OrderController extends Controller
         return redirect()->route('home')->with(['success'=> 'Your message has been sent!']);
     }
 
-    public function paymentMethod()
-    {
-        return view('order.paymentMethod');
-    }
-
     public function getCheckout()
     {
         if(!Session::has('cart')){
             return redirect()->route('home')->with(['error'=> 'Sorry, Your Shopping Cart is Empty!']);
         }
 
-        $cart = Session::get('cart');
+        return redirect()->route('order.paymentMethod');
 
-        // dd($cart);
-        // foreach($cart->items as $key => $product){
-        //     dd(unserialize($product['details']));
-        // }        
+    }
 
-        // Add into the order database
-        $order = new Order;
-        $order->user_id = Auth::user()->id;
-        $order->total_qty = $cart->totalQty;
-        $order->total_price = $cart->totalPrice;
-        $order->payment_status_id = 2;
-
-        $order->save();
-
-        foreach($cart->items as $key => $product){
-            // The product details
-            $productDetail = unserialize($product['details']);
-
-            // Add into order details database
-            $orderDetails = new OrderDetail;
-            $orderDetails->uniqueId = uniqid();
-            $orderDetails->order_id = $order->id;
-            $orderDetails->product_id = $product['item']['id'];
-            $orderDetails->order_detail_status_id = 1;
-            $orderDetails->quantity = $product['qty'];
-            $orderDetails->pages = $product['pages'];
-            $orderDetails->subject = $productDetail['topic'];
-            $orderDetails->type_id = $productDetail['type'];
-            $orderDetails->format_id = $productDetail['format'];
-            $orderDetails->language_id = $productDetail['language'];
-            $orderDetails->sources = $productDetail['source'];
-            $orderDetails->spacing_id = $productDetail['space'];
-            $orderDetails->description = $productDetail['details'];
-            $orderDetails->files = $productDetail['file'];
-            $orderDetails->deadline = $productDetail['deadline'];
-
-            $orderDetails->save();
+    public function paymentMethod()
+    {
+        if(!Session::has('cart')){
+            return redirect()->route('home')->with(['error'=> 'Sorry, Your Shopping Cart is Empty!']);
         }
-        // Clear data session
-        Session::forget('data');
 
-        // Clear Cart session
-        Session::forget('cart');
+        // dd(Session::get('cart')->items);
 
-        return redirect()->route('home')->with(['success'=> 'Thank you for entrusting us with your Job!']);
-
+        return view('order.paymentMethod');
     }
 }
