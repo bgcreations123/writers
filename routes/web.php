@@ -18,6 +18,10 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+
+    // admin route overwrites here
+    Route::get('completed-jobs/review/{id}', '\App\Http\Controllers\Voyager\CompletedJobController@review')->name('review');
+    // ['uses' => 'App\Http\Controllers\Voyager\CompletedJobController@review', 'as' => 'voyager.completed-jobs.review']);
 });
 
 Auth::routes();

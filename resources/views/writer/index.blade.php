@@ -144,7 +144,6 @@
 												<td>$ {{ $job->product->penalty_price * $job->orderDetail->pages }}.00</td>
 												<td>{{ $job->paymentStatus->status }}</td>
 												<td>
-													<a class="btn btn-sm btn-outline-secondary" href="#">Pay here</a>
 													<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
 												</td>
 											</tr>

@@ -69,18 +69,16 @@ class OrderController extends Controller
             'space' => 'required|not_in:0',
             'language' => 'required|not_in:0',
             'details' => 'required|min:3|max:1000',
-            'files' => 'required',
+            // 'files' => 'required',
             'deadline' => 'required|after:today',
         ]);
 
-        $filename = time().$request->file('files')->getClientOriginalName();
-
-        $fileName = ['file' => $filename];
-        // dd(array_replace($request->input(), $fileName));
-
-        // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
-
         if ($request->hasFile('files')){
+            
+            $filename = time().$request->file('files')->getClientOriginalName();
+
+            // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
+
             // Perform uploads
             $uploadedFile = $request->file('files');
             // $filename = time().$uploadedFile->getClientOriginalName();
@@ -90,7 +88,13 @@ class OrderController extends Controller
                 $uploadedFile,
                 $filename
             );
+        }else{
+            $filename = '';
         }
+        
+        $fileName = ['file' => $filename];
+        
+        // dd(array_replace($request->input(), $fileName));
 
         $pages = $request->pages;
 
@@ -103,6 +107,8 @@ class OrderController extends Controller
         $cart->add($product, $pages, $details, $product->id);
 
         $request->session()->put('cart', $cart);
+
+        // dd($cart);
 
         return redirect()->route('shoppingCart');
     }

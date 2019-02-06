@@ -81,7 +81,14 @@ class HomeController extends Controller
         ->whereNotNull('order_details.id')
         ->get();
 
-        $defferedJobs = DefferedJob::where('writer_id', auth()->user()->id)->get();
+        $defferedJobs = DefferedJob::where('writer_id', auth()->user()->id)
+        // ->leftJoin('order_details', function ($query) {
+        //     $query
+        //     ->on('order_details.id', '=', 'deffered_jobs.order_detail_id')
+        //     ->where('deadline', '>=', Carbon::now());
+        // })
+        // ->whereNotNull('order_details.id')
+        ->get();
         
         $paperPeriods = PaperPeriod::all('period', 'id');
         $classifications = PaperClassification::all('classification', 'id');

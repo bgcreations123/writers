@@ -84,12 +84,16 @@
 
       <div class="card col-md-6">
         <div class="card-body">
-          <h5 class="card-title">File</h5>
-          <p class="card-text">
-            <small>File name:</small>
-            {{ $orderDetails->files }}
-          </p>
-          <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', [$orderDetails->files])  }}">Download</a>
+          @if(empty($orderDetails->files))
+            <p>No related files submited.</p>
+          @else
+            <h5 class="card-title">File</h5>
+            <p class="card-text">
+              <small>File name:</small>
+              {{ $orderDetails->files }}
+            </p>
+            <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', [$orderDetails->files])  }}">Download</a>
+          @endif
         </div>
       </div>
     </div>

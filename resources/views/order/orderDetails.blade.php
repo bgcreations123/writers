@@ -99,6 +99,7 @@
 					    	<textarea class="form-control" name="details" rows="7">{{ (old('details')) ? old('details') : "Paper details" }}</textarea>
 					  	</div>
 					  	<div class="form-group">
+					  		<label for="files">Supporting Documents (Optional)</label>
 						  	<div class="file-loading">
 					        	<input id="files" name="files" type="file" class="file" data-show-upload="false" data-show-caption="true" data-msg-placeholder="Select {files} for upload..." multiple>
 							</div>

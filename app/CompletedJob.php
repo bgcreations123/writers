@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class CompletedJob extends Model
 {
+    public $orderBy = 'completed_jobs.id'; 
+
+    public $orderDirection = 'DESC';
+
     public function orderDetail()
 	{
 	    return $this->belongsTo(OrderDetail::class);
