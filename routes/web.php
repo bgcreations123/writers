@@ -21,7 +21,6 @@ Route::group(['prefix' => 'admin'], function () {
 
     // admin route overwrites here
     Route::get('completed-jobs/review/{id}', '\App\Http\Controllers\Voyager\CompletedJobController@review')->name('review');
-    // ['uses' => 'App\Http\Controllers\Voyager\CompletedJobController@review', 'as' => 'voyager.completed-jobs.review']);
 });
 
 Auth::routes();
@@ -31,9 +30,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/view_order/{id}', 'HomeController@viewOrder')->name('home.view_order');
 
 // Public service route
-Route::get('/ourServices', function(){
-	return view('home.ourServices');
-});
+Route::get('/ourServices', 'PageController@index')->name('home.ourServices');
 
 // determine product through ajax
 Route::get('/getProduct/{cid}/{pid}', 'HomeController@getProduct')->name('home.getProduct');

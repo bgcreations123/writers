@@ -8,6 +8,25 @@
       <div class="row justify-content-center">
         <h1>Welcome to Elect Writers</h1>
       </div>
+
+      <div class="jumbotron jumbotron-muted">
+        <div class="row">
+          <div class="col-lg-6">
+            <h2>Everything you need to know about the art of Writing. Free!</h2>
+            <p class="lead">Subscribe here in below and start learning<br>we are ready for you!</p>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter your email">
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="button">Subscribe</button>
+              </span>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-2">
+            <img src="{{ URL('images/notes5.jpg') }}" class="mx-auto d-block img-thumbnail" style="opacity: 0.7;">
+          </div>
+        </div> {{-- / . row --}}
+      </div> {{-- jumbotron --}}
+
       <div class="row">
         <div class="col-lg-8 my-4">
           <div class="card border border-default p-4">
@@ -195,23 +214,5 @@
           </div>
         </div> <!-- /.col-md-4 -->
       </div> <!-- /.row -->
-
-      <div class="jumbotron jumbotron-muted">
-        <div class="row">
-          <div class="col-lg-6">
-            <h2>Everything you need to know about the art of Writing. Free!</h2>
-            <p class="lead">Subscribe here in below and start learning<br>we are ready for you!</p>
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter your email">
-              <span class="input-group-btn">
-                <button class="btn btn-primary" type="button">Subscribe</button>
-              </span>
-            </div>
-          </div>
-          <div class="col-lg-6 mt-2">
-            <img src="{{ URL('images/notes5.jpg') }}" class="mx-auto d-block img-thumbnail" style="opacity: 0.7;">
-          </div>
-        </div> {{-- / . row --}}
-      </div> {{-- jumbotron --}}
 
 @endsection

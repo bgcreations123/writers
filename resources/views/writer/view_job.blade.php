@@ -44,29 +44,33 @@
   <div class="row">
 
     <div class="col-lg-8 col-md-12">
-		<h3 class="my-3">Job Details</h3>
-    	<div class="row">
-    		<div class="card">
-          <div class="card-body">
-    				<ul class="list-group">
-    					<li class="list-group-item">Paper Type : {{ $orderDetails->type->type }} </li>
-    					<li class="list-group-item">Paper Format : {{ $orderDetails->format->format }}</li>
-    					<li class="list-group-item">No. of Sources : {{ $orderDetails->sources }}</li>
-    					<li class="list-group-item">Paper Language: {{ $orderDetails->language->language }}</li>
-    				</ul>
-          </div>
-    		</div>
-    		<div class="card">
-          <div class="card-body">
-    				<ul class="list-group">
-    					<li class="list-group-item">Paper Spacing : {{ $orderDetails->spacing->space }} </li>
-    					<li class="list-group-item">Client Name : {{ $orderDetails->order->user->name }}</li>
-    					<li class="list-group-item">Job Status : {{ $orderDetails->orderDetailStatus->status }}</li>
-    					<li class="list-group-item">Job Price : $ {{ $orderDetails->product->job_price * $orderDetails->pages }}.00</li>
-    				</ul>
-          </div>
-    		</div>
-    	</div>
+      <div class="d-flex justify-content-between align-items-center">
+        <h3 class="my-3">
+          Job Details
+        </h3>
+        <span class="pr-2">
+          <small>ID:</small> <strong>{{ $orderDetails->uniqueId }}</strong>
+        </span>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-6 my-2">
+        <ul class="list-group">
+          <li class="list-group-item">Paper Type : {{ $orderDetails->type->type }} </li>
+          <li class="list-group-item">Paper Format : {{ $orderDetails->format->format }}</li>
+          <li class="list-group-item">No. of Sources : {{ $orderDetails->sources }}</li>
+          <li class="list-group-item">Paper Language: {{ $orderDetails->language->language }}</li>
+        </ul>
+        </div>
+        <div class="col-md-6 my-2">
+        <ul class="list-group">
+          <li class="list-group-item">Paper Spacing : {{ $orderDetails->spacing->space }} </li>
+          <li class="list-group-item">Client Name : {{ $orderDetails->order->user->name }}</li>
+          <li class="list-group-item">Job Status : {{ $orderDetails->orderDetailStatus->status }}</li>
+          <li class="list-group-item">Job Price : $ {{ $orderDetails->product->job_price * $orderDetails->pages }}.00</li>
+        </ul>
+        </div>
+      </div>
     </div>
 
     <div class="col-lg-4 col-md-12">
@@ -85,12 +89,12 @@
       <a href="{{ URL::previous() }}" class="btn btn-outline-secondary float-right">back</a>
     </div>
 
-  </div>
-  <!-- /.row -->
+  </div> <!-- /.row -->
+
 
   <div class="row">
 
-    <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
+    <div class="col-lg-6 mb-4">
 
       <!-- Related Projects Row -->
       <h3 class="my-4">Related Documents</h3>

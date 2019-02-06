@@ -18,17 +18,21 @@
           @if($orderDetails->orderDetailStatus->status == 'Complete')
             <h5 class="card-title">Completed</h5>
           @else
-            <h5 class="card-title">Deadline</h5>
+            @if($orderDetails->deadline <= \Carbon\Carbon::now())
+              <h5 class="card-title text-danger">Expired</h5>
+            @else
+              <h5 class="card-title">Deadline</h5>
+            @endif
           @endif
-		        <p class="card-text">
-              @if($orderDetails->orderDetailStatus->status == 'Complete')
-                {{ \Carbon\Carbon::parse($orderDetails->updated_at)->toDayDateTimeString() }}
-                <br />
-                {{ \Carbon\Carbon::parse($orderDetails->updated_at)->diffForHumans() }}
-              @else
-                {!! ($orderDetails->deadline < \Carbon\Carbon::now()) ? 'Expired '. \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() : \Carbon\Carbon::parse($orderDetails->deadline)->toDayDateTimeString() .'<br>'. \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() !!}
-              @endif
-            </p>
+	        <p class="card-text">
+            @if($orderDetails->orderDetailStatus->status == 'Complete')
+              {{ \Carbon\Carbon::parse($orderDetails->updated_at)->toDayDateTimeString() }}
+              <br />
+              {{ \Carbon\Carbon::parse($orderDetails->updated_at)->diffForHumans() }}
+            @else
+              {!! ($orderDetails->deadline < \Carbon\Carbon::now()) ? 'Expired '. \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() : \Carbon\Carbon::parse($orderDetails->deadline)->toDayDateTimeString() .'<br>'. \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() !!}
+            @endif
+          </p>
 			  </div>
 			</div>
 		</div>

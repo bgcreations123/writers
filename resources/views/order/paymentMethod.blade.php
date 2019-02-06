@@ -16,7 +16,7 @@
 						<a href="/home" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
 					</div>
 					<div class="card-body text-dark">
-						<br>  
+						<br>
 						<p class="text-center">
 							payment section choose an option herein 
 						</p>
@@ -86,7 +86,6 @@
 											</div> <!-- tab-pane.// -->
 
 											<div class="tab-pane fade" id="nav-tab-paypal">
-												
 												<p>
 													Paypal is easiest way to pay online
 												</p>
@@ -105,31 +104,12 @@
 													<strong>
 														Note:
 													</strong> 
-													Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+													Navigate to PayPal and sign in to your account. Make sure your account has enough money. 
 												</p>
-
 											</div>
 											
 											<div class="tab-pane fade" id="nav-tab-bank">
-												<p>Bank accaunt details</p>
-												<dl class="param">
-												  	<dt>BANK: </dt>
-												  	<dd> THE WORLD BANK</dd>
-												</dl>
-												<dl class="param">
-												  	<dt>Account number: </dt>
-												  	<dd> 12345678912345</dd>
-												</dl>
-												<dl class="param">
-												  	<dt>IBAN: </dt>
-												  	<dd> 123456789</dd>
-												</dl>
-												<p>
-													<strong>
-														Note:
-													</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-													tempor incididunt ut labore et dolore magna aliqua. 
-												</p>
+												{!! setting('bank.details') !!}
 											</div> <!-- tab-pane.// -->
 										</div> <!-- tab-content .// -->
 

@@ -17,23 +17,23 @@
           <div class="col-md-6 col-lg-7 text-center text-md-right">
 
             <!-- Facebook -->
-            <a class="fb-ic">
+            <a class="fb-ic" href="{{ setting('social-media.facebook') }}"  target="_blank">
               <i class="fab fa-facebook-f white-text mr-4"> </i>
             </a>
             <!-- Twitter -->
-            <a class="tw-ic">
+            <a class="tw-ic" href="{{ setting('social-media.twitter') }}"  target="_blank">
               <i class="fab fa-twitter white-text mr-4"> </i>
             </a>
             <!-- Google +-->
-            <a class="gplus-ic">
+            <a class="gplus-ic" href="https://mail.google.com/mail/?view=cm&fs=1&to={{ setting('social-media.google') }}"  target="_blank">
               <i class="fab fa-google-plus-g white-text mr-4"> </i>
             </a>
             <!--Linkedin -->
-            <a class="li-ic">
+            <a class="li-ic" href="{{ setting('social-media.linkedin') }}"  target="_blank">
               <i class="fab fa-linkedin-in white-text mr-4"> </i>
             </a>
             <!--Instagram-->
-            <a class="ins-ic">
+            <a class="ins-ic" href="{{ setting('social-media.instagram') }}"  target="_blank">
               <i class="fab fa-instagram white-text"> </i>
             </a>
 
@@ -56,10 +56,9 @@
         <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
 
           <!-- Content -->
-          <h6 class="text-uppercase font-weight-bold">Company name</h6>
+          <h6 class="text-uppercase font-weight-bold">{{ setting('site.title') }}</h6>
           <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-          <p>Here you can use rows and columns here to organize your footer content. Lorem ipsum dolor sit amet, consectetur
-            adipisicing elit.</p>
+          <p>{{ setting('site.site_about') }}</p>
 
         </div>
         <!-- Grid column -->
@@ -71,16 +70,16 @@
           <h6 class="text-uppercase font-weight-bold">Products</h6>
           <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <p>
-            <a class="dark-grey-text" href="#!">MDBootstrap</a>
+            <a class="dark-grey-text">{{ setting('products.essay') }}</a>
           </p>
           <p>
-            <a class="dark-grey-text" href="#!">MDWordPress</a>
+            <a class="dark-grey-text">{{ setting('products.speech') }}</a>
           </p>
           <p>
-            <a class="dark-grey-text" href="#!">BrandFlow</a>
+            <a class="dark-grey-text">{{ setting('products.research') }}</a>
           </p>
           <p>
-            <a class="dark-grey-text" href="#!">Bootstrap Angular</a>
+            <a class="dark-grey-text">{{ setting('products.course_work') }}</a>
           </p>
 
         </div>
@@ -93,13 +92,13 @@
           <h6 class="text-uppercase font-weight-bold">Useful links</h6>
           <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <p>
-            <a class="dark-grey-text" href="#!">Your Account</a>
+            <a class="dark-grey-text" href="{{ route('home') }}">Your Account</a>
           </p>
           <p>
             <a class="dark-grey-text" href="#!">Become an Affiliate</a>
           </p>
           <p>
-            <a class="dark-grey-text" href="#!">Shipping Rates</a>
+            <a class="dark-grey-text" href="{{ route('home') }}">Shipping Rates</a>
           </p>
           <p>
             <a class="dark-grey-text" href="#!">Help</a>
@@ -115,13 +114,13 @@
           <h6 class="text-uppercase font-weight-bold">Contact</h6>
           <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
           <p>
-            <i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+            <i class="fas fa-home mr-3"></i> {{ setting('contacts.address1') }}</p>
           <p>
-            <i class="fas fa-envelope mr-3"></i> info@example.com</p>
+            <i class="fas fa-envelope mr-3"></i> {{ setting('contacts.email') }}</p>
           <p>
-            <i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+            <i class="fas fa-phone mr-3"></i> {{ setting('contacts.office_number') }}</p>
           <p>
-            <i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+            <i class="fas fa-mobile-alt mr-3"></i> {{ setting('contacts.mobile_number') }}</p>
 
         </div>
         <!-- Grid column -->

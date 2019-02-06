@@ -119,7 +119,7 @@ class PaymentController extends Controller
 
 	    if (empty(Input::get('PayerID')) || empty(Input::get('token'))) {
 			// return home with a fail message
-        	return redirect()->route('home')->with(['success' => 'Payment Failed!']);
+        	return redirect()->route('home')->with(['error' => 'Payment Failed!']);
 		}
 
 		$payment = Payment::get($payment_id, $this->_api_context);
