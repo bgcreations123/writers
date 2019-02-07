@@ -12,8 +12,7 @@
       <div class="jumbotron jumbotron-muted">
         <div class="row">
           <div class="col-lg-6">
-            <h2>Everything you need to know about the art of Writing. Free!</h2>
-            <p class="lead">Subscribe here in below and start learning<br>we are ready for you!</p>
+            {!! setting('site.jumbotron') !!}
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Enter your email">
               <span class="input-group-btn">
@@ -90,8 +89,7 @@
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-lg-4 my-4">
-          <h2 class="text-center">Get your Paper written By A Proffessional Writer</h2>
-          <p>Place an order Today and Experience writers with the highest satisfaction rates, Lowest prices on the market, Security, confidentiality, and money back guarantee!</p>
+          {!! setting('site.home') !!}
           {{-- <a class="btn btn-primary btn-sm" href="#">Call to Action!</a> --}}
         </div> <!-- /.col-md-4 -->
       </div> <!-- /.row -->
