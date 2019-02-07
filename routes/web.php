@@ -21,6 +21,9 @@ Route::group(['prefix' => 'admin'], function () {
 
     // admin route overwrites here
     Route::get('completed-jobs/review/{id}', '\App\Http\Controllers\Voyager\CompletedJobController@review')->name('review');
+
+    Route::get('reviews/approve/{id}', '\App\Http\Controllers\Voyager\ReviewController@approve')->name('approve');
+    Route::get('reviews/reject/{id}', '\App\Http\Controllers\Voyager\ReviewController@reject')->name('reject');
 });
 
 Auth::routes();

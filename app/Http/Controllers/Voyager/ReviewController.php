@@ -11,10 +11,10 @@ use TCG\Voyager\Events\BreadDataUpdated;
 use TCG\Voyager\Events\BreadImagesDeleted;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
-use App\{CompletedJob, OrderDetail, Review, Reject};
+use App\{PickedJob, CompletedJob, OrderDetail, Review, Reject, Payment};
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 
-class CompletedJobController extends VoyagerBaseController
+class ReviewController extends VoyagerBaseController
 {
     public function index(Request $request)
     {
@@ -50,10 +50,8 @@ class CompletedJobController extends VoyagerBaseController
             $model = app($dataType->model_name);
             $query = $model::select('*')->whereNotIn('id', function ($query) {
                     $query
-                    ->select('completed_job_id')->from('reviews');
-                });
-
-            // dd($query);
+                    ->select('review_id')->from('payments');
+                })->where('review_status_id', '!=', 3);
 
             // If a column has a relationship associated with it, we do not want to show that field
             $this->removeRelationshipField($dataType, 'browse');
@@ -71,14 +69,10 @@ class CompletedJobController extends VoyagerBaseController
                     $getter,
                 ]);
             } elseif ($model->timestamps) {
-                $dataTypeContent = call_user_func([$query, $getter]);
+                $dataTypeContent = call_user_func([$query->latest($model::CREATED_AT), $getter]);
             } else {
                 $dataTypeContent = call_user_func([$query->orderBy($model->getKeyName(), 'DESC'), $getter]);
             }
-
-            // elseif ($model->orderBy && $model->orderDirection) { 
-            //     $dataTypeContent = call_user_func([$query->orderBy($model->orderBy, $model->orderDirection), $getter]);
-            // }
 
             // Replace relationships' keys for labels and create READ links if a slug is provided.
             $dataTypeContent = $this->resolveRelations($dataTypeContent, $dataType);
@@ -99,8 +93,8 @@ class CompletedJobController extends VoyagerBaseController
         // Check if a default search key is set
         $defaultSearchKey = isset($dataType->default_search_key) ? $dataType->default_search_key : null;
 
-        // Custom complete jobs
-        $completedJobs = CompletedJob::all();
+        // Custom review
+        $review = Review::all();
 
         $view = 'voyager::bread.browse';
 
@@ -119,15 +113,13 @@ class CompletedJobController extends VoyagerBaseController
             'searchable',
             'isServerSide',
             'defaultSearchKey',
-            'completedJobs'
+            'review'
         ));
     }
 
     public function show(Request $request, $id)
     {
         $slug = $this->getSlug($request);
-
-        // dd($slug);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
@@ -151,7 +143,7 @@ class CompletedJobController extends VoyagerBaseController
         // Check if BREAD is Translatable
         $isModelTranslatable = is_bread_translatable($dataTypeContent);
 
-        $completedJob = CompletedJob::find($id);
+        $review = Review::find($id);
 
         $view = 'voyager::bread.read';
 
@@ -159,22 +151,56 @@ class CompletedJobController extends VoyagerBaseController
             $view = "voyager::$slug.read";
         }
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'completedJob'));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'review'));
     }
 
-    public function review($id)
+    public function approve($id)
     {
-        //dd('reviewing'.$id);
-        $completedJob = CompletedJob::where('id', $id)->first();
+    	// Approve for payment
 
-        // Add data to review
-        $review = new Review;
-        $review->reviewer_id = Auth::user()->id;
-        $review->completed_job_id = $completedJob->id;
-        $review->review_status_id = 1;
+        $review = Review::where('id', $id)->first();
 
-        $review->save();
+        // Add data to Payments
+        $payment = new Payment;
+        $payment->review_id = $review->id;
+        $payment->job_price = $review->completedJob->product->job_price;
+        $payment->amount_paid = 0;
+        $payment->comments = 'Approved for payment';
+        $payment->payment_status_id = 1;
 
-        return redirect()->route('voyager.reviews.show', $review->id);
+        $payment->save();
+
+    	return redirect()->route('voyager.reviews.index');
+    }
+
+    public function reject($id)
+    {
+    	$review = Review::find($id);
+
+    	// Add data to rejects
+        $reject = new Reject;
+        $reject->review_id = $review->id;
+        $reject->comments = 'Rejected for correction';
+
+        $reject->save();
+
+        // Add into the picked jobs table
+        $job = new PickedJob;
+        $job->order_detail_id = $review->completedJob->order_detail_id;
+        $job->writer_id = $review->completedJob->writer_id;
+        $job->product_id = $review->completedJob->product_id;
+
+        $job->save();
+
+        // Update order details status table
+        OrderDetail::where('id', $review->completedJob->order_detail_id)->update(['order_detail_status_id' => 2]);
+    	
+    	// Reject back
+    	Review::where('id', $id)->update(['review_status_id' => 3]);
+
+    	// Remove from completed jobs
+    	CompletedJob::where('id', $review->completedJob->id)->delete();
+
+    	return redirect()->route('voyager.reviews.index');
     }
 }

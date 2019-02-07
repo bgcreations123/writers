@@ -29,28 +29,28 @@
 @section('content')
 
     <div class="page-content read container-fluid">
-       {{-- {{dd('voyager.'.$dataType->slug.'.review', $dataTypeContent->getKey())}} --}}
+       
         <div class="card">
             {{-- Begin foreign code --}}
             <div class="row">
                 <div class="col-lg-8 col-md-12 my-auto text-center">
-                    <h1>{{ $completedJob['orderDetail']['subject'] }}</h1>
-                    <h6>{{ $completedJob['product']['classification']['classification'] }} Under {{ $completedJob['product']['period']['period'] }}</h6>
-                    <p>{{ $completedJob['orderDetail']['pages'] }} pages</p>
+                    <h1>{{ $review['completedJob']['orderDetail']['subject'] }}</h1>
+                    <h6>{{ $review['completedJob']['product']['classification']['classification'] }} Under {{ $review['completedJob']['product']['period']['period'] }}</h6>
+                    <p>{{ $review['completedJob']['orderDetail']['pages'] }} pages</p>
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <div class="">
                       <div class="card-body text-center">
                         <h5 class="card-title">Deadline</h5>
                     <p class="card-text">
-                      @if($completedJob['orderDetail']['orderDetailStatus']['status'] == 'Complete')
-                        {{ \Carbon\Carbon::parse($completedJob['updated_at'])->toDayDateTimeString() }}
+                      @if($review['completedJob']['orderDetail']['orderDetailStatus']['status'] == 'Complete')
+                        {{ \Carbon\Carbon::parse($review['completedJob']['updated_at'])->toDayDateTimeString() }}
                         <br />
-                        {{ \Carbon\Carbon::parse($completedJob['updated_at'])->diffForHumans() }}
+                        {{ \Carbon\Carbon::parse($review['completedJob']['updated_at'])->diffForHumans() }}
                       @else
-                        {{ \Carbon\Carbon::parse($completedJob['deadline'])->toDayDateTimeString() }}
+                        {{ \Carbon\Carbon::parse($review['completedJob']['deadline'])->toDayDateTimeString() }}
                         <br />
-                        {{ \Carbon\Carbon::parse($completedJob['deadline'])->diffForHumans() }}
+                        {{ \Carbon\Carbon::parse($review['completedJob']['deadline'])->diffForHumans() }}
                       @endif
                     </p>
                       </div>
@@ -58,25 +58,23 @@
                 </div>
             </div>
 
-{{-- @include('voyager::formfields.link', ['view' => 'browse','options' => $completedJob['orderDetail']['type']['type']]) --}}
-
             <div class="col-md-12">
                 <h3 class="" style="padding-left: 20px;">Job Details</h3>
 
                 <div class="col-lg-6 col-md-12">
                     <ul class="list-group">
-                        <li class="list-group-item">Paper Type : {{ $completedJob['orderDetail']['type']['type'] }} </li>
-                        <li class="list-group-item">Paper Format : {{ $completedJob['orderDetail']['format']['format'] }}</li>
-                        <li class="list-group-item">No. of Sources : {{ $completedJob['orderDetail']['sources'] }}</li>
-                        <li class="list-group-item">Paper Language: {{ $completedJob['orderDetail']['language']['language'] }}</li>
+                        <li class="list-group-item">Paper Type : {{ $review['completedJob']['orderDetail']['type']['type'] }} </li>
+                        <li class="list-group-item">Paper Format : {{ $review['completedJob']['orderDetail']['format']['format'] }}</li>
+                        <li class="list-group-item">No. of Sources : {{ $review['completedJob']['orderDetail']['sources'] }}</li>
+                        <li class="list-group-item">Paper Language: {{ $review['completedJob']['orderDetail']['language']['language'] }}</li>
                     </ul>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <ul class="list-group">
-                        <li class="list-group-item">Paper Spacing : {{ $completedJob['orderDetail']['spacing']['space'] }} </li>
-                        <li class="list-group-item">Client Name : {{ $completedJob['orderDetail']['order']['user']['name'] }}</li>
-                        <li class="list-group-item">Job Status : {{ $completedJob['orderDetail']['orderDetailStatus']['status'] }}</li>
-                        <li class="list-group-item">Job Price : $ {{ $completedJob['product']['job_price'] * $completedJob['orderDetail']['pages'] }}.00</li>
+                        <li class="list-group-item">Paper Spacing : {{ $review['completedJob']['orderDetail']['spacing']['space'] }} </li>
+                        <li class="list-group-item">Client Name : {{ $review['completedJob']['orderDetail']['order']['user']['name'] }}</li>
+                        <li class="list-group-item">Job Status : {{ $review['completedJob']['orderDetail']['orderDetailStatus']['status'] }}</li>
+                        <li class="list-group-item">Job Price : $ {{ $review['completedJob']['product']['job_price'] * $review['completedJob']['orderDetail']['pages'] }}.00</li>
                     </ul>
                 </div>
             </div>
@@ -84,13 +82,60 @@
             <div class="col-md-12">
                 <h3 style="padding-left: 20px;">Job Description</h3>
                 <p style="padding-left: 20px;">
-                    {{ str_limit($completedJob['orderDetail']['description'], 270) }}
+                    {{ str_limit($review['completedJob']['orderDetail']['description'], 270) }}
                     <br />
                     <br />
-                    <a href="{{ URL::previous() }}" class="btn btn-default">back</a>
-                    <a href="{{ route('review', $dataTypeContent->getKey()) }}" class="btn btn-primary">Review</a>
-                    {{-- {{ route('voyager.'.$dataType->slug.'.review', $dataTypeContent->getKey()) }} --}}
                 </p>
+            </div>
+
+            <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
+                <!-- Related Projects Row -->
+                <h3 class="my-4" style="padding-left: 20px;">Related Documents</h3>
+              
+                <div class="card border-primary col-md-6">
+                    <div class="card-body">
+                        @if(empty($completedJob['orderDetail']['files']))
+                            <p>No related files. Reffer to job description.</p>
+                        @else
+                        <h5 class="card-title">File</h5>
+                        <p class="card-text">
+                            <small>File name:</small>
+                            {{ $review['completedJob']['orderDetail']['files'] }}
+                        </p>
+                        <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', [$review['completedJob']['orderDetail']['files']])  }}">Download</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
+                <!-- Finished Jobs Row -->
+                <h3 class="my-4" style="padding-left: 20px;">Finished Documents</h3>
+
+                <div class="card col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">File</h5>
+                        @if(empty($review['completedJob']['files']))
+                            <p>Sorry, No Evidence/Proof of work!</p>
+                        @else
+                            <p class="card-text">
+                                <small>File name:</small> 
+                                {{ $review['completedJob']['files'] }}
+                            </p>
+                            <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', [$review['completedJob']['files']])  }}">
+                                Download
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 my-4">
+            	<a href="{{ URL::previous() }}" class="btn btn-default">back</a>
+	            <a href="{{ route('approve', $dataTypeContent->getKey()) }}" class="btn btn-success">Approve</a>
+	            <a href="{{ route('reject', $dataTypeContent->getKey()) }}" class="btn btn-danger">Reject</a>
+	            {{-- {{ route('review', $dataTypeContent->getKey()) }} --}}
             </div>
 
         </div>
