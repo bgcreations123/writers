@@ -13,6 +13,7 @@ use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
 use App\{PickedJob, CompletedJob, OrderDetail, Review, Reject, Payment};
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
+use Illuminate\Support\Facades\Storage;
 
 class ReviewController extends VoyagerBaseController
 {
@@ -170,6 +171,9 @@ class ReviewController extends VoyagerBaseController
 
         $payment->save();
 
+        // Update order details status table
+        OrderDetail::where('id', $review->completedJob->order_detail_id)->update(['order_detail_status_id' => 3]);
+
     	return redirect()->route('voyager.reviews.index');
     }
 
@@ -197,6 +201,9 @@ class ReviewController extends VoyagerBaseController
     	
     	// Reject back
     	Review::where('id', $id)->update(['review_status_id' => 3]);
+
+    	// delete file
+    	Storage::disk('local')->delete('files/'.$review->completedJob->writer_id.'/'.$review->completedJob->files);
 
     	// Remove from completed jobs
     	CompletedJob::where('id', $review->completedJob->id)->delete();

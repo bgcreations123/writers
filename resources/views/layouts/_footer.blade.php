@@ -133,7 +133,7 @@
 
     <!-- Copyright -->
     <div class="footer-copyright text-center text-black-50 py-3">© 2019 Copyright:
-      <a class="dark-grey-text" href="https:theokumusempire.com"> http://theokumusempire.com</a>
+      <a class="dark-grey-text" href="https:theokumusempire.com" target="_blank"> http://theokumusempire.com</a>
     </div>
     <!-- Copyright -->
 

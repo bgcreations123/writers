@@ -130,10 +130,10 @@ class WriterController extends Controller
         $job->save();
 
         // Update order details status table
-        OrderDetail::where('id', $picked_job->order_detail_id)->update(['order_detail_status_id' => 3]);
+        // OrderDetail::where('id', $picked_job->order_detail_id)->update(['order_detail_status_id' => 3]);
 
         // Delete from picked job table
-        PickedJob::where('id', $id)->delete();
+        PickedJob::where('id', $picked_job->id)->delete();
 
         return redirect()->route('home')->with(['success' => 'You have successfully Completed your job.']);
     }
@@ -149,13 +149,15 @@ class WriterController extends Controller
     {
         $orderDetails = OrderDetail::find($id);
 
-        if($orderDetails->orderDetailStatus->status == 'Complete'){
+        if($orderDetails->orderDetailStatus->status == 'Processing'){
+            $processing = PickedJob::where('order_detail_id', $orderDetails->id)->first();
+        }elseif($orderDetails->orderDetailStatus->status == 'Complete'){
             $completed = CompletedJob::where('order_detail_id', $orderDetails->id)->first();
         }
 
         // dd($completed);
 
-        return view('writer.view_job', compact('orderDetails', 'completed'));
+        return view('writer.view_job', compact('orderDetails', 'processing', 'completed'));
     }
 
 }

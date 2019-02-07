@@ -68,7 +68,7 @@ class OrderController extends Controller
             'source' => 'required|not_in:0',
             'space' => 'required|not_in:0',
             'language' => 'required|not_in:0',
-            'details' => 'required|min:3|max:1000',
+            'details' => 'required|min:3|max:7000',
             // 'files' => 'required',
             'deadline' => 'required|after:today',
         ]);

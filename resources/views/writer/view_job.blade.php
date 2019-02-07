@@ -75,7 +75,8 @@
 
     <div class="col-lg-4 col-md-12">
       <h3 class="my-3 text-center">Job Description</h3>
-      <p>{{ str_limit($orderDetails->description, 270) }}</p>
+      {{-- {{ str_limit($orderDetails->description, 270) }} --}}
+      <p>{{ $orderDetails->description }}</p>
       @if($orderDetails->orderDetailStatus->status == 'Pending')
         @if($orderDetails->deadline <= \Carbon\Carbon::now())
           <a class="btn btn-outline-secondary" href="#">Pay here</a>
@@ -83,8 +84,12 @@
           <a href="{{ route('writer.pick', ['id'=>$orderDetails->id]) }}" class="btn btn-primary">Pick</a>
         @endif
       @elseif($orderDetails->orderDetailStatus->status == 'Processing')
-        <a href="{{ route('writer.complete', ['id'=>$orderDetails->id]) }}" class="btn btn-success">Complete</a>
-        <a href="{{ route('writer.deffer', ['id'=>$orderDetails->id]) }}" class="btn btn-outline-danger ">Defer</a>
+        @if($processing->writer_id != Auth()->user()->id)
+          <a class="btn btn-outline-secondary" href="#">Pay here</a>
+        @else
+          <a href="{{ route('writer.complete', ['id'=>$orderDetails->id]) }}" class="btn btn-success">Complete</a>
+          <a href="{{ route('writer.deffer', ['id'=>$orderDetails->id]) }}" class="btn btn-outline-danger ">Defer</a>
+        @endif
       @endif
       <a href="{{ URL::previous() }}" class="btn btn-outline-secondary float-right">back</a>
     </div>

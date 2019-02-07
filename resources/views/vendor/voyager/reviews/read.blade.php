@@ -82,7 +82,7 @@
             <div class="col-md-12">
                 <h3 style="padding-left: 20px;">Job Description</h3>
                 <p style="padding-left: 20px;">
-                    {{ str_limit($review['completedJob']['orderDetail']['description'], 270) }}
+                    {{ $review['completedJob']['orderDetail']['description'] }}
                     <br />
                     <br />
                 </p>

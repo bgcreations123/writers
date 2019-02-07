@@ -84,7 +84,7 @@
             <div class="col-md-12">
                 <h3 style="padding-left: 20px;">Job Description</h3>
                 <p style="padding-left: 20px;">
-                    {{ str_limit($completedJob['orderDetail']['description'], 270) }}
+                    {{ $completedJob['orderDetail']['description'] }}
                     <br />
                     <br />
                     <a href="{{ URL::previous() }}" class="btn btn-default">back</a>
