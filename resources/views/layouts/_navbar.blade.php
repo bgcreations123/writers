@@ -33,13 +33,18 @@
                         </li>
                     @endif
                 @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('messages') }}">Messages</a>
+                    </li>
                     @if(auth()->user()->hasRole('Client'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ URL::to('/shoppingcart') }}">
                                 Cart
-                                <span class="badge badge-pill badge-secondary">
-                                    {{ Session::has('cart') ? Session::get('cart')->totalQty : '' }}
-                                </span>
+                                @if(Session::has('cart'))
+                                    <span class="badge badge-pill badge-secondary">
+                                        {{ Session::get('cart')->totalQty }}
+                                    </span>
+                                @endif
                             </a>
 
                         </li>

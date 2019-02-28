@@ -206,6 +206,51 @@ class OrderController extends Controller
         return redirect()->route('home')->with(['success'=> 'Your message has been sent!']);
     }
 
+    public function getStats()
+    {
+        $pendingOrders = OrderDetail::select('*')
+        ->where('order_details.order_detail_status_id', 1)
+        ->leftJoin('orders', function ($query) {
+            $query
+            ->on('orders.id', '=', 'order_details.order_id')
+            ->where('orders.user_id', auth()->user()->id);
+        })
+        ->whereNotNull('orders.id')
+        ->orderBy('orders.id', 'desc')
+        ->get();
+
+        $processingOrders = OrderDetail::select('*')
+        ->where([['order_details.order_detail_status_id', 2], ['order_details.deadline', '>=', Carbon::now()]])
+        ->leftJoin('orders', function ($query) {
+            $query
+            ->on('orders.id', '=', 'order_details.order_id')
+            ->where('orders.user_id', '=', auth()->user()->id);
+        })
+        ->whereNotNull('orders.id')
+        ->orderBy('orders.id', 'desc')
+        ->get();
+
+        $completedOrders = OrderDetail::select('*')
+        ->where('order_details.order_detail_status_id', 3)
+        ->leftJoin('orders', function ($query) {
+            $query
+            ->on('orders.id', '=', 'order_details.order_id')
+            ->where('orders.user_id', '=', auth()->user()->id);
+        })
+        ->whereNotNull('orders.id')
+        ->orderBy('orders.id', 'desc')
+        ->get();
+
+        return view('order.stats', compact('pendingOrders', 'processingOrders', 'completedOrders'));
+    }
+
+    public function getJobDetails($id)
+    {
+        $detail = OrderDetail::where('order_id', $id)->first();
+
+        return response()->json($detail);
+    }
+
     public function getCheckout()
     {
         if(!Session::has('cart')){

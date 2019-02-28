@@ -58,7 +58,7 @@
 						    </div>
 						    <div class="form-group col-md-4">
 						      	<label for="inputDeadline">
-						      		End Date/Deadline
+						      		GMT End Date/Deadline 
 						      		<small>(According to Paper Period)</small>
 						      	</label>
 						      	<input type="text" id="deadline" name="deadline" class="form-control" value="{{ Carbon\Carbon::parse($data['period'])->toDateTimeString() }}" disabled="true">

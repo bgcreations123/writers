@@ -1,65 +1,86 @@
 // Custom js codes here
 
-var slider = document.getElementById("myRange");
-var output = document.getElementById("pages");
-output.innerHTML = slider.value;
-
-slider.oninput = function() {
-	output.innerHTML = this.value;
-}
-
 // Pricing plan for prices on the home page
 $(document).ready(function() {
+	var slider = document.getElementById("myRange");
+	var output = document.getElementById("pages");
+	output.innerHTML = slider.value;
+
+	slider.oninput = function() {
+		output.innerHTML = this.value;
+	}
+
 	$('select[name="classification"]').change(function(e){
 
 		var classificationId = $(this).val();
 
-		$('#pricing-plan-price').empty();
+		//$('#pricing-plan-price').innerHTML = '<sup><strong>$</strong></sup>0<span>.00</span>';
 
-		$('select[name="period"]').val('0');
 
-		$('select[name="period"]').prop('disabled', !$(this).val());
+		if(classificationId == 0){
+			// $('select[name="period"]').val('0');
+			// $('select[name="period"]').prop('disabled', true);
 
-		$('select[name="period"]').change(function(e){
+			// output.innerHTML = 1;
+			// slider.value = 1;
 
-			var periodId = $(this).val();
+			// var working_value = 0
 
-	        if(classificationId && periodId) {
-	            $.ajax({
-	                url: '/getProduct/'+classificationId+'/'+periodId,
-	                type:"GET",
-	                dataType:"json",
-	                beforeSend: function(){
-	                    $('#loader').css("visibility", "visible");
-	                },
+			// document.getElementById("pricing-plan-price").innerHTML = '<sup><strong>$</strong></sup>0<span>.00</span>';
+			location.reload();
+		} else {
 
-	                success:function(data) {
-	                    $('#pricing-plan-price').empty();
-	                    $.each(data, function(key, value){
+			$('select[name="period"]').prop('disabled', !$(this).val());
 
-                        	document.getElementById("pricing-plan-price").innerHTML = value
+			$('select[name="period"]').change(function(e){
 
-                        	slider.value = 1;
+				var periodId = $(this).val();
 
-                        	output.innerHTML = 1;
+				if(periodId == 0){
+					output.innerHTML = 1;
+					slider.value = 1;
 
-	                        slider.onmouseup = function(){
-                        		document.getElementById("pricing-plan-price").innerHTML = slider.value * value
-	                        	// $('#pricing-plan-price').val(slider.value * value);
-	                        	// console.log(slider.value);
-	                        }
+					document.getElementById("pricing-plan-price").innerHTML = '<sup><strong>$</strong></sup>0<span>.00</span>';
+				} else {
 
-	                    });
-	                },
-	                complete: function(){
-	                    $('#loader').css("visibility", "hidden");
-	                }
-	            });
-	        } else {
-	            $('#pricing-plan-price').empty();
-	        }
+			        if(classificationId && periodId) {
+			            $.ajax({
+			                url: '/getProduct/'+classificationId+'/'+periodId,
+			                type:"GET",
+			                dataType:"json",
+			                beforeSend: function(){
+			                    $('#loader').css("visibility", "visible");
+			                },
 
-		});
+			                success:function(data) {
+			                    $('#pricing-plan-price').innerHTML = '<sup><strong>$</strong></sup>0<span>.00</span>';
+			                    $.each(data, function(key, value){
+
+			                    	document.getElementById("pricing-plan-price").innerHTML = '<sup><strong>$</strong></sup>' + value * 1 + '<span>.00</span>';
+
+		                        	slider.value = 1;
+
+		                        	output.innerHTML = 1;
+
+			                        slider.onmouseup = function(){
+			                        	document.getElementById("pricing-plan-price").innerHTML = '<sup><strong>$</strong></sup>' + slider.value * value + '<span>.00</span>';
+			                        	// $('#pricing-plan-price').val(slider.value * value);
+			                        	// console.log(slider.value);
+			                        }
+
+			                    });
+			                },
+			                complete: function(){
+			                    $('#loader').css("visibility", "hidden");
+			                }
+			            });
+			        } else {
+			            document.getElementById("pricing-plan-price").innerHTML = '<sup><strong>$</strong></sup>0<span>.00</span>';
+			        }
+			    }
+
+			});
+		}
 		
 	});
 

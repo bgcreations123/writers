@@ -17,12 +17,6 @@
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="tab" href="#deffer" role="tab" aria-controls="deffer">My Deffered Jobs</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#messages" role="tab" aria-controls="messages">Messages</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#settings" role="tab" aria-controls="settings">Settings</a>
-				</li>
 			</ul>
 
 			<div class="tab-content">
@@ -148,78 +142,16 @@
 												</td>
 											</tr>
 									    @endforeach
+									    <tr>
+									    	<td colspan="3" class="text-right">Total:</td>
+									    	<td class="align-center">$ {{ $TotalMoneyOwed }}.00</td>
+									    	<td colspan="2"></td>
+									    </tr>
 									  </tbody>
 									</table>
 								</div>
 							@endif
 							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
-						</div>
-					</div>
-				</div>
-				<div class="tab-pane" id="messages" role="tabpanel">
-					<div class="card">
-						<div class="card-header">
-							My Messages
-						</div>
-						<div class="card-body">
-							<h5 class="card-title">Inbox</h5>
-							<div class="table-responsive-md">
-								<table class="table table-hover">
-								  <thead>
-								    <tr>
-								      <th scope="col">#</th>
-								      <th scope="col">First</th>
-								      <th scope="col">Last</th>
-								      <th scope="col">Action</th>
-								    </tr>
-								  </thead>
-								  <tbody>
-								    <tr>
-								      <th scope="row">1</th>
-								      <td>Mark</td>
-								      <td>Otto</td>
-								      <td>
-								      	<a href="#">View</a> | 
-								      	<a href="#">Edit</a> | 
-								      	<a href="#">Delete</a>
-								      </td>
-								    </tr>
-								    <tr>
-								      <th scope="row">2</th>
-								      <td>Jacob</td>
-								      <td>Thornton</td>
-								      <td>
-								      	<a href="#">View</a> | 
-								      	<a href="#">Edit</a> | 
-								      	<a href="#">Delete</a>
-								      </td>
-								    </tr>
-								    <tr>
-								      <th scope="row">3</th>
-								      <td>Larry</td>
-								      <td>the Bird</td>
-								      <td>
-								      	<a href="#">View</a> | 
-								      	<a href="#">Edit</a> | 
-								      	<a href="#">Delete</a>
-								      </td>
-								    </tr>
-								  </tbody>
-								</table>
-							</div>
-							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
-						</div>
-					</div>
-				</div>
-				<div class="tab-pane" id="settings" role="tabpanel">
-					<div class="card">
-						<div class="card-header">
-							Settings
-						</div>
-						<div class="card-body">
-							<h5 class="card-title">Special title treatment</h5>
-							<p>This is supposed to contain any settings for jobs if any</p>
-							<a href="#" class="btn btn-primary">Go somewhere</a>
 						</div>
 					</div>
 				</div>

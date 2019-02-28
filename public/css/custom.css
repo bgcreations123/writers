@@ -57,7 +57,7 @@ body { padding-top: 85px; }
     margin-right: 20px;
     border-right: 1px solid #ddd;
     border-right: 0;
-    padding-right: 15px;
+    /*padding-right: 15px;*/
 }
 .nav-tab .nav-link {
     border: 1px solid transparent;
@@ -65,7 +65,6 @@ body { padding-top: 85px; }
     border-top-right-radius: .25rem;
     
 }
-
 .nav-tab .nav-link.active {
     color: #495057;
     border: 1px solid #ddd;
@@ -87,7 +86,7 @@ body { padding-top: 85px; }
     margin-right: 20px;
     border-bottom: 0;
     border-right: 1px solid transparent;
-    padding-right: 15px;
+    /*padding-right: 15px;*/
 }
 
 /* showing price */

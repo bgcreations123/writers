@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Payment extends Model
+class Payable extends Model
 {
     public function review()
 	{

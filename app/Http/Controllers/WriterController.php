@@ -34,9 +34,9 @@ class WriterController extends Controller
         }
 
         //Find out if a user is picking own deffered job
-        $defferedJob = DefferedJob::whereNotNull([['order_detail_id', $id], ['writer_id', Auth()->user()->id], ['payment_status_id', 1]]);
+        $myDefferedJob = DefferedJob::whereNotNull([['order_detail_id', $id], ['writer_id', Auth()->user()->id], ['payment_status_id', 1]]);
 
-        if($defferedJob){
+        if($myDefferedJob){
             // Delete from deffered job table
             DefferedJob::where([['order_detail_id', $id], ['writer_id', Auth()->user()->id], ['payment_status_id', 1]])->delete();
         }
@@ -138,13 +138,6 @@ class WriterController extends Controller
         return redirect()->route('home')->with(['success' => 'You have successfully Completed your job.']);
     }
 
-    public function payments()
-    {
-        $paidJobs = CompletedJob::where([['writer_id', auth()->user()->id], ['payment_status_id', 2]])->get();
-    	$unPaidJobs = CompletedJob::where([['writer_id', auth()->user()->id], ['payment_status_id', 1]])->get();
-        return view('writer.payments', compact('paidJobs', 'unPaidJobs'));
-    }
-
     public function viewJob($id)
     {
         $orderDetails = OrderDetail::find($id);
@@ -160,4 +153,10 @@ class WriterController extends Controller
         return view('writer.view_job', compact('orderDetails', 'processing', 'completed'));
     }
 
+    public function payments()
+    {
+        $paidJobs = CompletedJob::where([['writer_id', auth()->user()->id], ['payment_status_id', 2]])->get();
+    	$unPaidJobs = CompletedJob::where([['writer_id', auth()->user()->id], ['payment_status_id', 1]])->get();
+        return view('writer.payments', compact('paidJobs', 'unPaidJobs'));
+    }
 }

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Input;
 use PayPal\Api\{Amount, Details, Item, ItemList, Payer, Payment, PaymentExecution, ExecutePayment, RedirectUrls, Transaction};
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
-use App\{Cart, Product, PaperClassification, PaperPeriod, PaperType, PaperSpacing, PaperLanguage, PaperFormat, Order, OrderDetail};
+use App\{Cart, Product, PaperClassification, PaperPeriod, PaperType, PaperSpacing, PaperLanguage, PaperFormat, Order, OrderDetail, Transactions};
 use Carbon\Carbon;
 use Session;
 
@@ -131,9 +131,25 @@ class PaymentController extends Controller
 	    $result = $payment->execute($execution, $this->_api_context);
 
 		if ($result->getState() == 'approved') {
+			// dd($result);
 
 			// Record into our DB
 			$this->record();
+
+			// record the transaction
+	        $transactions = new Transactions();
+	        $transactions->trans_id = uniqid();
+	        $transactions->client_id = Auth::user()->id;
+	        $transactions->amount = $result->transactions[0]->amount->total;
+	        $transactions->type = $result->payer->payment_method . ' Deposit';
+	        $transactions->currency = $result->transactions[0]->amount->currency;
+	        $transactions->description = $result->transactions[0]->description;
+	        $transactions->fee = '0';
+	        $transactions->sender = $result->payer->payer_info->email;
+	        $transactions->receiver = $result->transactions[0]->payee->email;
+	        $transactions->status = $result->state;
+
+	        $transactions->Save();
 
 			// return home with a success message
 	        return redirect()->route('home')->with(['success' => 'Thank you for entrusting us with your Job!']);
@@ -185,6 +201,7 @@ class PaymentController extends Controller
 
             $orderDetails->save();
         }
+
         // Clear data session
         Session::forget('data');
 

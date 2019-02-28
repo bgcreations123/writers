@@ -24,6 +24,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('reviews/approve/{id}', '\App\Http\Controllers\Voyager\ReviewController@approve')->name('approve');
     Route::get('reviews/reject/{id}', '\App\Http\Controllers\Voyager\ReviewController@reject')->name('reject');
+    Route::get('payables/pay/{id}', '\App\Http\Controllers\Voyager\PayableController@getPay')->name('pay');
 });
 
 Auth::routes();
@@ -55,9 +56,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/clear', 'OrderController@clearCart')->name('clearCart');
 	
 	Route::get('/checkout', 'OrderController@getCheckout')->name('order.getCheckout');
-
 	Route::get('contact', 'OrderController@create')->name('order.create');
 	Route::post('contact', 'OrderController@store')->name('order.store');
+	Route::get('stats', 'OrderController@getStats')->name('order.stats');
+	Route::get('jobDetails/{id}', 'OrderController@getJobDetails')->name('order.jobDetails');
 
 	Route::get('/pick/{id}', 'WriterController@pick')->name('writer.pick');
 	Route::get('/deffer/{id}', 'WriterController@deffer')->name('writer.deffer');
@@ -69,6 +71,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/paypal', 'PaymentController@paypal')->name('paypal');
 	Route::get('/status', 'PaymentController@getPaymentStatus')->name('status');
 
+	Route::get('/messages', 'MessagesController@index')->name('messages');
+	Route::get('/messages/{id}', 'MessagesController@show')->name('messages.show');
+	Route::post('/messages', 'MessagesController@store')->name('messages.store');
 });
 
 
