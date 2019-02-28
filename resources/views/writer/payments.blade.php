@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Writer Payments')
+@section('title', 'Payments')
 
 @section('content')
 	<!-- Heading Row -->

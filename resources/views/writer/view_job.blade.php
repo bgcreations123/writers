@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Writer')
+@section('title', 'View')
 
 @section('content')
 
@@ -157,7 +157,7 @@
 
         <a href="{{ URL::previous() }}" class="btn btn-outline-secondary float-right">back</a>
       </div>
-      
+
       {{-- correction comments if available --}}
 
     </div>
