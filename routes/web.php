@@ -33,8 +33,13 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/view_order/{id}', 'HomeController@viewOrder')->name('home.view_order');
 
-// Public service route
-Route::get('/ourServices', 'PageController@index')->name('home.ourServices');
+// Dynamic Public Page route
+Route::get('/home/{slug}', 'PageController@index')->name('home.page');
+
+// Dynamic Public Post route
+Route::get('/post', 'PostController@index')->name('home.post');
+Route::get('/post/{slug}', 'PostController@index')->name('home.post');
+
 
 // determine product through ajax
 Route::get('/getProduct/{cid}/{pid}', 'HomeController@getProduct')->name('home.getProduct');

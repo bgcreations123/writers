@@ -15,14 +15,14 @@ class PageController extends Controller
      * @return void
      */
 
-    public function index(Request $request){
-    	$slug = substr(strrchr(url()->current(),"/"),1);
+    public function index(Request $request, $slug){
+    	// $slug = substr(strrchr(url()->current(),"/"),1);
 
     	// dd($slug);
 
-    	$page = Page::where([['slug', $slug], ['status', 'ACTIVE']])->first();
+    	$page = Page::where([['slug', $slug], ['status', 'ACTIVE']])->firstOrFail();
 
-    	return view('home.'.$slug, compact('page'));
+    	return view('home.page', compact('page'));
     }
 
 }
