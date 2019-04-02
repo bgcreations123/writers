@@ -11,15 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
+Route::get('/', 'WelcomeController@welcome')->name('welcome');
 
+// determine product through ajax
+Route::get('/getProduct/{cid}/{pid}', 'WelcomeController@getProduct')->name('welcome.getProduct');
+
+// Admin routes for voyager
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 
-    // admin route overwrites here
     Route::get('completed-jobs/review/{id}', '\App\Http\Controllers\Voyager\CompletedJobController@review')->name('review');
 
     Route::get('reviews/approve/{id}', '\App\Http\Controllers\Voyager\ReviewController@approve')->name('approve');
@@ -41,8 +45,6 @@ Route::get('/post', 'PostController@index')->name('home.post');
 Route::get('/post/{slug}', 'PostController@index')->name('home.post');
 
 
-// determine product through ajax
-Route::get('/getProduct/{cid}/{pid}', 'HomeController@getProduct')->name('home.getProduct');
 
 // Private pages
 Route::group(['middleware' => 'auth'], function () {

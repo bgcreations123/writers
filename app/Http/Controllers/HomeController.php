@@ -156,12 +156,5 @@ class HomeController extends Controller
 
         return view('user.profile', compact('user'));
     }
-
-    public function getProduct($cid, $pid)
-    {
-        $product = Product::where([['classification_id', $cid], ['period_id', $pid]])->pluck('price','id');
-        // dd($product);
-
-        return json_encode($product);
-    }
+    
 }
