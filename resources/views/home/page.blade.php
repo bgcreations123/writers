@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', $page->slug)
+@section('title', $page->title)
 
 @section('content')
 

@@ -48,6 +48,7 @@ class CompletedJobController extends VoyagerBaseController
         // Next Get or Paginate the actual content from the MODEL that corresponds to the slug DataType
         if (strlen($dataType->model_name) != 0) {
             $model = app($dataType->model_name);
+            // $query = $model::select('*');
             $query = $model::select('*')->whereNotIn('id', function ($query) {
                     $query
                     ->select('completed_job_id')->from('reviews');

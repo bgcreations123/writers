@@ -10,7 +10,7 @@ class Order extends Model
     /**
      * Get the user that owns the order.
      */
-    public function user()
+    public function client()
 	{
 	    return $this->belongsTo(User::class);
 	}

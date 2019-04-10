@@ -146,7 +146,7 @@
             <a href="{{ route('writer.pick', ['id'=>$orderDetails->id]) }}" class="btn btn-primary">Pick</a>
           @endif
         @elseif($orderDetails->orderDetailStatus->status == 'Processing')
-          @if($processing->writer_id != Auth()->user()->id)
+          @if($processing['writer_id'] != Auth()->user()->id)
             <a class="btn btn-outline-secondary" href="#">Pay here</a>
           @else
             <a href="{{ route('writer.complete', ['id'=>$orderDetails->id]) }}" class="btn btn-success">Complete</a>

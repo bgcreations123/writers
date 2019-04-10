@@ -17,17 +17,19 @@
 
 Route::get('/', 'WelcomeController@welcome')->name('welcome');
 
-// determine product through ajax
+// determine product price through ajax
 Route::get('/getProduct/{cid}/{pid}', 'WelcomeController@getProduct')->name('welcome.getProduct');
 
 // Admin routes for voyager
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 
-    Route::get('completed-jobs/review/{id}', '\App\Http\Controllers\Voyager\CompletedJobController@review')->name('review');
+    Route::get('completed-jobs/review/{id}', '\App\Http\Controllers\Voyager\CompletedJobController@review')->name('review-completed-jobs');
 
     Route::get('reviews/approve/{id}', '\App\Http\Controllers\Voyager\ReviewController@approve')->name('approve');
+
     Route::get('reviews/reject/{id}', '\App\Http\Controllers\Voyager\ReviewController@reject')->name('reject');
+
     Route::get('payables/pay/{id}', '\App\Http\Controllers\Voyager\PayableController@getPay')->name('pay');
 });
 
@@ -35,6 +37,7 @@ Auth::routes();
 
 // Public home routes
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/view_order/{id}', 'HomeController@viewOrder')->name('home.view_order');
 
 // Dynamic Public Page route
@@ -42,6 +45,7 @@ Route::get('/home/{slug}', 'PageController@index')->name('home.page');
 
 // Dynamic Public Post route
 Route::get('/post', 'PostController@index')->name('home.post');
+
 Route::get('/post/{slug}', 'PostController@index')->name('home.post');
 
 

@@ -29,29 +29,23 @@
 @section('content')
 
     <div class="page-content read container-fluid">
-       {{-- {{dd('voyager.'.$dataType->slug.'.review', $dataTypeContent->getKey())}} --}}
+       {{-- {{dd($pickedJob)}} --}}
         <div class="card">
             {{-- Begin foreign code --}}
             <div class="row">
                 <div class="col-lg-8 col-md-12 my-auto text-center">
-                    <h1>{{ $completedJob['orderDetail']['subject'] }}</h1>
-                    <h6>{{ $completedJob['product']['classification']['classification'] }} Under {{ $completedJob['product']['period']['period'] }}</h6>
-                    <p>{{ $completedJob['orderDetail']['pages'] }} pages</p>
+                    <h1>{{ $pickedJob['orderDetail']['subject'] }}</h1>
+                    <h6>{{ $pickedJob['product']['classification']['classification'] }} Under {{ $pickedJob['product']['period']['period'] }}</h6>
+                    <p>{{ $pickedJob['orderDetail']['pages'] }} pages</p>
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <div class="">
                       <div class="card-body text-center">
                         <h5 class="card-title">Deadline</h5>
                     <p class="card-text">
-                      @if($completedJob['orderDetail']['orderDetailStatus']['status'] == 'Complete')
-                        {{ \Carbon\Carbon::parse($completedJob['updated_at'])->toDayDateTimeString() }}
+                        {{ \Carbon\Carbon::parse($pickedJob['deadline'])->toDayDateTimeString() }}
                         <br />
-                        {{ \Carbon\Carbon::parse($completedJob['updated_at'])->diffForHumans() }}
-                      @else
-                        {{ \Carbon\Carbon::parse($completedJob['deadline'])->toDayDateTimeString() }}
-                        <br />
-                        {{ \Carbon\Carbon::parse($completedJob['deadline'])->diffForHumans() }}
-                      @endif
+                        {{ \Carbon\Carbon::parse($pickedJob['deadline'])->diffForHumans() }}
                     </p>
                       </div>
                     </div>
@@ -65,18 +59,18 @@
 
                 <div class="col-lg-6 col-md-12">
                     <ul class="list-group">
-                        <li class="list-group-item">Paper Type : {{ $completedJob['orderDetail']['type']['type'] }} </li>
-                        <li class="list-group-item">Paper Format : {{ $completedJob['orderDetail']['format']['format'] }}</li>
-                        <li class="list-group-item">No. of Sources : {{ $completedJob['orderDetail']['sources'] }}</li>
-                        <li class="list-group-item">Paper Language: {{ $completedJob['orderDetail']['language']['language'] }}</li>
+                        <li class="list-group-item">Paper Type : {{ $pickedJob['orderDetail']['type']['type'] }} </li>
+                        <li class="list-group-item">Paper Format : {{ $pickedJob['orderDetail']['format']['format'] }}</li>
+                        <li class="list-group-item">No. of Sources : {{ $pickedJob['orderDetail']['sources'] }}</li>
+                        <li class="list-group-item">Paper Language: {{ $pickedJob['orderDetail']['language']['language'] }}</li>
                     </ul>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <ul class="list-group">
-                        <li class="list-group-item">Paper Spacing : {{ $completedJob['orderDetail']['spacing']['space'] }} </li>
-                        <li class="list-group-item">Client Name : {{ $completedJob['orderDetail']['order']['user']['name'] }}</li>
-                        <li class="list-group-item">Job Status : {{ $completedJob['orderDetail']['orderDetailStatus']['status'] }}</li>
-                        <li class="list-group-item">Job Price : $ {{ $completedJob['product']['job_price'] * $completedJob['orderDetail']['pages'] }}.00</li>
+                        <li class="list-group-item">Paper Spacing : {{ $pickedJob['orderDetail']['spacing']['space'] }} </li>
+                        <li class="list-group-item">Client Name : {{ $pickedJob['orderDetail']['order']['user']['name'] }}</li>
+                        <li class="list-group-item">Job Status : {{ $pickedJob['orderDetail']['orderDetailStatus']['status'] }}</li>
+                        <li class="list-group-item">Job Price : $ {{ $pickedJob['product']['job_price'] * $pickedJob['orderDetail']['pages'] }}.00</li>
                     </ul>
                 </div>
             </div>
@@ -84,11 +78,10 @@
             <div class="col-md-12">
                 <h3 style="padding-left: 20px;">Job Description</h3>
                 <p style="padding-left: 20px;">
-                    {{ $completedJob['orderDetail']['description'] }}
+                    {{ $pickedJob['orderDetail']['description'] }}
                     <br />
                     <br />
                     <a href="{{ URL::previous() }}" class="btn btn-default">back</a>
-                    <a href="{{ route('review-completed-jobs', $dataTypeContent->getKey()) }}" class="btn btn-primary">Review</a>
                     {{-- {{ route('voyager.'.$dataType->slug.'.review', $dataTypeContent->getKey()) }} --}}
                 </p>
             </div>

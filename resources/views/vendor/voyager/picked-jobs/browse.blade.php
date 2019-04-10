@@ -83,16 +83,16 @@
                                         @endcan
                                         {{-- custom table body --}}
                                         <th scope="row">
-                                            {{ $data->completedJob['orderDetail']['uniqueId'] }}
+                                            {{ $data->orderDetail->uniqueId }}
                                         </th>
                                         <td>
-                                            {{ $data->completedJob['writer']['name'] }}
+                                            {{ $data->writer->name }}
                                         </td>
                                         <td>
-                                            {{ $data->completedJob['orderDetail']['subject'] }}
+                                            {{ $data->orderDetail->subject }}
                                         </td>
                                         <td>
-                                            $ {{ $data->completedJob['product']['job_price'] * $data->completedJob['orderDetail']['pages'] }}.00
+                                            $ {{ $data->product->job_price * $data->orderDetail->pages }}.00
                                         </td>
                                         <td>
                                             {{ \Carbon\Carbon::parse($data->updated_at)->toDayDateTimeString() }}
@@ -201,3 +201,4 @@
         });
     </script>
 @stop
+
