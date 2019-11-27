@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-6 content border-right">
                         {{-- <div class="col-12 mx-auto text-center" style="padding-left: 240px"> --}}
-                        <img src="{{ Voyager::image( setting('site.logo') ) }}">
+                        <img src="{{ Voyager::image(setting('site.logo')) }}">
 
                         <h1 class="text-center">{{ setting('site.title') }}</h1>
 
