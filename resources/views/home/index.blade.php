@@ -59,7 +59,7 @@
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="gridCheck" name="terms">
                     <label class="form-check-label" for="gridCheck">
-                      Accept terms and Conditions <a href="#">herein</a>
+                      Accept Terms and Conditions <a href="#">herein</a>
                     </label>
                   </div>
                 </div>
@@ -106,7 +106,7 @@
                 </span>
               </div>
               @if($pendingOrders->isEmpty())
-                <p>Apply Your Writting Now...</p>
+                <p>No Pending Orders...</p>
               @else
                 <ul class="list-group  list-group-flush">
                   @foreach($pendingOrders as $pendingOrder)

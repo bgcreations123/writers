@@ -31,19 +31,19 @@
 									<div class="card-body p-5">
 
 										<ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
-											<li class="nav-item">
+											{{-- <li class="nav-item">
 												<a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
-												<i class="fa fa-credit-card"></i> Credit Card</a></li>
+												<i class="fa fa-credit-card"></i> Credit Card</a></li> --}}
 											<li class="nav-item">
 												<a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
 												<i class="fab fa-paypal"></i>  Paypal</a></li>
-											<li class="nav-item">
+											{{-- <li class="nav-item">
 												<a class="nav-link" data-toggle="pill" href="#nav-tab-bank">
-												<i class="fa fa-university"></i>  Bank Transfer</a></li>
+												<i class="fa fa-university"></i>  Bank Transfer</a></li> --}}
 										</ul>
 
 										<div class="tab-content">
-											<div class="tab-pane fade show active" id="nav-tab-card">
+											{{-- <div class="tab-pane fade show active" id="nav-tab-card">
 												<p class="alert alert-success">Some text success or error</p>
 												<form role="form">
 													<div class="form-group">
@@ -83,7 +83,7 @@
 													</div> <!-- row.// -->
 													<button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>
 												</form>
-											</div> <!-- tab-pane.// -->
+											</div> --}} <!-- tab-pane.// -->
 
 											<div class="tab-pane fade" id="nav-tab-paypal">
 												<p>
@@ -95,7 +95,7 @@
 
 													<button class="btn btn-primary btn-block" type="submit">
 														<i class="fab fa-paypal"></i> 
-														Paypal Login  
+														Proceed to Payment 
 													</button>
 
 												</form>
@@ -104,13 +104,13 @@
 													<strong>
 														Note:
 													</strong> 
-													Navigate to PayPal and sign in to your account. Make sure your account has enough money. 
+													We accept CARD payments through paypal. 
 												</p>
 											</div>
 											
-											<div class="tab-pane fade" id="nav-tab-bank">
+											{{-- <div class="tab-pane fade" id="nav-tab-bank">
 												{!! setting('bank.details') !!}
-											</div> <!-- tab-pane.// -->
+											</div> --}} <!-- tab-pane.// -->
 										</div> <!-- tab-content .// -->
 
 									</div> <!-- card-body.// -->

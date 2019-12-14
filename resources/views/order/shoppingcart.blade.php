@@ -110,7 +110,7 @@
 				                </div>
 							</div>
 							<div class="col-md-12 col-lg-4 text-center" style="border-top: 2px solid #5ea4f3; background-color: #f7fbff; height: 100%; padding: 10px;">
-								<h4>Summery</h4>
+								<h4>Summary</h4>
 								<ul class="list-group  list-group-flush">
 									<li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
 										Item(s) <span>{{ $total_qty }}</span>

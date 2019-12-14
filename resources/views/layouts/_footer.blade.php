@@ -1,4 +1,4 @@
-<!-- Footer -->
+Footer -->
 <footer class="page-footer font-small blue-grey lighten-5">
 
     <div style="background-color: #eee;">
@@ -132,10 +132,10 @@
     <!-- Footer Links -->
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center text-black-50 py-3">© 2019 Copyright:
-      <a class="dark-grey-text" href="https:theokumusempire.com" target="_blank"> http://theokumusempire.com</a>
+    <div class="footer-copyright text-center text-black-50 py-3">© 2019 {{-- Copyright: --}}
+      {{-- <a class="dark-grey-text" href="https:theokumusempire.com" target="_blank"> http://theokumusempire.com</a> --}}
     </div>
     <!-- Copyright -->
 
   </footer>
-  <!-- Footer -->
+  <!-- Footer
