@@ -12,7 +12,7 @@ class Order extends Model
      */
     public function client()
 	{
-	    return $this->belongsTo(User::class);
+	    return $this->belongsTo(User::class, 'user_id');
 	}
 
 	public function paymentStatus()

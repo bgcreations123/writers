@@ -72,7 +72,7 @@
         <div class="col-md-6 my-2">
         <ul class="list-group">
           <li class="list-group-item">Paper Spacing : {{ $orderDetails->spacing->space }} </li>
-          <li class="list-group-item">Client Name : {{ $orderDetails->order->user->name }}</li>
+          <li class="list-group-item">Client Name : {{ $orderDetails->order->client->name }}</li>
           <li class="list-group-item">Job Status : {{ $orderDetails->orderDetailStatus->status }}</li>
           <li class="list-group-item">Job Price : $ {{ $orderDetails->product->job_price * $orderDetails->pages }}.00</li>
         </ul>
@@ -180,7 +180,7 @@
               <div class="form-group">
                   <input type="hidden" class="form-control" id="recipient" name="recipient" value="{{ $orderDetails->order->user_id }}">
                   <label for="recipient">Recipient</label>
-                  <input type="text" class="form-control" id="recipient" name="recipient" value="{{ $orderDetails->order->user->name  }}" disabled>
+                  <input type="text" class="form-control" id="recipient" name="recipient" value="{{ $orderDetails->order->client->name  }}" disabled>
               </div>
               <div class="form-group">
                 <label for="subject" class="col-form-label">Subject:</label>

@@ -39,7 +39,7 @@
 				  	  	</div>
 					  	<div class="form-row">
 						    <div class="form-group col-md-4">
-						      	<label for="inputType">Paper Types</label>
+						      	<label for="inputType">Paper Types (Optional)</label>
 						      	<select id="inputType" class="form-control" name="type">
 						        	<option value="0" selected>Choose...</option>
 						        	@foreach ($types as $type)
@@ -48,7 +48,7 @@
 						      	</select>
 						    </div>
 						    <div class="form-group col-md-4">
-						      	<label for="inputFormat">Paper format</label>
+						      	<label for="inputFormat">Paper format (Optional)</label>
 						      	<select id="inputFormat" class="form-control" name="format">
 						        	<option value="0" selected>Choose...</option>
 						        	@foreach ($formats as $format)
@@ -67,16 +67,16 @@
 					  	</div>
 					  	<div class="form-row">	
 					    	<div class="form-group col-md-4">
-					      		<label for="inputSource">No. of Sources</label>
+					      		<label for="inputSource">No. of Sources (Optional)</label>
 					      		<select id="inputSource" class="form-control" name="source">
-					        		<option value="0" selected>Choose...</option>
-					        		@for($i=1; $i<=20; $i++)
+					        		{{-- <option value="0" selected>Choose...</option> --}}
+					        		@for($i=0; $i<=20; $i++)
 										<option value="{{$i}}"  {{ (old('source') == $i) ? "selected" : "" }}>{{$i}}</option>
 									@endfor
 					      		</select>
 					    	</div>
 					    	<div class="form-group col-md-4">
-					      		<label for="inputSpacing">Paper Spacing</label>
+					      		<label for="inputSpacing">Paper Spacing (Optional)</label>
 						    	<select id="inputSpacing" class="form-control" name="space">
 						      		<option value="0" selected>Choose...</option>
 						      		@foreach ($spaces as $space)
@@ -85,7 +85,7 @@
 						    	</select>
 					    	</div>
 					    	<div class="form-group col-md-4">
-					      		<label for="inputLanguage">Paper Language</label>
+					      		<label for="inputLanguage">Paper Language (Optional)</label>
 					      		<select id="inputLanguage" class="form-control" name="language">
 					        		<option value="0" selected>Choose...</option>
 					        		@foreach ($languages as $language)

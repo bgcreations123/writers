@@ -63,11 +63,11 @@ class OrderController extends Controller
 
         $this->validate($request, [
             'topic' => 'required',
-            'type' => 'required|not_in:0',
-            'format' => 'required|not_in:0',
-            'source' => 'required|not_in:0',
-            'space' => 'required|not_in:0',
-            'language' => 'required|not_in:0',
+            // 'type' => 'not_in:0',
+            // 'format' => 'not_in:0',
+            // 'source' => 'not_in:0',
+            // 'space' => 'not_in:0',
+            // 'language' => 'not_in:0',
             'details' => 'required|min:3|max:7000',
             // 'files' => 'required',
             'deadline' => 'required|after:today',

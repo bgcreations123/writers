@@ -1,4 +1,3 @@
-Footer -->
 <footer class="page-footer font-small blue-grey lighten-5">
 
     <div style="background-color: #eee;">
