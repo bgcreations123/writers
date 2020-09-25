@@ -94,7 +94,7 @@
               
                 <div class="card border-primary col-md-6">
                     <div class="card-body">
-                        @if(empty($completedJob['orderDetail']['files']))
+                        @if(empty($review['completedJob']['orderDetail']['files']))
                             <p>No related files. Reffer to job description.</p>
                         @else
                         <h5 class="card-title">File</h5>
@@ -102,7 +102,7 @@
                             <small>File name:</small>
                             {{ $review['completedJob']['orderDetail']['files'] }}
                         </p>
-                        <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', [$review['completedJob']['orderDetail']['files']])  }}">Download</a>
+                        <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', ['ref', $review['completedJob']['orderDetail']['files']])  }}">Download</a>
                         @endif
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                                 <small>File name:</small> 
                                 {{ $review['completedJob']['files'] }}
                             </p>
-                            <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', [$review['completedJob']['files']])  }}">
+                            <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', ['job', $review['completedJob']['files']])  }}">
                                 Download
                             </a>
                         @endif

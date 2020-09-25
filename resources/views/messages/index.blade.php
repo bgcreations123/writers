@@ -218,7 +218,7 @@
 	<div class="modal fade" id="composeModal" tabindex="-1" role="dialog" aria-labelledby="composeModalLabel" aria-hidden="true">
 	  	<div class="modal-dialog" role="document">
 	    	<div class="modal-content">
-	    		<form action="{{ route('messages.store') }}" method="POST">
+	    		<form action="{{ route('messages.store') }}" method="POST" enctype="multipart/form-data">
 	    			{{ csrf_field() }}
 		      		<div class="modal-header">
 		        		<h5 class="modal-title" id="composeModalLabel">Modal title</h5>
@@ -246,7 +246,7 @@
 						</div>
 						<div class="form-group">
 							<label for="message-file" class="col-form-label">Attachment:</label>
-							<input type="file" class="form-control" id="message-file" name="file">
+							<input type="file" class="form-control" id="message-file" name="file[]" multiple>
 						</div>
 		      		</div>
 		      		<div class="modal-footer">

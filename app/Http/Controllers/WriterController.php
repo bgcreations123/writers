@@ -89,7 +89,7 @@ class WriterController extends Controller
             return redirect()->route('home')->with(['error' => 'Sorry, Use the right channel to pick jobs.']);
         }
 
-        $job = PickedJob::select('id')->where('order_detail_id', $id)->first();
+        $job = PickedJob::where('order_detail_id', $id)->first();
 
         return view('writer.complete', compact('job'));
     }
@@ -99,6 +99,9 @@ class WriterController extends Controller
         $this->validate($request, [
             'files' => 'required',
         ]);
+
+        // Get the job owner
+        $job_owner = OrderDetail::with('order')->where('id', $id)->first();
 
         $filename = time().$request->file('files')->getClientOriginalName();
         // dd(array_replace($request->input(), $fileName));
@@ -110,14 +113,14 @@ class WriterController extends Controller
             $uploadedFile = $request->file('files');
 
             Storage::disk('local')->putFileAs(
-                'files/'.(int)auth()->user()->id,
+                'files/'.$job_owner->order->user_id,
                 $uploadedFile,
                 $filename
             );
         }
 
         // Identify Picked jobs
-        $picked_job = PickedJob::find($id);
+        $picked_job = PickedJob::where('order_detail_id', $id)->first();
 
         // Add into the completed jobs table
         $job = new CompletedJob;

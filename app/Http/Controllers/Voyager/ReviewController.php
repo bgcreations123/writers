@@ -144,7 +144,7 @@ class ReviewController extends VoyagerBaseController
         // Check if BREAD is Translatable
         $isModelTranslatable = is_bread_translatable($dataTypeContent);
 
-        $review = Review::find($id);
+        $review = Review::with('completedJob')->find($id);
 
         $view = 'voyager::bread.read';
 
@@ -152,7 +152,7 @@ class ReviewController extends VoyagerBaseController
             $view = "voyager::$slug.read";
         }
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'review'));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'review', 'completedJob'));
     }
 
     public function approve($id)

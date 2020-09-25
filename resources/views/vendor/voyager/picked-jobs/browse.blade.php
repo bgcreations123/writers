@@ -69,7 +69,7 @@
                                         <th>Writer</th>
                                         <th>Topic</th>
                                         <th>Amount Payable</th>
-                                        <th>Updated At</th>
+                                        <th>Deadline Date</th>
                                         <th class="actions text-right">{{ __('voyager::generic.actions') }}</th>
                                     </tr>
                                 </thead>
@@ -94,8 +94,10 @@
                                         <td>
                                             $ {{ $data->product->job_price * $data->orderDetail->pages }}.00
                                         </td>
-                                        <td>
-                                            {{ \Carbon\Carbon::parse($data->updated_at)->toDayDateTimeString() }}
+                                        <td class="text-center">
+                                            {{ \Carbon\Carbon::parse($data->orderDetail->deadline)->toDayDateTimeString() }} (GMT)
+                                            <br />
+                                            {{ \Carbon\Carbon::parse($data->orderDetail->deadline)->diffForHumans() }}
                                         </td>
                                         <td class="no-sort no-click" id="bread-actions">
                                             @foreach(Voyager::actions() as $action)

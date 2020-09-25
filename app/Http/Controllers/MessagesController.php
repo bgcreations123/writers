@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\{User, Message, Attachment};
+use App\{User, Message, messagesFiles};
 
 class MessagesController extends Controller
 {
@@ -44,8 +44,9 @@ class MessagesController extends Controller
     	$user = Auth()->user();
 
     	$message = Message::where('id', $id)->orWhere([['sender_id', $user->id], ['reciever_id', $user->id]])->first();
-        if(!empty($message->attachment)){
-            $files = Attachment::where('message_id', $id)->get();
+
+        if($message->files = true){
+            $files = messagesFiles::where('message_id', $id)->get();
         }
 
         // Update message status
@@ -65,34 +66,42 @@ class MessagesController extends Controller
             'message' => 'required',
         ]);
 
+
         $message = new Message;
         $message->sender_id = $user->id;
         $message->reciever_id = $request->recipient;
         $message->subject = $request->subject;
         $message->message = $request->message;
         $message->message_status_id = 2;
+        $message->files = ($request->hasFile('file'))?'1':'0';
+        $message->save();
+        dd($request->hasFile('file'));
 
-        if ($request->hasFile('file')){
-            $filename = time().$request->file('file')->getClientOriginalName();
-            // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
+        if ($request->hasFile('file')) {
             // Perform uploads
-            $uploadedFile = $request->file('file');
-            // $filename = time().$uploadedFile->getClientOriginalName();
-            Storage::disk('local')->putFileAs(
-                'files/'.(int)auth()->user()->id,
-                $uploadedFile,
-                $filename
-            );
-            $message->attachment = true;
+            $files = $request->file('file');
+            foreach($files as $file):
+                $filename = time().$file->getClientOriginalName();
+                // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
+                // $uploadedFile = $request->file('file');
+                // $filename = time().$uploadedFile->getClientOriginalName();
+                Storage::disk('local')->putFileAs(
+                    'files/'.(int)auth()->user()->id,
+                    $file,
+                    $filename
+                );
+            endforeach;
         }
 
-        $message->save();
-
+        // Send files into the DB
         if ($request->hasFile('file')){
-            $file = new Attachment;
-            $file->message_id = $message->id;
-            $file->file_name = $filename;
-            $file->save();
+            $files = $request->file('file');
+            foreach ($files as $file):
+                $file = new messagesFiles;
+                $file->message_id = $message->id;
+                $file->name = $filename;
+                $file->save();
+            endforeach; 
         }
 
         return redirect()->back()->with(['success' => 'Your message was sent successfully.']);

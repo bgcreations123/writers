@@ -79,13 +79,28 @@
                 <h3 style="padding-left: 20px;">Job Description</h3>
                 <p style="padding-left: 20px;">
                     {{ $pickedJob['orderDetail']['description'] }}
-                    <br />
-                    <br />
-                    <a href="{{ URL::previous() }}" class="btn btn-default">back</a>
                     {{-- {{ route('voyager.'.$dataType->slug.'.review', $dataTypeContent->getKey()) }} --}}
                 </p>
             </div>
-
+            <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
+                <!-- Related Projects Row -->
+                <h3 class="my-4" style="padding-left: 20px;">Related Documents</h3>
+              
+                <div class="card border-primary col-md-6">
+                    <div class="card-body">
+                        @if(empty($pickedJob['orderDetail']['files']))
+                            <p>No related files. Reffer to job description.</p>
+                        @else
+                        <h5 class="card-title">File</h5>
+                        <p class="card-text">
+                            <small>File name:</small>
+                            {{ $pickedJob['orderDetail']['files'] }}
+                        </p>
+                        <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', ['ref', $pickedJob['orderDetail']['files']])  }}">Download</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

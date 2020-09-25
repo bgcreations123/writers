@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-
-class Attachment extends Model
+class completedJobsFile extends Model
 {
-    
+    //
 }

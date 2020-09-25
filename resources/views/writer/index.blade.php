@@ -18,7 +18,7 @@
 					<a class="nav-link" data-toggle="tab" href="#deffer" role="tab" aria-controls="deffer">My Deffered Jobs</a>
 				</li>
 			</ul>
-
+			
 			<div class="tab-content">
 				<div class="tab-pane active" id="jobs" role="tabpanel">
 					<div class="card">
@@ -37,7 +37,7 @@
 									      <th scope="col">Unique ID</th>
 									      <th scope="col">Product</th>
 									      <th scope="col">Topic</th>
-									      <th scope="col">Wadge Bill</th>
+									      <th scope="col">Wage Bill</th>
 									      <th scope="col">Deadline</th>
 									      <th scope="col">Action</th>
 									    </tr>
@@ -80,7 +80,7 @@
 									      <th scope="col">Unique ID</th>
 									      <th scope="col">Product</th>
 									      <th scope="col">Topic</th>
-									      <th scope="col">Wadge Bill</th>
+									      <th scope="col">Wage Bill</th>
 									      <th scope="col">Deadline</th>
 									      <th scope="col">Action</th>
 									    </tr>

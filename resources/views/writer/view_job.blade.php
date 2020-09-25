@@ -30,11 +30,11 @@
           @endif
           <p class="card-text">
             @if($orderDetails->orderDetailStatus->status == 'Complete')
-              {{ \Carbon\Carbon::parse($orderDetails->updated_at)->toDayDateTimeString() }}
+              {{ \Carbon\Carbon::parse($orderDetails->updated_at)->toDayDateTimeString() }} (GMT)
               <br />
               {{ \Carbon\Carbon::parse($orderDetails->updated_at)->diffForHumans() }}
             @else
-              {{ \Carbon\Carbon::parse($orderDetails->deadline)->toDayDateTimeString() }}
+              {{ \Carbon\Carbon::parse($orderDetails->deadline)->toDayDateTimeString() }} (GMT)
               <br />
               {{ \Carbon\Carbon::parse($orderDetails->deadline)->diffForHumans() }}
             @endif
@@ -63,15 +63,15 @@
       <div class="row">
         <div class="col-md-6 my-2">
         <ul class="list-group">
-          <li class="list-group-item">Paper Type : {{ $orderDetails->type->type }} </li>
-          <li class="list-group-item">Paper Format : {{ $orderDetails->format->format }}</li>
-          <li class="list-group-item">No. of Sources : {{ $orderDetails->sources }}</li>
-          <li class="list-group-item">Paper Language: {{ $orderDetails->language->language }}</li>
+          <li class="list-group-item">Paper Type : {{ empty($orderDetails->type->type)?'Any':$orderDetails->type->type }} </li>
+          <li class="list-group-item">Paper Format : {{ empty($orderDetails->format->format)?'Any':$orderDetails->format->format }}</li>
+          <li class="list-group-item">No. of Sources : {{ empty($orderDetails->sources)?'Any':$orderDetails->sources }}</li>
+          <li class="list-group-item">Paper Language: {{ empty($orderDetails->language->language)?'Any':$orderDetails->language->language }}</li>
         </ul>
         </div>
         <div class="col-md-6 my-2">
         <ul class="list-group">
-          <li class="list-group-item">Paper Spacing : {{ $orderDetails->spacing->space }} </li>
+          <li class="list-group-item">Paper Spacing : {{ empty($orderDetails->spacing->space)?'Any':$orderDetails->spacing->space }} </li>
           <li class="list-group-item">Client Name : {{ $orderDetails->order->client->name }}</li>
           <li class="list-group-item">Job Status : {{ $orderDetails->orderDetailStatus->status }}</li>
           <li class="list-group-item">Job Price : $ {{ $orderDetails->product->job_price * $orderDetails->pages }}.00</li>
@@ -96,7 +96,7 @@
                   <small>File Ext:</small>
                   {{ '.'.substr(strrchr($orderDetails->files, "."), 1) }}
                 </p>
-                <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', [$orderDetails->files])  }}">
+                <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', ['ref', $orderDetails->files])  }}">
                   Download
                 </a>
               @endif
@@ -119,7 +119,7 @@
                     <small>File Ext:</small> 
                     {{ '.'.substr(strrchr($completed->files, "."), 1) }}
                   </p>
-                  <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', [$completed->files])  }}">
+                  <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', ['job', $completed->files])  }}">
                     Download
                   </a>
                 @endif
@@ -168,7 +168,7 @@
   <div class="modal fade" id="composeModal" tabindex="-1" role="dialog" aria-labelledby="composeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <form action="{{ route('messages.store') }}" method="POST">
+        <form action="{{ route('messages.store') }}" method="POST" enctype="multipart/form-data">
           {{ csrf_field() }}
             <div class="modal-header">
               <h5 class="modal-title" id="composeModalLabel">Modal title</h5>
@@ -192,7 +192,7 @@
               </div>
               <div class="form-group">
                 <label for="message-file" class="col-form-label">Attachment:</label>
-                <input type="file" class="form-control" id="message-file" name="file">
+                <input type="file" class="form-control" id="message-file" name="file[]" multiple>
               </div>
             </div>
             <div class="modal-footer">

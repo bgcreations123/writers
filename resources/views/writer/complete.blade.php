@@ -12,9 +12,10 @@
 				<div class="card-header">
 					Job Pool
 				</div>
+				
 				<div class="card-body">
 					<h5 class="card-title">Submit Your Job</h5>
-					<form action="{{ route('writer.completeJob', ['id'=>$job->id]) }}" enctype="multipart/form-data" method="post">
+					<form action="{{ route('writer.completeJob', ['id'=>$job->order_detail_id]) }}" enctype="multipart/form-data" method="post">
 						{{ csrf_field() }}
 						<div class="file-loading">
 				        	<input id="files" name="files" type="file" class="file" data-show-upload="false" data-show-caption="true" data-msg-placeholder="Select {files} for upload..." multiple>

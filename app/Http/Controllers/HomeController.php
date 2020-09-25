@@ -81,13 +81,19 @@ class HomeController extends Controller
         ->whereNull('deffered_jobs.id')
         ->get();
 
-        $pickedJobs = PickedJob::where('writer_id', auth()->user()->id)
-        ->leftJoin('order_details', function ($query) {
-            $query
-            ->on('order_details.id', '=', 'picked_jobs.order_detail_id')
-            ->where('deadline', '>=', Carbon::now());
+        // $pickedJobs = PickedJob::where('writer_id', auth()->user()->id)
+        // ->leftJoin('order_details', function ($query) {
+        //     $query
+        //     ->on('order_details.id', '=', 'picked_jobs.order_detail_id')
+        //     ->where('deadline', '>=', Carbon::now());
+        // })
+        // ->whereNotNull('order_details.id')
+        // ->get();
+
+        $pickedJobs = PickedJob::where('writer_id', auth()->user()->id)->with('orderDetail')->whereHas('orderDetail', function ($query) {
+            $query->where('deadline', '>=', Carbon::now());
         })
-        ->whereNotNull('order_details.id')
+        ->whereNotNull('id')
         ->get();
 
         $defferedJobs = DefferedJob::where('writer_id', auth()->user()->id)

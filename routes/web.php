@@ -15,6 +15,10 @@
 //     return view('welcome');
 // });
 
+use Illuminate\Http\Request;
+
+use App\{OrderDetail, CompletedJob};
+
 Route::get('/', 'WelcomeController@welcome')->name('welcome');
 
 // determine product price through ajax
@@ -89,11 +93,28 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 // Download File From Route
-Route::get('download/{filename}', function($filename)
+Route::get('download/{type}/{filename}', function($type, $filename)
 {
-    // Check if file exists in app/storage/file folder
-    $file_path = storage_path() .'/app/files/5/'. $filename;
-    // dd($file_path);
+    if($type == 'ref'):
+    	// Look for the file owner
+	    $owner = OrderDetail::with('order')->where('files', $filename)->first();
+	    // dd($owner->order->user_id);
+
+	    // Check if file exists in app/storage/file folder
+	    $file_path = storage_path() .'/app/files/'.(int)$owner->order->user_id.'/'. $filename;
+	    // dd($file_path);
+
+    elseif($type == 'job'):
+    	// Look for the file owner
+	    $owner = CompletedJob::with('orderDetail')->where('files', $filename)->first();
+	    // dd($owner->orderDetail->order->user_id);
+
+	    // Check if file exists in app/storage/file folder
+	    $file_path = storage_path() .'/app/files/'.(int)$owner->orderDetail->order->user_id.'/'. $filename;
+	    // dd($file_path);
+
+    endif;
+    
     if (file_exists($file_path))
     {
         // Send Download

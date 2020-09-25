@@ -60,15 +60,15 @@
       <div class="row">
         <div class="col-md-6 my-2">
         <ul class="list-group">
-          <li class="list-group-item">Paper Type : {{ $orderDetails->type->type }} </li>
-          <li class="list-group-item">Paper Format : {{ $orderDetails->format->format }}</li>
-          <li class="list-group-item">No. of Sources : {{ $orderDetails->sources }}</li>
-          <li class="list-group-item">Paper Language: {{ $orderDetails->language->language }}</li>
+          <li class="list-group-item">Paper Type : {{ empty($orderDetails->type->type)?'Any':$orderDetails->type->type }} </li>
+          <li class="list-group-item">Paper Format : {{ empty($orderDetails->format->format)?'Any':$orderDetails->format->format }}</li>
+          <li class="list-group-item">No. of Sources : {{ empty($orderDetails->sources)?'Any':$orderDetails->sources }}</li>
+          <li class="list-group-item">Paper Language: {{ empty($orderDetails->language->language)?'Any':$orderDetails->language->language }}</li>
         </ul>
         </div>
         <div class="col-md-6 my-2">
         <ul class="list-group">
-          <li class="list-group-item">Paper Spacing : {{ $orderDetails->spacing->space }} </li>
+          <li class="list-group-item">Paper Spacing : {{ empty($orderDetails->spacing->space)?'Any':$orderDetails->spacing->space }} </li>
           <li class="list-group-item">Writter's Name : {{ ($orderDetails->orderDetailStatus->status == 'Complete') ? $completed['writer']['name'] : (($orderDetails->orderDetailStatus->status == 'Processing') ? $processing['writer']['name'] : 'Pending')}}</li>
           <li class="list-group-item">Job Status : {{ $orderDetails->orderDetailStatus->status }}</li>
           <li class="list-group-item">Job Price : $ {{ $orderDetails->product->price * $orderDetails->pages }}.00</li>
@@ -76,7 +76,6 @@
         </div>
       </div>
 
-      {{--  --}}
       <div class="row">
         <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
 
@@ -90,10 +89,11 @@
               @else
                 <h5 class="card-title">File</h5>
                 <p class="card-text">
-                  <small>File name:</small>
-                  {{ '.'.substr(strrchr($orderDetails->files, "."), 1) }}
+                  <small>File Name:</small>
+                  {{-- {{ '.'.substr(strrchr($orderDetails->files, "."), 1) }} --}}
+                  {{ $orderDetails->files }}
                 </p>
-                <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', [$orderDetails->files])  }}">Download</a>
+                <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', ['ref', $orderDetails->files])  }}">Download</a>
               @endif
             </div>
           </div>
@@ -112,10 +112,11 @@
                   <p>Sorry, No Evidence/Proof of work!</p>
                 @else
                   <p class="card-text">
-                    <small>File Ext:</small> 
-                    {{ '.'.substr(strrchr($completed->files, "."), 1) }}
+                    <small>File Name:</small> 
+                    {{-- {{ '.'.substr(strrchr($completed->files, "."), 1) }} --}}
+                    {{ $completed->files }}
                   </p>
-                  <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', [$completed->files])  }}">
+                  <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', ['job', $completed->files])  }}">
                     Download
                   </a>
                 @endif
@@ -146,7 +147,7 @@
   <div class="modal fade" id="composeModal" tabindex="-1" role="dialog" aria-labelledby="composeModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <form action="{{ route('messages.store') }}" method="POST">
+          <form action="{{ route('messages.store') }}" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
               <div class="modal-header">
                 <h5 class="modal-title" id="composeModalLabel">Modal title</h5>
@@ -182,7 +183,7 @@
                 </div>
                 <div class="form-group">
                   <label for="message-file" class="col-form-label">Attachment:</label>
-                  <input type="file" class="form-control" id="message-file" name="file">
+                  <input type="file" class="form-control" id="message-file" name="file[]" multiple>
                 </div>
               </div>
               <div class="modal-footer">

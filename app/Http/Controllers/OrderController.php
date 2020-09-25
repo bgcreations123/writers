@@ -208,38 +208,44 @@ class OrderController extends Controller
 
     public function getStats()
     {
-        $pendingOrders = OrderDetail::select('*')
-        ->where('order_details.order_detail_status_id', 1)
-        ->leftJoin('orders', function ($query) {
-            $query
-            ->on('orders.id', '=', 'order_details.order_id')
-            ->where('orders.user_id', auth()->user()->id);
-        })
-        ->whereNotNull('orders.id')
-        ->orderBy('orders.id', 'desc')
-        ->get();
+        // $pendingOrders = OrderDetail::select('*')
+        // ->where('order_details.order_detail_status_id', 1)
+        // ->leftJoin('orders', function ($query) {
+        //     $query
+        //     ->on('orders.id', '=', 'order_details.order_id')
+        //     ->where('orders.user_id', auth()->user()->id);
+        // })
+        // ->whereNotNull('orders.id')
+        // ->orderBy('orders.id', 'desc')
+        // ->get();
 
-        $processingOrders = OrderDetail::select('*')
-        ->where([['order_details.order_detail_status_id', 2], ['order_details.deadline', '>=', Carbon::now()]])
-        ->leftJoin('orders', function ($query) {
-            $query
-            ->on('orders.id', '=', 'order_details.order_id')
-            ->where('orders.user_id', '=', auth()->user()->id);
-        })
-        ->whereNotNull('orders.id')
-        ->orderBy('orders.id', 'desc')
-        ->get();
+        // $processingOrders = OrderDetail::select('*')
+        // ->where([['order_details.order_detail_status_id', 2], ['order_details.deadline', '>=', Carbon::now()]])
+        // ->leftJoin('orders', function ($query) {
+        //     $query
+        //     ->on('orders.id', '=', 'order_details.order_id')
+        //     ->where('orders.user_id', '=', auth()->user()->id);
+        // })
+        // ->whereNotNull('orders.id')
+        // ->orderBy('orders.id', 'desc')
+        // ->get();
 
-        $completedOrders = OrderDetail::select('*')
-        ->where('order_details.order_detail_status_id', 3)
-        ->leftJoin('orders', function ($query) {
-            $query
-            ->on('orders.id', '=', 'order_details.order_id')
-            ->where('orders.user_id', '=', auth()->user()->id);
-        })
-        ->whereNotNull('orders.id')
-        ->orderBy('orders.id', 'desc')
-        ->get();
+        // $completedOrders = OrderDetail::select('*')
+        // ->where('order_details.order_detail_status_id', 3)
+        // ->leftJoin('orders', function ($query) {
+        //     $query
+        //     ->on('orders.id', '=', 'order_details.order_id')
+        //     ->where('orders.user_id', '=', auth()->user()->id);
+        // })
+        // ->whereNotNull('orders.id')
+        // ->orderBy('orders.id', 'desc')
+        // ->get();
+
+        $pendingOrders = OrderDetail::with('order')->where(['order_detail_status_id' => 1])->orderBy('id', 'desc')->get();
+
+        $processingOrders = OrderDetail::with('order')->where(['order_detail_status_id' => 2])->orderBy('id', 'desc')->get();
+
+        $completedOrders = OrderDetail::with('order')->where(['order_detail_status_id' => 3])->orderBy('id', 'desc')->get();
 
         return view('order.stats', compact('pendingOrders', 'processingOrders', 'completedOrders'));
     }
