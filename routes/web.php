@@ -76,6 +76,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('stats', 'OrderController@getStats')->name('order.stats');
 	Route::get('jobDetails/{id}', 'OrderController@getJobDetails')->name('order.jobDetails');
 
+	Route::get('/jobs', 'WriterController@jobs')->name('writer.jobs');
+	Route::get('/my_jobs', 'WriterController@my_jobs')->name('writer.my_jobs');
+	Route::get('/deffered_jobs', 'WriterController@deffered_jobs')->name('writer.deffered_jobs');
 	Route::get('/pick/{id}', 'WriterController@pick')->name('writer.pick');
 	Route::get('/deffer/{id}', 'WriterController@deffer')->name('writer.deffer');
 	Route::get('/complete/{id}', 'WriterController@complete')->name('writer.complete');

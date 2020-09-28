@@ -1,161 +1,154 @@
-@extends('layouts.master')
+@extends('layouts.writer_master')
 
 @section('title', 'Writer')
 
 @section('content')
 
-	<!-- Heading Row -->
-    <div class="row my-4">
-        <div class="col-lg-12 mx-auto">
-			<ul class="nav nav-tab" id="myTab" role="tablist" aria-orientation="vertical">
-				<li class="nav-item">
-					<a class="nav-link active" data-toggle="tab" href="#jobs" role="tab" aria-controls="jobs">Job Pool</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#picked" role="tab" aria-controls="picked">My Picked Jobs</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#deffer" role="tab" aria-controls="deffer">My Deffered Jobs</a>
-				</li>
-			</ul>
-			
-			<div class="tab-content">
-				<div class="tab-pane active" id="jobs" role="tabpanel">
-					<div class="card">
-						<div class="card-header">
-							Job Pool
-						</div>
-						<div class="card-body">
-							<h5 class="card-title">Pick A Job</h5>
-							@if($jobPool->isEmpty())
-								<p>Sorry, No jobs in the pool yet!</p>
-							@else
-								<div class="table-responsive-md">
-									<table class="table table-hover">
-									  <thead>
-									    <tr>
-									      <th scope="col">Unique ID</th>
-									      <th scope="col">Product</th>
-									      <th scope="col">Topic</th>
-									      <th scope="col">Wage Bill</th>
-									      <th scope="col">Deadline</th>
-									      <th scope="col">Action</th>
-									    </tr>
-									  </thead>
-									  <tbody>
-								    	@foreach($jobPool as $job)
-									    	<tr>
-												<th scope="row">{{ $job->uniqueId }}</th>
-												<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
-												<td>{{ $job->subject }}</td>
-												<td>$ {{ $job->product->job_price * $job->pages }}.00</td>
-												<td>{{ \Carbon\Carbon::parse($job->deadline)->diffForHumans() }}</td>
-												<td>
-													<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->id]) }}">View Job</a>
-												</td>
-									    	</tr>
-										@endforeach
-									  </tbody>
-									</table>
-								</div>
-							@endif
-							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
-						</div>
-					</div>
-				</div>
-				<div class="tab-pane" id="picked" role="tabpanel">
-					<div class="card">
-						<div class="card-header">
-							My Picked Jobs
-						</div>
-						<div class="card-body">
-							<h5 class="card-title">All Pending jobs</h5>
-							@if($pickedJobs->isEmpty())
-								<p>Sorry, No jobs Picked Yet!</p>
-							@else
-								<div class="table-responsive-md">
-									<table class="table table-hover">
-									  <thead>
-									    <tr>
-									      <th scope="col">Unique ID</th>
-									      <th scope="col">Product</th>
-									      <th scope="col">Topic</th>
-									      <th scope="col">Wage Bill</th>
-									      <th scope="col">Deadline</th>
-									      <th scope="col">Action</th>
-									    </tr>
-									  </thead>
-									  <tbody>
-									  	@foreach($pickedJobs as $job)
-									  	{{-- {{dd($job->product->classification->classification)}} --}}
-									    	<tr>
-												<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
-												<td>{{ $job->product['classification']['classification'] }} Paper <br />Under {{ $job->product['period']['period'] }}</td>
-												<td>{{ $job->orderDetail->subject }}</td>
-												<td>$ {{ $job->product['job_price'] * $job->orderDetail->pages }}.00</td>
-												<td>{{ \Carbon\Carbon::parse($job->orderDetail->deadline)->diffForHumans() }}</td>
-												<td>
-													<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
-												</td>
-									    	</tr>
-										@endforeach
-									  </tbody>
-									</table>
-								</div>
-							@endif
-							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
-						</div>
-					</div>
-				</div>
-				<div class="tab-pane" id="deffer" role="tabpanel">
-					<div class="card">
-						<div class="card-header">
-							My Deffered Jobs
-						</div>
-						<div class="card-body">
-							<h5 class="card-title">All Deffered Jobs</h5>
-							@if($defferedJobs->isEmpty())
-								<p>No deffered jobs!</p>
-							@else
-								<div class="table-responsive-md">
-									<table class="table table-hover">
-									  <thead>
-									    <tr>
-									      <th scope="col">Unique ID</th>
-									      <th scope="col">Product</th>
-									      <th scope="col">Topic</th>
-									      <th scope="col">Penalty</th>
-									      <th scope="col">Payment Status</th>
-									      <th scope="col">Action</th>
-									    </tr>
-									  </thead>
-									  <tbody>
-									  	@foreach($defferedJobs as $job)
-											<tr>
-												<th scope="row">{{ $job->orderDetail->uniqueId }}</th>
-												<td>{{ $job->product->classification->classification }} Paper <br />Under {{ $job->product->period->period }}</td>
-												<td>{{ $job->orderDetail->subject }}</td>
-												<td>$ {{ $job->product->penalty_price * $job->orderDetail->pages }}.00</td>
-												<td>{{ $job->paymentStatus->status }}</td>
-												<td>
-													<a class="btn btn-sm btn-outline-primary" href="{{ route('writer.view_job', ['id'=>$job->orderDetail->id]) }}">View Job</a>
-												</td>
-											</tr>
-									    @endforeach
-									    <tr>
-									    	<td colspan="3" class="text-right">Total:</td>
-									    	<td class="align-center">$ {{ $TotalMoneyOwed }}.00</td>
-									    	<td colspan="2"></td>
-									    </tr>
-									  </tbody>
-									</table>
-								</div>
-							@endif
-							{{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+	  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+	    <h1 class="h2">Dashboard</h1>
+	    <div class="btn-toolbar mb-2 mb-md-0">
+	      <div class="btn-group mr-2">
+	        <button class="btn btn-sm btn-outline-secondary">Share</button>
+	        <button class="btn btn-sm btn-outline-secondary">Export</button>
+	      </div>
+	      <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+	        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+	        This week
+	      </button>
+	    </div>
+	  </div>
+
+	  <canvas class="my-4 chartjs-render-monitor" id="myChart" width="807" height="340" style="display: block; height: 340px; width: 807px;"></canvas>
+
+	  <h2>Section title</h2>
+	  <div class="table-responsive">
+	    <table class="table table-striped table-sm">
+	      <thead>
+	        <tr>
+	          <th>#</th>
+	          <th>Header</th>
+	          <th>Header</th>
+	          <th>Header</th>
+	          <th>Header</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr>
+	          <td>1,001</td>
+	          <td>Lorem</td>
+	          <td>ipsum</td>
+	          <td>dolor</td>
+	          <td>sit</td>
+	        </tr>
+	        <tr>
+	          <td>1,002</td>
+	          <td>amet</td>
+	          <td>consectetur</td>
+	          <td>adipiscing</td>
+	          <td>elit</td>
+	        </tr>
+	        <tr>
+	          <td>1,003</td>
+	          <td>Integer</td>
+	          <td>nec</td>
+	          <td>odio</td>
+	          <td>Praesent</td>
+	        </tr>
+	        <tr>
+	          <td>1,003</td>
+	          <td>libero</td>
+	          <td>Sed</td>
+	          <td>cursus</td>
+	          <td>ante</td>
+	        </tr>
+	        <tr>
+	          <td>1,004</td>
+	          <td>dapibus</td>
+	          <td>diam</td>
+	          <td>Sed</td>
+	          <td>nisi</td>
+	        </tr>
+	        <tr>
+	          <td>1,005</td>
+	          <td>Nulla</td>
+	          <td>quis</td>
+	          <td>sem</td>
+	          <td>at</td>
+	        </tr>
+	        <tr>
+	          <td>1,006</td>
+	          <td>nibh</td>
+	          <td>elementum</td>
+	          <td>imperdiet</td>
+	          <td>Duis</td>
+	        </tr>
+	        <tr>
+	          <td>1,007</td>
+	          <td>sagittis</td>
+	          <td>ipsum</td>
+	          <td>Praesent</td>
+	          <td>mauris</td>
+	        </tr>
+	        <tr>
+	          <td>1,008</td>
+	          <td>Fusce</td>
+	          <td>nec</td>
+	          <td>tellus</td>
+	          <td>sed</td>
+	        </tr>
+	        <tr>
+	          <td>1,009</td>
+	          <td>augue</td>
+	          <td>semper</td>
+	          <td>porta</td>
+	          <td>Mauris</td>
+	        </tr>
+	        <tr>
+	          <td>1,010</td>
+	          <td>massa</td>
+	          <td>Vestibulum</td>
+	          <td>lacinia</td>
+	          <td>arcu</td>
+	        </tr>
+	        <tr>
+	          <td>1,011</td>
+	          <td>eget</td>
+	          <td>nulla</td>
+	          <td>Class</td>
+	          <td>aptent</td>
+	        </tr>
+	        <tr>
+	          <td>1,012</td>
+	          <td>taciti</td>
+	          <td>sociosqu</td>
+	          <td>ad</td>
+	          <td>litora</td>
+	        </tr>
+	        <tr>
+	          <td>1,013</td>
+	          <td>torquent</td>
+	          <td>per</td>
+	          <td>conubia</td>
+	          <td>nostra</td>
+	        </tr>
+	        <tr>
+	          <td>1,014</td>
+	          <td>per</td>
+	          <td>inceptos</td>
+	          <td>himenaeos</td>
+	          <td>Curabitur</td>
+	        </tr>
+	        <tr>
+	          <td>1,015</td>
+	          <td>sodales</td>
+	          <td>ligula</td>
+	          <td>in</td>
+	          <td>libero</td>
+	        </tr>
+	      </tbody>
+	    </table>
+	  </div>
+	</main>
+
 @endsection

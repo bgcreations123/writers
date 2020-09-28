@@ -29,8 +29,6 @@ class HomeController extends Controller
     {
         Session::has('data') ? Session::forget('data') : null;
 
-
-
         $pendingOrders = OrderDetail::select('order_details.id', 'order_details.subject', 'order_details.deadline')
         ->where('order_details.order_detail_status_id', 1)
         ->leftJoin('orders', function ($query) {
@@ -136,6 +134,8 @@ class HomeController extends Controller
 
     public function viewOrder($id)
     {
+        $completed = 0;
+        $processing = 0;
         $orderDetails = OrderDetail::find($id);
 
         // If picked

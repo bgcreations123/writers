@@ -75,11 +75,14 @@ class MessagesController extends Controller
         $message->message_status_id = 2;
         $message->files = ($request->hasFile('file'))?'1':'0';
         $message->save();
-        dd($request->hasFile('file'));
+
+        // dd($request->hasFile('file'));
 
         if ($request->hasFile('file')) {
-            // Perform uploads
+            
             $files = $request->file('file');
+
+            // Perform uploads
             foreach($files as $file):
                 $filename = time().$file->getClientOriginalName();
                 // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
@@ -90,18 +93,13 @@ class MessagesController extends Controller
                     $file,
                     $filename
                 );
-            endforeach;
-        }
 
-        // Send files into the DB
-        if ($request->hasFile('file')){
-            $files = $request->file('file');
-            foreach ($files as $file):
+                // Send files into the DB
                 $file = new messagesFiles;
                 $file->message_id = $message->id;
                 $file->name = $filename;
                 $file->save();
-            endforeach; 
+            endforeach;
         }
 
         return redirect()->back()->with(['success' => 'Your message was sent successfully.']);

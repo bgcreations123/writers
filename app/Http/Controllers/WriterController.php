@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\{OrderDetail, PickedJob, CompletedJob, DefferedJob};
+use App\{OrderDetail, Product, PickedJob, CompletedJob, DefferedJob};
 
 class WriterController extends Controller
 {
@@ -17,6 +18,63 @@ class WriterController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function jobs(){
+        // $jobPool = OrderDetail::select('id', 'uniqueId', 'product_id', 'subject', 'deadline')->where([['order_detail_status_id', 1], ['deadline', '>=', Carbon::now()]])->orderBy('created_at', 'desc')->get();
+
+        $jobPool = OrderDetail::select('order_details.id', 'order_details.uniqueId', 'order_details.product_id', 'order_details.pages', 'order_details.subject', 'order_details.deadline')
+        ->where([['order_detail_status_id', 1], ['deadline', '>=', Carbon::now()]])
+        ->leftJoin('deffered_jobs', function ($query) {
+                 $query
+                 ->on('order_details.id', '=', 'deffered_jobs.order_detail_id')
+                 ->where('deffered_jobs.writer_id', '=', auth()->user()->id);
+             })
+        ->whereNull('deffered_jobs.id')
+        ->get();
+
+        $subTotalMoneyOwed = Product::leftJoin('deffered_jobs', function ($query) {
+            $query
+            ->on('products.id', '=', 'deffered_jobs.product_id')
+            ->where('deffered_jobs.writer_id', '=', auth()->user()->id);
+        })
+        ->whereNotNull('deffered_jobs.id')
+        ->sum('penalty_price');
+
+        $subTotalPagesOwed = Product::leftJoin('deffered_jobs', function ($query) {
+            $query
+            ->on('products.id', '=', 'deffered_jobs.product_id')
+            ->where('deffered_jobs.writer_id', '=', auth()->user()->id);
+        })
+        ->leftJoin('order_details', function ($query) {
+            $query
+            ->on('deffered_jobs.order_detail_id', '=', 'order_details.id');
+        })
+        ->whereNotNull('deffered_jobs.id')
+        ->sum('pages');
+
+        $TotalMoneyOwed = $subTotalMoneyOwed * $subTotalPagesOwed;
+
+        return view('writer.jobs', compact('jobPool', 'TotalMoneyOwed'));
+    }
+
+    public function my_jobs()
+    {
+        $my_jobs = PickedJob::where('writer_id', auth()->user()->id)->with('orderDetail')->whereHas('orderDetail', function ($query) {
+            $query->where('deadline', '>=', Carbon::now());
+        })
+        ->whereNotNull('id')
+        ->get();
+
+        return view('writer.my_jobs', compact('my_jobs'));
+    }
+
+    public function deffered_jobs()
+    {
+        $deffered_jobs = DefferedJob::where('writer_id', auth()->user()->id)
+        ->get();
+
+        return view('writer.deffered_jobs', compact('deffered_jobs'));
     }
 
     public function pick($id)
@@ -143,6 +201,8 @@ class WriterController extends Controller
 
     public function viewJob($id)
     {
+        $completed = 0;
+        $processing = 0;
         $orderDetails = OrderDetail::find($id);
 
         if($orderDetails->orderDetailStatus->status == 'Processing'){
