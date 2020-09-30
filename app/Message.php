@@ -37,8 +37,8 @@ class Message extends Model
 	    return $this->belongsTo(MessageStatus::class);
 	}
 
-    public function messagesFiles()
+    public function MessagesFiles()
     {
-        return $this->belongsTo(messagesFiles::class);
+        return $this->belongsTo(MessagesFiles::class);
     }
 }

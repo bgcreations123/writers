@@ -43,12 +43,17 @@
                     @endif
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('messages') }}">Messages</a>
+                        <a class="nav-link" href="{{ route('messages.inbox') }}">
+                            <span class="fa fa-envelope-o"></span>
+                            <span class="badge badge-pill badge-primary">
+                                2
+                            </span>
+                        </a>
                     </li>
                     @if(auth()->user()->hasRole('Client'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ URL::to('/shoppingcart') }}">
-                                Cart
+                                <span class="fa fa-shopping-cart"></span>
                                 @if(Session::has('cart'))
                                     <span class="badge badge-pill badge-secondary">
                                         {{ Session::get('cart')->totalQty }}
@@ -59,7 +64,9 @@
                         </li>
                     @elseif(auth()->user()->hasRole('Writer'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('writer.payments') }}">Payments</a>
+                            <a class="nav-link" href="#">
+                                <span class="fa fa-bell-o"></span>
+                            </a>
                         </li>
                     @endif
 

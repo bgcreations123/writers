@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\{User, Message, messagesFiles};
+use App\{User, Message, MessagesFiles};
 
 class MessagesController extends Controller
 {
@@ -19,13 +19,12 @@ class MessagesController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function inbox()
     {
     	// Get all messages belonging to a single user
     	$user = Auth()->user();
     	
     	$inbox_messages = Message::where('reciever_id', $user->id)->get();
-    	$outbox_messages = Message::where('sender_id', $user->id)->get();
 
         $unread = Message::where([['reciever_id', $user->id], ['message_status_id', 2]])->count();
 
@@ -35,7 +34,17 @@ class MessagesController extends Controller
             $users = User::all();
         }
 
-    	return view('messages.index', compact('inbox_messages', 'outbox_messages', 'unread', 'users'));
+    	return view('messages.inbox', compact('inbox_messages', 'unread', 'users'));
+    }
+
+    public function sent()
+    {
+        // Get all messages belonging to a single user
+        $user = Auth()->user();
+
+        $sent_messages = Message::where('sender_id', $user->id)->get();
+
+        return view('messages.sent', compact('sent_messages'));
     }
 
     public function show($id)
@@ -43,10 +52,12 @@ class MessagesController extends Controller
     	// Get to read a single message
     	$user = Auth()->user();
 
+        $files = null;
+
     	$message = Message::where('id', $id)->orWhere([['sender_id', $user->id], ['reciever_id', $user->id]])->first();
 
         if($message->files = true){
-            $files = messagesFiles::where('message_id', $id)->get();
+            $files = MessagesFiles::where('message_id', $id)->get();
         }
 
         // Update message status

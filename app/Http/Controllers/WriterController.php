@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\{OrderDetail, Product, PickedJob, CompletedJob, DefferedJob};
+use App\{OrderDetail, Product, PickedJob, CompletedJob, CompletedJobsFiles, DefferedJob};
 
 class WriterController extends Controller
 {
@@ -33,6 +33,22 @@ class WriterController extends Controller
         ->whereNull('deffered_jobs.id')
         ->get();
 
+        return view('writer.jobs', compact('jobPool'));
+    }
+
+    public function my_jobs()
+    {
+        $my_jobs = PickedJob::where('writer_id', auth()->user()->id)->with('orderDetail')->whereHas('orderDetail', function ($query) {
+            $query->where('deadline', '>=', Carbon::now());
+        })
+        ->whereNotNull('id')
+        ->get();
+
+        return view('writer.my_jobs', compact('my_jobs'));
+    }
+
+    public function deffered_jobs()
+    {
         $subTotalMoneyOwed = Product::leftJoin('deffered_jobs', function ($query) {
             $query
             ->on('products.id', '=', 'deffered_jobs.product_id')
@@ -55,26 +71,17 @@ class WriterController extends Controller
 
         $TotalMoneyOwed = $subTotalMoneyOwed * $subTotalPagesOwed;
 
-        return view('writer.jobs', compact('jobPool', 'TotalMoneyOwed'));
-    }
-
-    public function my_jobs()
-    {
-        $my_jobs = PickedJob::where('writer_id', auth()->user()->id)->with('orderDetail')->whereHas('orderDetail', function ($query) {
-            $query->where('deadline', '>=', Carbon::now());
-        })
-        ->whereNotNull('id')
-        ->get();
-
-        return view('writer.my_jobs', compact('my_jobs'));
-    }
-
-    public function deffered_jobs()
-    {
         $deffered_jobs = DefferedJob::where('writer_id', auth()->user()->id)
         ->get();
 
-        return view('writer.deffered_jobs', compact('deffered_jobs'));
+        return view('writer.deffered_jobs', compact('deffered_jobs', 'TotalMoneyOwed'));
+    }
+
+    public function completed_jobs()
+    {
+        $completed_jobs = CompletedJob::where('writer_id', auth()->user()->id)->get();
+
+        return view('writer.completed_jobs', compact('completed_jobs'));
     }
 
     public function pick($id)
@@ -155,30 +162,18 @@ class WriterController extends Controller
     public function completeJob(Request $request, $id)
     {
         $this->validate($request, [
-            'files' => 'required',
+            'file' => 'required',
         ]);
 
-        // Get the job owner
+        // Identify job owner
         $job_owner = OrderDetail::with('order')->where('id', $id)->first();
 
-        $filename = time().$request->file('files')->getClientOriginalName();
         // dd(array_replace($request->input(), $fileName));
-
-        // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
-
-        if ($request->hasFile('files')){
-            // Perform uploads
-            $uploadedFile = $request->file('files');
-
-            Storage::disk('local')->putFileAs(
-                'files/'.$job_owner->order->user_id,
-                $uploadedFile,
-                $filename
-            );
-        }
 
         // Identify Picked jobs
         $picked_job = PickedJob::where('order_detail_id', $id)->first();
+
+        // dd($request->file('file'));
 
         // Add into the completed jobs table
         $job = new CompletedJob;
@@ -186,12 +181,37 @@ class WriterController extends Controller
         $job->writer_id = $picked_job->writer_id;
         $job->product_id = $picked_job->product_id;
         $job->payment_status_id = 1;
-        $job->files = $filename;
-
+        $job->files = ($request->hasFile('file'))?'1':'0';
         $job->save();
 
+        if($request->hasFile('file')) {
+            
+            $files = $request->file('file');
+
+            // Perform uploads
+            foreach($files as $file):
+                $filename = time().$file->getClientOriginalName();
+                // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
+                // $uploadedFile = $request->file('file');
+                // $filename = time().$uploadedFile->getClientOriginalName();
+                Storage::disk('local')->putFileAs(
+                    'files/'.$job_owner->order->user_id,
+                    $file,
+                    $filename
+                );
+
+                // Send files into the DB
+                $file = new CompletedJobsFiles;
+                $file->completed_job_id = $job->id;
+                $file->name = $filename;
+                $file->save();
+            endforeach;
+        }
+
+        // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
+
         // Update order details status table
-        // OrderDetail::where('id', $picked_job->order_detail_id)->update(['order_detail_status_id' => 3]);
+        OrderDetail::where('id', $picked_job->order_detail_id)->update(['order_detail_status_id' => 3]);
 
         // Delete from picked job table
         PickedJob::where('id', $picked_job->id)->delete();
@@ -201,25 +221,45 @@ class WriterController extends Controller
 
     public function viewJob($id)
     {
+        $files = null;
         $completed = 0;
         $processing = 0;
         $orderDetails = OrderDetail::find($id);
 
-        if($orderDetails->orderDetailStatus->status == 'Processing'){
+        if($orderDetails->OrderDetailStatus->status == 'Processing'){
             $processing = PickedJob::where('order_detail_id', $orderDetails->id)->first();
         }elseif($orderDetails->orderDetailStatus->status == 'Complete'){
             $completed = CompletedJob::where('order_detail_id', $orderDetails->id)->first();
+
+            // dd($completed);
+
+            if($completed->files = true){
+                $files = CompletedJobsFiles::where('completed_job_id', $completed->id)->get();
+            }
         }
 
         // dd($completed);
 
-        return view('writer.view_job', compact('orderDetails', 'processing', 'completed'));
+        return view('writer.view_job', compact('orderDetails', 'processing', 'completed', 'files'));
+    }
+
+    public function my_account()
+    {
+        return view('writer.my_account');
     }
 
     public function payments()
     {
         $paidJobs = CompletedJob::where([['writer_id', auth()->user()->id], ['payment_status_id', 2]])->get();
-    	$unPaidJobs = CompletedJob::where([['writer_id', auth()->user()->id], ['payment_status_id', 1]])->get();
-        return view('writer.payments', compact('paidJobs', 'unPaidJobs'));
+    	
+        return view('writer.payments', compact('paidJobs'));
     }
+
+    public function unpaid()
+    {
+        $unPaidJobs = CompletedJob::where([['writer_id', auth()->user()->id], ['payment_status_id', 1]])->get();
+
+        return view('writer.unpaid', compact('unPaidJobs'));
+    }
+
 }

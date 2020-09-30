@@ -154,6 +154,8 @@ class CompletedJobController extends VoyagerBaseController
 
         $completedJob = CompletedJob::find($id);
 
+        // dd($completedJob);
+
         $view = 'voyager::bread.read';
 
         if (view()->exists("voyager::$slug.read")) {

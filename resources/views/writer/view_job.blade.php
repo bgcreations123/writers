@@ -15,100 +15,36 @@
 
     {{-- {{dd($orderDetails->order_detail_status_id)}} --}}
 
-  	<div class="row">
-      
-  	</div>
-
 
     <div class="row">
       {{-- Left --}}
-      <div class="col-md-7">
+      <div class="col-md-12">
 
-        {{--  --}}
-        <div class="d-flex justify-content-between align-items-center">
-          <h4 class="my-3">
-            Job Details
-          </h4>
-          <span class="pr-2">
-            <small>ID:</small> <strong>{{ $orderDetails->uniqueId }}</strong>
-          </span>
-        </div>
-        
+      {{-- Right --}}
+      <div class="col-md-12">
         <div class="row">
-          <div class="col-md-6 my-2">
-          <ul class="list-group">
-            <li class="list-group-item">Paper Type : {{ empty($orderDetails->type->type)?'Any':$orderDetails->type->type }} </li>
-            <li class="list-group-item">Paper Format : {{ empty($orderDetails->format->format)?'Any':$orderDetails->format->format }}</li>
-            <li class="list-group-item">No. of Sources : {{ empty($orderDetails->sources)?'Any':$orderDetails->sources }}</li>
-            <li class="list-group-item">Paper Language: {{ empty($orderDetails->language->language)?'Any':$orderDetails->language->language }}</li>
-          </ul>
+          <div class="col-md-12 py-3">
+            <a href="{{ URL::previous() }}" class="btn btn-outline-secondary float-right">back</a>
+            @if($orderDetails->orderDetailStatus->status == 'Pending')
+              @if($orderDetails->deadline <= \Carbon\Carbon::now())
+                <a class="btn btn-outline-secondary float-right " href="#">Pay here</a>
+              @else
+                <a href="{{ route('writer.pick', ['id'=>$orderDetails->id]) }}" class="btn btn-primary float-right">Pick</a>
+              @endif
+            @elseif($orderDetails->OrderDetailStatus->status == 'Processing')
+              @if($processing['writer_id'] != Auth()->user()->id)
+                <a class="btn btn-outline-secondary" href="#">Pay here</a>
+              @else
+                <a href="{{ route('writer.complete', ['id'=>$orderDetails->id]) }}" class="btn btn-success">Complete</a>
+                <a href="{{ route('writer.deffer', ['id'=>$orderDetails->id]) }}" class="btn btn-outline-danger ">Defer</a>
+              @endif
+              <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#composeModal">Compose Message</a>
+            @endif
           </div>
-          <div class="col-md-6 my-2">
-          <ul class="list-group">
-            <li class="list-group-item">Paper Spacing : {{ empty($orderDetails->spacing->space)?'Any':$orderDetails->spacing->space }} </li>
-            <li class="list-group-item">Client Name : {{ $orderDetails->order->client->name }}</li>
-            <li class="list-group-item">Job Status : {{ $orderDetails->orderDetailStatus->status }}</li>
-            <li class="list-group-item">Job Price : $ {{ $orderDetails->product->job_price * $orderDetails->pages }}.00</li>
-          </ul>
-          </div>
-        </div>
-
-        {{--  --}}
-        <div class="row">
-          <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
-
-            <!-- Related Projects Row -->
-            <h4 class="my-4">Related Documents</h4>
-
-            <div class="card col-md-6">
-              <div class="card-body">
-                @if(empty($orderDetails->files))
-                  <p>No related files submited.</p>
-                @else
-                  <h5 class="card-title">File</h5>
-                  <p class="card-text">
-                    <small>File Ext:</small>
-                    {{ '.'.substr(strrchr($orderDetails->files, "."), 1) }}
-                  </p>
-                  <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', ['ref', $orderDetails->files])  }}">
-                    Download
-                  </a>
-                @endif
-              </div>
-            </div>
-          </div>
-
-          @if($orderDetails->orderDetailStatus->status == 'Complete')
-
-            <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
-              <!-- Finished Jobs Row -->
-              <h4 class="my-4">Finished Documents</h4>
-              <div class="card col-md-6">
-                <div class="card-body">
-                  <h5 class="card-title">File</h5>
-                  @if(empty($completed->files))
-                    <p>Sorry, No Evidence/Proof of work!</p>
-                  @else
-                    <p class="card-text">
-                      <small>File Ext:</small> 
-                      {{ '.'.substr(strrchr($completed->files, "."), 1) }}
-                    </p>
-                    <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', ['job', $completed->files])  }}">
-                      Download
-                    </a>
-                  @endif
-                </div>
-              </div>
-            </div>
-
-          @endif
         </div>
       </div>
 
-      {{-- Right --}}
-      <div class="col-md-5">
-
-        <div class="card">
+        <div class="card shadow">
           <div class="card-body text-center">
             @if($orderDetails->orderDetailStatus->status == 'Complete')
               <h5 class="card-title">Completed</h5>
@@ -134,31 +70,130 @@
         </div>
 
         {{--  --}}
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 class="my-3">
+            Job Details
+          </h4>
+          <span class="pr-2">
+            <small>ID:</small> <strong>{{ $orderDetails->uniqueId }}</strong>
+          </span>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-6 my-2">
+            <ul class="list-group">
+              <li class="list-group-item">Paper Type : {{ empty($orderDetails->type->type)?'Any':$orderDetails->type->type }} </li>
+              <li class="list-group-item">Paper Format : {{ empty($orderDetails->format->format)?'Any':$orderDetails->format->format }}</li>
+              <li class="list-group-item">No. of Sources : {{ empty($orderDetails->sources)?'Any':$orderDetails->sources }}</li>
+              <li class="list-group-item">Paper Language: {{ empty($orderDetails->language->language)?'Any':$orderDetails->language->language }}</li>
+            </ul>
+          </div>
+          <div class="col-md-6 my-2">
+            <ul class="list-group">
+              <li class="list-group-item">Paper Spacing : {{ empty($orderDetails->spacing->space)?'Any':$orderDetails->spacing->space }} </li>
+              <li class="list-group-item">Client Name : {{ substr($orderDetails->order->client->name, 0, 1).'. '.str_word_count($orderDetails->order->client->name, 1)[1] }}</li>
+              <li class="list-group-item">Job Status : {{ $orderDetails->orderDetailStatus->status }}</li>
+              <li class="list-group-item">Job Price : $ {{ $orderDetails->product->job_price * $orderDetails->pages }}.00</li>
+            </ul>
+          </div>
+        </div>
+
         <div class="col-md-12">
+          {{--  --}}
           <h4 class="my-3 text-center">Job Description</h4>
           <p>{{ $orderDetails->description }}</p>
 
-          @if($orderDetails->orderDetailStatus->status == 'Pending')
-            @if($orderDetails->deadline <= \Carbon\Carbon::now())
-              <a class="btn btn-outline-secondary" href="#">Pay here</a>
-            @else
-              <a href="{{ route('writer.pick', ['id'=>$orderDetails->id]) }}" class="btn btn-primary">Pick</a>
-            @endif
-          @elseif($orderDetails->orderDetailStatus->status == 'Processing')
-            @if($processing['writer_id'] != Auth()->user()->id)
-              <a class="btn btn-outline-secondary" href="#">Pay here</a>
-            @else
-              <a href="{{ route('writer.complete', ['id'=>$orderDetails->id]) }}" class="btn btn-success">Complete</a>
-              <a href="{{ route('writer.deffer', ['id'=>$orderDetails->id]) }}" class="btn btn-outline-danger ">Defer</a>
-            @endif
-            <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#composeModal">Compose Message</a>
-          @endif
-
-          <a href="{{ URL::previous() }}" class="btn btn-outline-secondary float-right">back</a>
+          {{-- correction comments if available --}}
         </div>
 
-        {{-- correction comments if available --}}
+        {{--  --}}
+        <div class="row">
+          <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
 
+            <!-- Related Projects Row -->
+            <h4 class="my-4">Related Documents</h4>
+
+            <div class="card shadow">
+              <div class="card-body">
+                @if(empty($orderDetails->files))
+                  <p>No related files submited.</p>
+                @else
+                  <div class="card-deck">
+                    <div class="card col-md-6 shadow">
+                      <div class="card-block text-center">
+                        <h4 class="card-title text">
+                          <small>
+                            <a href="{{ url( 'download', ['ref', $orderDetails->files])  }}">Download</a>
+                          </small> 
+                        </h4>
+                        <p class="card-text">
+                          <small class="text-muted">
+                            <div>
+                              <a href="{{ url( 'download', ['job', $orderDetails->files])  }}">
+                                <span class="fa fa-file-o" style="font-size: 20px;"></span>
+                                <br>
+                                <small>{{ $orderDetails->files }}</small>
+                              </a>
+                            </div>
+                          </small>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                @endif
+              </div>
+            </div>
+          </div>
+
+          @if($orderDetails->orderDetailStatus->status == 'Complete')
+            <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
+              <!-- Finished Jobs Row -->
+              <h4 class="my-4">Finished Documents</h4>
+              <div class="card shadow">
+                <div class="card-body">
+                  @if(empty($files))
+                    <p>Sorry, No Evidence/Proof of work!</p>
+                  @else
+                    <div class="card-deck">
+                      @foreach($files as $file)
+                        <div class="card col-md-6">
+                          <div class="card-block text-center">
+                            <h4 class="card-title text">
+                              <small>
+                                <a href="{{ url( 'download', ['job', $completed->files])  }}">Download</a>
+                              </small> 
+                            </h4>
+                            <p class="card-text">
+                              <small class="text-muted">
+                                <div>
+                                  <a href="{{ url( 'download', ['job', $completed->files])  }}">
+                                    <span class="fa fa-file-o" style="font-size: 20px;"></span>
+                                    <br>
+                                    <small>{{ $file->name }}</small>
+                                  </a>
+                                </div>
+                              </small>
+                            </p>
+                          </div>
+                        </div>
+                      @endforeach
+                    </div>
+                    <!-- <div class="col-md-2">
+                        <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', ['job', $completed->files])  }}">
+                          Download
+                        </a>
+                      <a href="{{ url( 'download', ['job', $completed->files])  }}">
+                        <span class="fa fa-file-o" style="font-size: 60px;"></span>
+                        <br>
+                        {{ '.'.substr(strrchr($file->name, "."), 1) }}
+                      </a>
+                    </div> -->
+                  @endif
+                </div>
+              </div>
+            </div>
+          @endif
+        </div>
       </div>
 
     </div>

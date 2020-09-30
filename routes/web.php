@@ -79,17 +79,21 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/jobs', 'WriterController@jobs')->name('writer.jobs');
 	Route::get('/my_jobs', 'WriterController@my_jobs')->name('writer.my_jobs');
 	Route::get('/deffered_jobs', 'WriterController@deffered_jobs')->name('writer.deffered_jobs');
+	Route::get('/completed_jobs', 'WriterController@completed_jobs')->name('writer.completed_jobs');
 	Route::get('/pick/{id}', 'WriterController@pick')->name('writer.pick');
 	Route::get('/deffer/{id}', 'WriterController@deffer')->name('writer.deffer');
 	Route::get('/complete/{id}', 'WriterController@complete')->name('writer.complete');
 	Route::post('/complete/{id}', 'WriterController@completeJob')->name('writer.completeJob');
+	Route::get('/my_account', 'WriterController@my_account')->name('writer.my_account');
 	Route::get('/payments', 'WriterController@payments')->name('writer.payments');
+	Route::get('/unpaid', 'WriterController@unpaid')->name('writer.unpaid');
 	Route::get('/view_job/{id}', 'WriterController@viewJob')->name('writer.view_job');
 	
 	Route::post('/paypal', 'PaymentController@paypal')->name('paypal');
 	Route::get('/status', 'PaymentController@getPaymentStatus')->name('status');
 
-	Route::get('/messages', 'MessagesController@index')->name('messages');
+	Route::get('/inbox', 'MessagesController@inbox')->name('messages.inbox');
+	Route::get('/sent', 'MessagesController@sent')->name('messages.sent');
 	Route::get('/messages/{id}', 'MessagesController@show')->name('messages.show');
 	Route::post('/messages', 'MessagesController@store')->name('messages.store');
 });

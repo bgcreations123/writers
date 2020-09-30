@@ -30,4 +30,9 @@ class CompletedJob extends Model
 	{
 	    return $this->belongsTo(PaymentStatus::class);
 	}
+
+	public function CompletedJobsFiles()
+    {
+        return $this->belongsTo(CompletedJobsFiles::class);
+    }
 }

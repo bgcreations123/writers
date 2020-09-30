@@ -10,9 +10,11 @@
 		</div>
 
 		<div class="tab-pane" id="picked" role="tabpanel">
-			<div class="card">
+			<div class="card shadow">
+				<div class="card-header">
+					<a class="btn btn-sm btn-outline-secondary float-right shadow">Gen. Actions</a>
+				</div>
 				<div class="card-body">
-					<h5 class="card-title">All Deffered Jobs</h5>
 					@if($deffered_jobs->isEmpty())
 						<p>Great! No jobs canceled.</p>
 					@else

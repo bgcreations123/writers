@@ -63,16 +63,16 @@
 
                 <div class="col-lg-6 col-md-12">
                     <ul class="list-group">
-                        <li class="list-group-item">Paper Type : {{ $review['completedJob']['orderDetail']['type']['type'] }} </li>
-                        <li class="list-group-item">Paper Format : {{ $review['completedJob']['orderDetail']['format']['format'] }}</li>
-                        <li class="list-group-item">No. of Sources : {{ $review['completedJob']['orderDetail']['sources'] }}</li>
-                        <li class="list-group-item">Paper Language: {{ $review['completedJob']['orderDetail']['language']['language'] }}</li>
+                        <li class="list-group-item">Paper Type : {{ ($review['completedJob']['orderDetail']['type'] == 0)?'Null':$review['completedJob']['orderDetail']['type']['type'] }} </li>
+                        <li class="list-group-item">Paper Format : {{ ($review['completedJob']['orderDetail']['format'] == 0)?'Null':$review['completedJob']['orderDetail']['format']['format'] }}</li>
+                        <li class="list-group-item">No. of Sources : {{ ($review['completedJob']['orderDetail']['sources'] == 0)?'Null':$review['completedJob']['orderDetail']['sources'] }}</li>
+                        <li class="list-group-item">Paper Language: {{ ($review['completedJob']['orderDetail']['language'] == 0)?'Null':$review['completedJob']['orderDetail']['language']['language'] }}</li>
                     </ul>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <ul class="list-group">
-                        <li class="list-group-item">Paper Spacing : {{ $review['completedJob']['orderDetail']['spacing']['space'] }} </li>
-                        <li class="list-group-item">Client Name : {{ $review['completedJob']['orderDetail']['order']['user']['name'] }}</li>
+                        <li class="list-group-item">Paper Spacing : {{ ($review['completedJob']['orderDetail']['spacing'] == 0)?'Null':$review['completedJob']['orderDetail']['spacing']['space'] }} </li>
+                        <li class="list-group-item">Client Name : {{ $review['completedJob']['orderDetail']['order']['client']['name'] }}</li>
                         <li class="list-group-item">Job Status : {{ $review['completedJob']['orderDetail']['orderDetailStatus']['status'] }}</li>
                         <li class="list-group-item">Job Price : $ {{ $review['completedJob']['product']['job_price'] * $review['completedJob']['orderDetail']['pages'] }}.00</li>
                     </ul>

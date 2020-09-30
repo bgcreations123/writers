@@ -73,6 +73,30 @@ class OrderController extends Controller
             'deadline' => 'required|after:today',
         ]);
 
+        if ($request->hasFile('file')) {
+            
+            $files = $request->file('file');
+
+            // Perform uploads
+            foreach($files as $file):
+                $filename = time().$file->getClientOriginalName();
+                // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
+                // $uploadedFile = $request->file('file');
+                // $filename = time().$uploadedFile->getClientOriginalName();
+                Storage::disk('local')->putFileAs(
+                    'files/'.(int)auth()->user()->id,
+                    $file,
+                    $filename
+                );
+
+                // Send files into the DB
+                $file = new OrderDetailsFiles;
+                $file->order_details_id = $job->id;
+                $file->name = $filename;
+                $file->save();
+            endforeach;
+        }
+
         if ($request->hasFile('files')){
             
             $filename = time().$request->file('files')->getClientOriginalName();

@@ -11,7 +11,7 @@
 
       <div class="row">
         <div class="col-lg-8 my-4">
-          <div class="card border border-default p-4">
+          <div class="card border border-default p-4 shadow">
             <div class="card-title">
               <div class="row justify-content-center align-items-center">
                 <div class="col-10 border-bottom">
@@ -95,7 +95,7 @@
       <!-- Content Row -->
       <div class="row">
         <div class="col-md-4 mb-4">
-          <div class="card h-100">
+          <div class="card h-100 shadow">
             <div class="card-body">
               <div class="card-title d-flex justify-content-between align-items-center">
                 <h5 class="text-primary">
@@ -130,7 +130,7 @@
         </div>
         <!-- /.col-md-4 -->
         <div class="col-md-4 mb-4">
-          <div class="card h-100">
+          <div class="card h-100 shadow">
             <div class="card-body">
               <div class="card-title d-flex justify-content-between align-items-center">
                 <h5 class="text-primary">
@@ -162,7 +162,7 @@
         </div>
         <!-- /.col-md-4 -->
         <div class="col-md-4 mb-4">
-          <div class="card h-100">
+          <div class="card h-100 shadow">
             <div class="card-body">
               <div class="card-title d-flex justify-content-between align-items-center">
                 <h5 class="text-primary">
@@ -238,7 +238,7 @@
 
       <!--/.Carousel Wrapper-->
 
-      <div class="jumbotron jumbotron-muted">
+      <div class="jumbotron jumbotron-muted shadow">
         <div class="row">
           <div class="col-lg-6">
             {!! setting('site.jumbotron') !!}

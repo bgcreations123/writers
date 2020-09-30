@@ -5,7 +5,7 @@
 @section('content')
     <div class="container" style="padding-top: 40px;">
         <div class="row justify-content-center align-items-center">
-            <div class="col-md-10 border border-default rounded p-2">
+            <div class="col-md-10 border border-default rounded p-2 shadow">
                 <div class="row">
                     <div class="col-md-6 content border-right">
                         {{-- <div class="col-12 mx-auto text-center" style="padding-left: 240px"> --}}

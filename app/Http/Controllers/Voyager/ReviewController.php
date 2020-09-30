@@ -152,7 +152,7 @@ class ReviewController extends VoyagerBaseController
             $view = "voyager::$slug.read";
         }
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'review', 'completedJob'));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'review'));
     }
 
     public function approve($id)

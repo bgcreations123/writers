@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\{User, PaperPeriod, PaperClassification, OrderDetail, PickedJob, CompletedJob, DefferedJob, Product};
+use App\{User, PaperPeriod, PaperClassification, OrderDetail, PickedJob, CompletedJob, CompletedJobsFiles, DefferedJob, Product};
 use Carbon\Carbon;
 use Session;
 
@@ -134,21 +134,26 @@ class HomeController extends Controller
 
     public function viewOrder($id)
     {
+        $files = null;
         $completed = 0;
         $processing = 0;
         $orderDetails = OrderDetail::find($id);
 
         // If picked
-        if($orderDetails->orderDetailStatus->status == 'Processing'){
+        if($orderDetails->OrderDetailStatus->status == 'Processing'){
             $processing = PickedJob::where('order_detail_id', $orderDetails->id)->first();
-        }
-
         // If completed
-        if($orderDetails->orderDetailStatus->status == 'Complete'){
+        }elseif($orderDetails->orderDetailStatus->status == 'Complete'){
             $completed = CompletedJob::where('order_detail_id', $orderDetails->id)->first();
+
+            // dd($completed);
+
+            if($completed->files = true){
+                $files = CompletedJobsFiles::where('completed_job_id', $completed->id)->get();
+            }
         }
 
-        return view('home.view_order', compact('orderDetails', 'completed', 'processing'));
+        return view('home.view_order', compact('orderDetails', 'completed', 'processing', 'files'));
     }
 
     public function profile($id)
