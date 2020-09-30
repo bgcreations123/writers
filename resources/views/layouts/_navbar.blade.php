@@ -45,9 +45,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('messages.inbox') }}">
                             <span class="fa fa-envelope-o"></span>
-                            <span class="badge badge-pill badge-primary">
-                                2
-                            </span>
+                            @if(!empty($message_count->count()))
+                                <span class="badge badge-pill badge-primary">
+                                    {{ $message_count->count() }}
+                                </span>
+                            @endif
                         </a>
                     </li>
                     @if(auth()->user()->hasRole('Client'))

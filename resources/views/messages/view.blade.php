@@ -86,8 +86,9 @@
 		      		</div>
 		      		<div class="modal-body">
 						<div class="form-group">
+							<input type="hidden" class="form-control" id="recipient" name="recipient" value="{{ ($message->reciever_id == Auth()->user()->id)?$message->sender_id:$message->reciever_id }}">
 							<label for="recipient">Recipient</label>
-                    		<input type="text" class="form-control" id="recipient" name="recipient" value="{{ ($message->reciever->id == Auth()->user()->id)?$message->sender->name:$message->reciever->name  }}" disabled>
+                    		<input type="text" class="form-control" id="recipient" name="recipient" value="{{ ($message->reciever_id == Auth()->user()->id)?$message->sender->name:$message->reciever->name  }}" disabled>
 						</div>
 						<div class="form-group">
 							<label for="subject" class="col-form-label">Subject:</label>

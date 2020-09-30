@@ -77,7 +77,6 @@ class MessagesController extends Controller
             'message' => 'required',
         ]);
 
-
         $message = new Message;
         $message->sender_id = $user->id;
         $message->reciever_id = $request->recipient;
