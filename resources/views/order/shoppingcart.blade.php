@@ -15,7 +15,7 @@
 				  	<div class="card-header bg-dark text-light">
 						<i class="fa fa-shopping-cart" aria-hidden="true"></i>
 						Shopping cart
-						<a href="/home" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
+						<a href="/home" class="btn btn-outline-info btn-sm pull-right">Raise Another Job</a>
 					</div>
 					<div class="card-body text-dark">
 						<div class="row">
@@ -141,7 +141,7 @@
 				  	<div class="card-header bg-dark text-light">
 						<i class="fa fa-shopping-cart" aria-hidden="true"></i>
 						Shopping cart
-						<a href="/home" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
+						<a href="/home" class="btn btn-outline-info btn-sm pull-right">Raise A Job</a>
 					</div>
 					<div class="card-body text-dark">
 						<h2 class="text-center">No Products in Your Cart</h2>

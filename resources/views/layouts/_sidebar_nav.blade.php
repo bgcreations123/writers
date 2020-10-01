@@ -40,34 +40,34 @@
               </li>
           </ul>
         </li>
+        <li class="nav-item">
+          <a href="#paymentsSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle collapsed">
+            <span class="fa fa-money"></span>
+            Payments
+          </a>
+          <ul class="list-unstyled collapse ml-4" id="paymentsSubmenu" style="">
+              <li>
+                <a href="{{ route('writer.my_account') }}" class="nav-link">
+                  <span class="fa fa-ravelry"></span>
+                  My Account
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('writer.payments') }}" class="nav-link">
+                  <span class="fa fa-thumbs-o-up"></span>
+                  Paid dues
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('writer.unpaid') }}" class="nav-link">
+                  <span class="fa fa-thumbs-o-down"></span>
+                  Unpaid dues
+                </a>
+              </li>
+          </ul>
+        </li>
         @endif
         @if(auth()->user()->hasRole('Client') || auth()->user()->hasRole('Writer') )
-          <li class="nav-item">
-            <a href="#paymentsSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle collapsed">
-              <span class="fa fa-money"></span>
-              Payments
-            </a>
-            <ul class="list-unstyled collapse ml-4" id="paymentsSubmenu" style="">
-                <li>
-                  <a href="{{ route('writer.my_account') }}" class="nav-link">
-                    <span class="fa fa-ravelry"></span>
-                    My Account
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('writer.payments') }}" class="nav-link">
-                    <span class="fa fa-thumbs-o-up"></span>
-                    Paid dues
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('writer.unpaid') }}" class="nav-link">
-                    <span class="fa fa-thumbs-o-down"></span>
-                    Unpaid dues
-                  </a>
-                </li>
-            </ul>
-          </li>
           <li class="nav-item">
             <a href="#messageSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle collapsed">
               <span class="fa fa-envelope"></span>
