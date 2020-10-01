@@ -17,7 +17,7 @@
 
 use Illuminate\Http\Request;
 
-use App\{OrderDetail, CompletedJob};
+use App\{OrderDetail, CompletedJobsFiles};
 
 Route::get('/', 'WelcomeController@welcome')->name('welcome');
 
@@ -113,11 +113,11 @@ Route::get('download/{type}/{filename}', function($type, $filename)
 
     elseif($type == 'job'):
     	// Look for the file owner
-	    $owner = CompletedJob::with('orderDetail')->where('files', $filename)->first();
-	    // dd($owner->orderDetail->order->user_id);
+	    $owner = CompletedJobsFiles::where('name', $filename)->first();
+	    // dd($owner->completedJob->orderDetail->order->user_id);
 
 	    // Check if file exists in app/storage/file folder
-	    $file_path = storage_path() .'/app/files/'.(int)$owner->orderDetail->order->user_id.'/'. $filename;
+	    $file_path = storage_path() .'/app/files/'.(int)$owner->completedJob->orderDetail->order->user_id.'/'. $filename;
 	    // dd($file_path);
 
     endif;

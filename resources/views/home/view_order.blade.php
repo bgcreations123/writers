@@ -96,7 +96,7 @@
                       <p class="card-text">
                         <small class="text-muted">
                           <div>
-                            <a href="{{ url( 'download', ['job', $orderDetails->files])  }}">
+                            <a href="{{ url( 'download', ['ref', $orderDetails->files])  }}">
                               <span class="fa fa-file-o" style="font-size: 20px;"></span>
                               <br>
                               <small>{{ $orderDetails->files }}</small>
@@ -127,13 +127,13 @@
                         <div class="card-block text-center">
                           <h4 class="card-title mt-2">
                             <small>
-                              <a href="{{ url( 'download', ['job', $completed->files])  }}">Download</a>
+                              <a href="{{ url( 'download', ['job', $file->name])  }}">Download</a>
                             </small> 
                           </h4>
                           <p class="card-text">
                             <small class="text-muted">
                               <div>
-                                <a href="{{ url( 'download', ['job', $completed->files])  }}">
+                                <a href="{{ url( 'download', ['job', $file->name])  }}">
                                   <span class="fa fa-file-o" style="font-size: 20px;"></span>
                                   <br>
                                   <small>{{ $file->name }}</small>
