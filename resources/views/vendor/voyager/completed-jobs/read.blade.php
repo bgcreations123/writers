@@ -24,7 +24,7 @@
         </a>
     </h1>
     @include('voyager::multilingual.language-selector')
-@stop
+@stop 
 
 @section('content')
 
