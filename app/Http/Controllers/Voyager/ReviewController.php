@@ -11,7 +11,7 @@ use TCG\Voyager\Events\BreadDataUpdated;
 use TCG\Voyager\Events\BreadImagesDeleted;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
-use App\{PickedJob, CompletedJob, OrderDetail, Review, Reject, Payable};
+use App\{PickedJob, CompletedJob, CompletedJobsFiles, OrderDetail, Review, Reject, Payable};
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 use Illuminate\Support\Facades\Storage;
 
@@ -146,13 +146,17 @@ class ReviewController extends VoyagerBaseController
 
         $review = Review::with('completedJob')->find($id);
 
+        if($review->completedJob->files = true){
+            $files = CompletedJobsFiles::where('completed_job_id', $review->completedJob->id)->get();
+        }
+
         $view = 'voyager::bread.read';
 
         if (view()->exists("voyager::$slug.read")) {
             $view = "voyager::$slug.read";
         }
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'review'));
+        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'review', 'files'));
     }
 
     public function approve($id)

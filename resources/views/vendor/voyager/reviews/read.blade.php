@@ -89,46 +89,77 @@
             </div>
 
             <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
+
                 <!-- Related Projects Row -->
-                <h3 class="my-4" style="padding-left: 20px;">Related Documents</h3>
-              
-                <div class="card border-primary col-md-6">
-                    <div class="card-body">
-                        @if(empty($review['completedJob']['orderDetail']['files']))
-                            <p>No related files. Reffer to job description.</p>
-                        @else
-                        <h5 class="card-title">File</h5>
-                        <p class="card-text">
-                            <small>File name:</small>
-                            {{ $review['completedJob']['orderDetail']['files'] }}
-                        </p>
-                        <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', ['ref', $review['completedJob']['orderDetail']['files']])  }}">Download</a>
-                        @endif
-                    </div>
+                <h4 class="my-4" style="padding-left: 20px;">Related Documents</h4>
+
+                <div class="card shadow">
+                  <div class="card-body">
+                    @if(empty($review['completedJob']['orderDetail']['files']))
+                        <p>No related files. Reffer to job description.</p>
+                    @else
+                      <div class="card-deck">
+                        <div class="card col-md-4 shadow">
+                          <div class="card-block text-center">
+                            <h4 class="card-title text">
+                              <small>
+                                <a href="{{ url( 'download', ['ref', $review['completedJob']['orderDetail']['files']])  }}">Download</a>
+                              </small> 
+                            </h4>
+                            <p class="card-text">
+                              <small class="text-muted">
+                                <div>
+                                  <a href="{{ url( 'download', ['ref', $review['completedJob']['orderDetail']['files']])  }}">
+                                    <span class="fa fa-file-o" style="font-size: 20px;"></span>
+                                    <br>
+                                    <small>{{ $review['completedJob']['orderDetail']['files'] }}</small>
+                                  </a>
+                                </div>
+                              </small>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    @endif
+                  </div>
                 </div>
             </div>
 
-            
             <div class="col-lg-6 col-md-3 col-sm-6 mb-4">
-                <!-- Finished Jobs Row -->
-                <h3 class="my-4" style="padding-left: 20px;">Finished Documents</h3>
-
-                <div class="card col-md-6">
-                    <div class="card-body">
-                        <h5 class="card-title">File</h5>
-                        @if(empty($review['completedJob']['files']))
-                            <p>Sorry, No Evidence/Proof of work!</p>
-                        @else
+              <!-- Finished Jobs Row -->
+              <h4 class="my-4" style="padding-left: 20px;">Finished Documents</h4>
+              <div class="card shadow">
+                <div class="card-body">
+                  @if(empty($files))
+                    <p>Sorry, No Evidence/Proof of work!</p>
+                  @else
+                    <div class="card-deck">
+                      @foreach($files as $file)
+                        <div class="card col-md-3">
+                          <div class="card-block text-center">
+                            <h4 class="card-title text">
+                              <small>
+                                <a href="{{ url( 'download', ['job', $file->name])  }}">Download</a>
+                              </small> 
+                            </h4>
                             <p class="card-text">
-                                <small>File name:</small> 
-                                {{ $review['completedJob']['files'] }}
+                              <small class="text-muted">
+                                <div>
+                                  <a href="{{ url( 'download', ['job', $file->name])  }}">
+                                    <span class="fa fa-file-o" style="font-size: 20px;"></span>
+                                    <br>
+                                    <small>{{ $file->name }}</small>
+                                  </a>
+                                </div>
+                              </small>
                             </p>
-                            <a class="btn btn-sm btn-primary mx-auto d-block" href="{{ url( 'download', ['job', $review['completedJob']['files']])  }}">
-                                Download
-                            </a>
-                        @endif
+                          </div>
+                        </div>
+                      @endforeach
                     </div>
+                  @endif
                 </div>
+              </div>
             </div>
 
             <div class="col-md-12 my-4">
