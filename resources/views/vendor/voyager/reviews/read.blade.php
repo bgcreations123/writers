@@ -63,15 +63,15 @@
 
                 <div class="col-lg-6 col-md-12">
                     <ul class="list-group">
-                        <li class="list-group-item">Paper Type : {{ ($review['completedJob']['orderDetail']['type'] == 0)?'Null':$review['completedJob']['orderDetail']['type']['type'] }} </li>
-                        <li class="list-group-item">Paper Format : {{ ($review['completedJob']['orderDetail']['format'] == 0)?'Null':$review['completedJob']['orderDetail']['format']['format'] }}</li>
-                        <li class="list-group-item">No. of Sources : {{ ($review['completedJob']['orderDetail']['sources'] == 0)?'Null':$review['completedJob']['orderDetail']['sources'] }}</li>
-                        <li class="list-group-item">Paper Language: {{ ($review['completedJob']['orderDetail']['language'] == 0)?'Null':$review['completedJob']['orderDetail']['language']['language'] }}</li>
+                        <li class="list-group-item">Paper Type : {{ empty($review['completedJob']['orderDetail']['type'])?'Any':$review['completedJob']['orderDetail']['type']['type'] }} </li>
+                        <li class="list-group-item">Paper Format : {{ empty($review['completedJob']['orderDetail']['format'])?'Any':$review['completedJob']['orderDetail']['format']['format'] }}</li>
+                        <li class="list-group-item">No. of Sources : {{ empty($review['completedJob']['orderDetail']['sources'])?'Any':$review['completedJob']['orderDetail']['sources'] }}</li>
+                        <li class="list-group-item">Paper Language: {{ empty($review['completedJob']['orderDetail']['language'])?'Any':$review['completedJob']['orderDetail']['language']['language'] }}</li>
                     </ul>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <ul class="list-group">
-                        <li class="list-group-item">Paper Spacing : {{ ($review['completedJob']['orderDetail']['spacing'] == 0)?'Null':$review['completedJob']['orderDetail']['spacing']['space'] }} </li>
+                        <li class="list-group-item">Paper Spacing : {{ empty($review['completedJob']['orderDetail']['spacing'])?'Any':$review['completedJob']['orderDetail']['spacing']['space'] }} </li>
                         <li class="list-group-item">Client Name : {{ $review['completedJob']['orderDetail']['order']['client']['name'] }}</li>
                         <li class="list-group-item">Job Status : {{ $review['completedJob']['orderDetail']['orderDetailStatus']['status'] }}</li>
                         <li class="list-group-item">Job Price : $ {{ $review['completedJob']['product']['job_price'] * $review['completedJob']['orderDetail']['pages'] }}.00</li>
@@ -166,7 +166,6 @@
             	<a href="{{ URL::previous() }}" class="btn btn-default">back</a>
 	            <a href="{{ route('approve', $dataTypeContent->getKey()) }}" class="btn btn-success">Approve</a>
 	            <a href="{{ route('reject', $dataTypeContent->getKey()) }}" class="btn btn-danger">Reject</a>
-	            {{-- {{ route('review', $dataTypeContent->getKey()) }} --}}
             </div>
 
         </div>

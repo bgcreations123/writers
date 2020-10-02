@@ -65,15 +65,15 @@
 
                 <div class="col-lg-6 col-md-12">
                     <ul class="list-group">
-                        <li class="list-group-item">Paper Type : {{ ($completedJob['orderDetail']['type'] == 0)?'Null':$completedJob['orderDetail']['type']['type'] }} </li>
-                        <li class="list-group-item">Paper Format : {{ ($completedJob['orderDetail']['format'] == 0)?'Null':$completedJob['orderDetail']['format']['format'] }}</li>
-                        <li class="list-group-item">No. of Sources : {{ ($completedJob['orderDetail']['sources'] == 0)?'Null':$completedJob['orderDetail']['sources'] }}</li>
-                        <li class="list-group-item">Paper Language: {{ ($completedJob['orderDetail']['language'] == 0)?'Null':$completedJob['orderDetail']['language']['language'] }}</li>
+                        <li class="list-group-item">Paper Type : {{ empty($completedJob['orderDetail']['type'])?'Any':$completedJob['orderDetail']['type']['type'] }} </li>
+                        <li class="list-group-item">Paper Format : {{ empty($completedJob['orderDetail']['format'])?'Any':$completedJob['orderDetail']['format']['format'] }}</li>
+                        <li class="list-group-item">No. of Sources : {{ empty($completedJob['orderDetail']['sources'])?'Any':$completedJob['orderDetail']['sources'] }}</li>
+                        <li class="list-group-item">Paper Language: {{ empty($completedJob['orderDetail']['language'])?'Any':$completedJob['orderDetail']['language']['language'] }}</li>
                     </ul>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <ul class="list-group">
-                        <li class="list-group-item">Paper Spacing : {{ ($completedJob['orderDetail']['spacing'] == 0)?'Null':$completedJob['orderDetail']['spacing']['space'] }} </li>
+                        <li class="list-group-item">Paper Spacing : {{ empty($completedJob['orderDetail']['spacing'])?'Any':$completedJob['orderDetail']['spacing']['space'] }} </li>
                         <li class="list-group-item">Client Name : {{ $completedJob['orderDetail']['order']['client']['name'] }}</li>
                         <li class="list-group-item">Job Status : {{ $completedJob['orderDetail']['orderDetailStatus']['status'] }}</li>
                         <li class="list-group-item">Job Price : $ {{ $completedJob['product']['job_price'] * $completedJob['orderDetail']['pages'] }}.00</li>
