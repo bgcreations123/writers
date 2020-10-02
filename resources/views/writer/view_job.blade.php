@@ -178,16 +178,6 @@
                         </div>
                       @endforeach
                     </div>
-                    <!-- <div class="col-md-2">
-                        <a class="btn btn-sm btn-primary mx-auto" href="{{ url( 'download', ['job', $completed->files])  }}">
-                          Download
-                        </a>
-                      <a href="{{ url( 'download', ['job', $completed->files])  }}">
-                        <span class="fa fa-file-o" style="font-size: 60px;"></span>
-                        <br>
-                        {{ '.'.substr(strrchr($file->name, "."), 1) }}
-                      </a>
-                    </div> -->
                   @endif
                 </div>
               </div>
