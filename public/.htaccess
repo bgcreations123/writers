@@ -22,5 +22,5 @@
     # Force HTTPs to add padlock
     RewriteCond %{HTTP_HOST} electwriting\.com [NC]
     RewriteCond %{SERVER_PORT} 80
-    RewriteRule ^(.*)$ https://electwriting.com/$1 [R,L]    
+    RewriteRule ^(.*)$ https://electwriting.com/$1 [R,L]      
 </IfModule>

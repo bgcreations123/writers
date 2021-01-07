@@ -53,6 +53,8 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             @if(!empty($message_count->count()))
+                                <a href="#" class="dropdown-item disabled">New Messages:</a>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('messages.show', ['id'=>$message_count[0]->id]) }}">{{ (strlen($message_count[0]->subject < 15))?substr($message_count[0]->subject,0,15).'...':$message_count[0]->subject }}</a>
                                 <div class="dropdown-divider"></div>
                             @endif

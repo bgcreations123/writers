@@ -28,12 +28,14 @@ Route::get('/getProduct/{cid}/{pid}', 'WelcomeController@getProduct')->name('wel
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 
+    Route::get('tracker', '\App\Http\Controllers\Voyager\JobTrackerController@index')->name('track');
+
     Route::get('completed-jobs/review/{id}', '\App\Http\Controllers\Voyager\CompletedJobController@review')->name('review-completed-jobs');
 
     Route::get('reviews/approve/{id}', '\App\Http\Controllers\Voyager\ReviewController@approve')->name('approve');
 
     Route::get('reviews/reject/{id}', '\App\Http\Controllers\Voyager\ReviewController@reject')->name('reject');
-
+    
     Route::get('payables/pay/{id}', '\App\Http\Controllers\Voyager\PayableController@getPay')->name('pay');
 });
 
