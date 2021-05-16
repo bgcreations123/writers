@@ -110,6 +110,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Mpesa API Locale
+    |--------------------------------------------------------------------------
+    |
+    | This locale will be used by the Mpesa PHP library when generating keys
+    | as response from the servers.
+    |
+    */
+
+    'short_code' => env('SHORT_CODE', 174379),
+    'consumer_key' => env('CONSUMER_KEY', 'sMpgnYW62glBlxPXbyTBEGdPib8eJLOL'),
+    'consumer_secret' => env('CONSUMER_SECRET', 'IcK2PkAFArVVVffU'),
+    'pass_key' => env('PASS_KEY', 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'),
+    'stk_push_url' => env('STK_PUSH_URL', 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |

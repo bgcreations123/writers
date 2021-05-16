@@ -31,20 +31,71 @@
 									<div class="card-body p-5">
 
 										<ul class="nav bg-light nav-pills rounded nav-fill mb-3" role="tablist">
-											{{-- <li class="nav-item">
-												<a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
-												<i class="fa fa-credit-card"></i> Credit Card</a></li> --}}
+											<li class="nav-item">
+												<a class="nav-link active" data-toggle="pill" href="#nav-tab-mobile">
+												<i class="fa fa-university"></i>  Mobile Payments</a>
+											</li>
 											<li class="nav-item">
 												<a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
-												<i class="fab fa-paypal"></i>  Paypal</a></li>
-											{{-- <li class="nav-item">
-												<a class="nav-link" data-toggle="pill" href="#nav-tab-bank">
-												<i class="fa fa-university"></i>  Bank Transfer</a></li> --}}
+												<i class="fab fa-paypal"></i>  Paypal</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" data-toggle="pill" href="#nav-tab-card">
+												<i class="fa fa-credit-card"></i> Credit Card</a>
+											</li>
 										</ul>
 
 										<div class="tab-content">
-											{{-- <div class="tab-pane fade show active" id="nav-tab-card">
-												<p class="alert alert-success">Some text success or error</p>
+											<div class="tab-pane fade show active" id="nav-tab-mobile">
+												{{-- {!! setting('bank.details') !!} --}}
+												<form role="form" method="POST" id="payment-form"  action="{{ route('stk-push') }}">
+													{{ csrf_field() }}
+													@if ($errors->any())
+												      <div class="alert alert-danger">
+												        <ul>
+												            @foreach ($errors->all() as $error)
+												              <li>{{ $error }}</li>
+												            @endforeach
+												        </ul>
+												      </div><br />
+												    @endif
+													<input type="hidden" name="amount" value="{{ Session::get('cart')->totalPrice }}" />
+													<input type="hidden" name="description" value="Testing stk push on sandbox" />
+													<div class="form-group">
+														<label for="phone_number"> Enter your phone number </label>
+														<input type="phone_number" name="phone_number" class="form-control" required />
+														@if($errors->has('phone_number'))
+														    <div class="error">{{ $errors->first('phone_number') }}</div>
+														@endif
+													</div>
+													<button class="btn btn-success btn-block" type="submit">
+														<i class="fab fa-mpesa"></i> 
+														Proceed to Payment 
+													</button>
+												</form>
+											</div> <!-- tab-pane.// -->
+
+											<div class="tab-pane fade" id="nav-tab-paypal">
+												<p>
+													Paypal is easiest way to pay online
+												</p>
+												<form role="form" method="POST" id="payment-form"  action="{{ route('paypal') }}">
+													{{ csrf_field() }}
+													<button class="btn btn-primary btn-block" type="submit">
+														<i class="fab fa-paypal"></i> 
+														Proceed to Payment 
+													</button>
+												</form>
+												<p>
+													<strong>
+														Note:
+													</strong> 
+													We accept CARD payments through paypal. 
+												</p>
+											</div> <!-- tab-pane.// -->
+
+											<div class="tab-pane fade" id="nav-tab-card">
+												<p class="alert alert-danger">Currently not operational!</p>
 												<form role="form">
 													<div class="form-group">
 														<label for="username">Full name (on the card)</label>
@@ -83,34 +134,7 @@
 													</div> <!-- row.// -->
 													<button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>
 												</form>
-											</div> --}} <!-- tab-pane.// -->
-
-											<div class="tab-pane fade" id="nav-tab-paypal">
-												<p>
-													Paypal is easiest way to pay online
-												</p>
-
-												<form role="form" method="POST" id="payment-form"  action="{{ route('paypal') }}">
-													{{ csrf_field() }}
-
-													<button class="btn btn-primary btn-block" type="submit">
-														<i class="fab fa-paypal"></i> 
-														Proceed to Payment 
-													</button>
-
-												</form>
-
-												<p>
-													<strong>
-														Note:
-													</strong> 
-													We accept CARD payments through paypal. 
-												</p>
-											</div>
-											
-											{{-- <div class="tab-pane fade" id="nav-tab-bank">
-												{!! setting('bank.details') !!}
-											</div> --}} <!-- tab-pane.// -->
+											</div> <!-- tab-pane.// -->
 										</div> <!-- tab-content .// -->
 
 									</div> <!-- card-body.// -->

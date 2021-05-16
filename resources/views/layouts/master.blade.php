@@ -23,6 +23,8 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}" defer></script>
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/floating-wpp.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -33,6 +35,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('css/floating-wpp.css') }}">
 
     {{-- Favicon --}}
     <link rel="shortcut icon" href="{{ Voyager::image('settings/writers-fav.ico') }}" type="image/x-icon">
@@ -60,9 +63,10 @@
                     @yield('content')
                 </div>
             </div>
-            {{-- Twerk Codes --}}
+
+            {{-- Twark Codes --}}
             <!--Start of Tawk.to Script3-->
-            <script type="text/javascript">
+            <!-- <script type="text/javascript">
                 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
                 (function(){
                 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -72,8 +76,31 @@
                 s1.setAttribute('crossorigin','*');
                 s0.parentNode.insertBefore(s1,s0);
                 })();
-            </script>
+            </script> -->
             <!--End of Tawk.to Script-->
+
+            <!-- Whats App button -->
+            <div id="whatsappButton"></div>
+
+
+            <script type="text/javascript">
+                $(function () {
+                    $('#whatsappButton').floatingWhatsApp({
+                        phone: '+254722547906',
+                        popupMessage: 'Hello, how can we help you?',
+                        message: "How can I make an order?",
+                        showPopup: true,
+                        showOnIE: false,
+                        autoOpen: false, // true or false
+                        autoOpenTimer: 4000, //In milliseconds
+                        position: 'right',
+                        headerTitle: 'Welcome!',
+                        headerColor: 'green',
+                        backgroundColor: 'green',
+                        buttonImage: '<img src="{{ asset('images/whatsapp.svg') }}" />'
+                    });
+                });
+            </script>
 
         </div>
 
