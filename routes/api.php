@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('v1/access/token', 'PaymentController@generateAccessToken');
 Route::post('v1/hlab/stk/push', 'PaymentController@customerMpesaSTKPush')->name('stk-push');
+Route::post('v1/hlab/stk/push/callback', 'PaymentController@mpesaSTKCallBack')->name('stk-push-callback');
 Route::post('v1/hlab/validation', 'PaymentController@mpesaValidation')->name('payment_validation'); // SafCallback
 Route::post('v1/hlab/transaction/confirmation', 'PaymentController@mpesaConfirmation');
 Route::post('v1/hlab/register/url', 'PaymentController@mpesaRegisterUrls');

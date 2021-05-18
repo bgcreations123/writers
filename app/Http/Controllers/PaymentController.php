@@ -166,7 +166,7 @@ class PaymentController extends Controller
         // dd($cart);
         // foreach($cart->items as $key => $product){
         //     dd(unserialize($product['details']));
-        // }        
+        // }
 
         // Add into the order database
         $order = new Order;
@@ -241,7 +241,7 @@ class PaymentController extends Controller
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $curl_response = curl_exec($curl);
         $access_token=json_decode($curl_response);
-        
+
         return $access_token->access_token;
     }
 
@@ -254,7 +254,7 @@ class PaymentController extends Controller
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
         ]);
 
-        $amount = $request->get('amount');
+        $amount = 1; //$request->get('amount');
         $description = $request->get('description');
         $phone_number = intval($request->get('phone_number'));
 
@@ -272,7 +272,7 @@ class PaymentController extends Controller
             'PartyA' => $phone_number, // replace this with your phone number
             'PartyB' => intval(config('app.short_code')),
             'PhoneNumber' => $phone_number, // replace this with your phone number
-            'CallBackURL' => 'https://electwriting.com/safcallback/',
+            'CallBackURL' => 'https://c1302dd0fe01.ngrok.io/api/v1/hlab/stk/push/callback/',
             'AccountReference' => "Electwriting Co ltd",
             'TransactionDesc' => $description,
         ];
@@ -334,6 +334,25 @@ class PaymentController extends Controller
         $response->setContent(json_encode(["C2BPaymentConfirmationResult"=>"Success"]));
         return $response;
     }
+
+    /**
+    * M-pesa stk push call back url
+    */
+    public function mpesaSTKCallBack(Request $request)
+    {
+      $content=json_decode($request->getContent());
+      $mpesa_stk = new MpesaStk();
+      $mpesa_stk->MerchantRequestID = $content->MerchantRequestID;
+      $mpesa_stk->CheckoutRequestID = $content->CheckoutRequestID;
+      $mpesa_stk->ResultCode = $content->ResultCode;
+      $mpesa_stk->ResultDesc = $content->ResultDesc;
+      $mpesa_stk->Amount = $content->CallbackMetadata->Item[0]->Amount;
+      $mpesa_stk->MpesaReceiptNumber = $content->CallbackMetadata->Item[0]->MpesaReceiptNumber;
+      $mpesa_stk->TransactionDate = $content->CallbackMetadata->Item[0]->TransactionDate;
+      $mpesa_stk->PhoneNumber = $content->CallbackMetadata->Item[0]->PhoneNumber;
+      $mpesa_stk->save();
+    }
+
 
     /**
      * M-pesa Register Validation and Confirmation method
