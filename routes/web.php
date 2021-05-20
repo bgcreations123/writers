@@ -35,7 +35,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('reviews/approve/{id}', '\App\Http\Controllers\Voyager\ReviewController@approve')->name('approve');
 
     Route::get('reviews/reject/{id}', '\App\Http\Controllers\Voyager\ReviewController@reject')->name('reject');
-    
+
     Route::get('payables/pay/{id}', '\App\Http\Controllers\Voyager\PayableController@getPay')->name('pay');
 });
 
@@ -66,12 +66,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/upload', 'OrderController@upload')->name('upload');
 	Route::get('/shoppingcart', 'OrderController@getCart')->name('shoppingCart');
 	Route::get('/paymentMethod', 'OrderController@paymentMethod')->name('order.paymentMethod');
+	Route::get('/paymentMpesaConfirmation', 'OrderController@paymentMpesaConfirmation')->name('order.paymentMpesaConfirmation');
 	Route::post('/addToCart/{id}', 'OrderController@getAddToCart')->name('order.getAddToCart');
 	Route::post('/updateItem/{id}', 'OrderController@getUpdateItem')->name('order.getUpdateItem');
 	Route::get('/reducebyone/{id}', 'OrderController@getReduceByOne')->name('reduceByOne');
 	Route::get('/remove/{id}', 'OrderController@getRemoveItem')->name('removeItem');
 	Route::get('/clear', 'OrderController@clearCart')->name('clearCart');
-	
+
 	Route::get('/checkout', 'OrderController@getCheckout')->name('order.getCheckout');
 	Route::get('contact', 'OrderController@create')->name('order.create');
 	Route::post('contact', 'OrderController@store')->name('order.store');
@@ -90,7 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/payments', 'WriterController@payments')->name('writer.payments');
 	Route::get('/unpaid', 'WriterController@unpaid')->name('writer.unpaid');
 	Route::get('/view_job/{id}', 'WriterController@viewJob')->name('writer.view_job');
-	
+
 	Route::post('/paypal', 'PaymentController@paypal')->name('paypal');
 	Route::get('/status', 'PaymentController@getPaymentStatus')->name('status');
 
@@ -123,7 +124,7 @@ Route::get('download/{type}/{filename}', function($type, $filename)
 	    // dd($file_path);
 
     endif;
-    
+
     if (file_exists($file_path))
     {
         // Send Download

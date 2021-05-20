@@ -18,7 +18,7 @@
 					<div class="card-body text-dark">
 						<br>
 						<p class="text-center">
-							payment section choose an option herein 
+							payment section choose an option herein
 						</p>
 
 						<hr>
@@ -69,8 +69,8 @@
 														@endif
 													</div>
 													<button class="btn btn-success btn-block" type="submit">
-														<i class="fab fa-mpesa"></i> 
-														Proceed to Payment 
+														<i class="fab fa-mpesa"></i>
+														Proceed to Payment
 													</button>
 												</form>
 											</div> <!-- tab-pane.// -->
@@ -82,15 +82,15 @@
 												<form role="form" method="POST" id="payment-form"  action="{{ route('paypal') }}">
 													{{ csrf_field() }}
 													<button class="btn btn-primary btn-block" type="submit">
-														<i class="fab fa-paypal"></i> 
-														Proceed to Payment 
+														<i class="fab fa-paypal"></i>
+														Proceed to Payment
 													</button>
 												</form>
 												<p>
 													<strong>
 														Note:
-													</strong> 
-													We accept CARD payments through paypal. 
+													</strong>
+													We accept CARD payments through paypal.
 												</p>
 											</div> <!-- tab-pane.// -->
 
@@ -108,8 +108,8 @@
 															<input type="text" class="form-control" name="cardNumber" placeholder="">
 															<div class="input-group-append">
 																<span class="input-group-text text-muted">
-																	<i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>   
-																	<i class="fab fa-cc-mastercard"></i> 
+																	<i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>  
+																	<i class="fab fa-cc-mastercard"></i>
 																</span>
 															</div>
 														</div>

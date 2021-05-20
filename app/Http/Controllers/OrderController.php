@@ -47,7 +47,7 @@ class OrderController extends Controller
             return redirect()->route('home')->with(['error'=> 'Please Initialize Your Order!']);
         }
 
-        $data = Session::get('data'); 
+        $data = Session::get('data');
 
         $types = PaperType::all('type', 'id');
         $spaces = PaperSpacing::all('space', 'id');
@@ -74,7 +74,7 @@ class OrderController extends Controller
         ]);
 
         if ($request->hasFile('file')) {
-            
+
             $files = $request->file('file');
 
             // Perform uploads
@@ -98,7 +98,7 @@ class OrderController extends Controller
         }
 
         if ($request->hasFile('files')){
-            
+
             $filename = time().$request->file('files')->getClientOriginalName();
 
             // request()->file('files')->move(public_path('upload'), $request->file('files')->getClientOriginalName());
@@ -115,9 +115,9 @@ class OrderController extends Controller
         }else{
             $filename = '';
         }
-        
+
         $fileName = ['file' => $filename];
-        
+
         // dd(array_replace($request->input(), $fileName));
 
         $pages = $request->pages;
@@ -300,5 +300,16 @@ class OrderController extends Controller
         // dd(Session::get('cart')->items);
 
         return view('order.paymentMethod');
+    }
+
+    public function paymentMpesaConfirmation()
+    {
+        if(!Session::has('cart')){
+            return redirect()->route('home')->with(['error'=> 'Sorry, Your Shopping Cart is Empty!']);
+        }
+
+        // dd(Session::get('cart')->items);
+
+        return view('order.paymentMpesaConfirmation');
     }
 }
