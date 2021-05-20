@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Input;
 use PayPal\Api\{Amount, Details, Item, ItemList, Payer, Payment, PaymentExecution, ExecutePayment, RedirectUrls, Transaction};
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
-use App\{Cart, Product, PaperClassification, PaperPeriod, PaperType, PaperSpacing, PaperLanguage, PaperFormat, Order, OrderDetail, Transactions};
+use App\{Cart, Product, PaperClassification, PaperPeriod, PaperType, PaperSpacing, PaperLanguage, PaperFormat, Order, OrderDetail, Transactions, MpesaStk};
 use Carbon\Carbon;
 use Session;
+use Illuminate\Foundation\Bootstrap\ConfigureLogging;
 
 class PaymentController extends Controller
 {
@@ -340,9 +341,9 @@ class PaymentController extends Controller
     */
     public function mpesaSTKCallBack(Request $request)
     {
-      $content=json_decode($request->getContent());
-      // $mpesa_stk = new MpesaStk();
-      // $mpesa_stk->MerchantRequestID = $content->MerchantRequestID;
+      $content=$request->getContent();
+      $mpesa_stk = new MpesaStk();
+      $mpesa_stk->MerchantRequestID = $content;
       // $mpesa_stk->CheckoutRequestID = $content->CheckoutRequestID;
       // $mpesa_stk->ResultCode = $content->ResultCode;
       // $mpesa_stk->ResultDesc = $content->ResultDesc;
@@ -350,7 +351,7 @@ class PaymentController extends Controller
       // $mpesa_stk->MpesaReceiptNumber = $content->CallbackMetadata->Item[0]->MpesaReceiptNumber;
       // $mpesa_stk->TransactionDate = $content->CallbackMetadata->Item[0]->TransactionDate;
       // $mpesa_stk->PhoneNumber = $content->CallbackMetadata->Item[0]->PhoneNumber;
-      // $mpesa_stk->save();
+      $mpesa_stk->save();
     }
 
 
