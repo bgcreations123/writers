@@ -24,7 +24,7 @@
 
 								<article class="card">
 									<div class="card-body p-5">
-										<form role="form" method="POST" id="payment-form"  action="{{ route('stk-push') }}">
+										<form role="form" method="POST" id="payment-form"  action="{{ route('mpesaConfirmPayment') }}">
 											{{ csrf_field() }}
 											@if ($errors->any())
 													<div class="alert alert-danger">
@@ -36,7 +36,6 @@
 													</div><br />
 												@endif
 											<input type="hidden" name="amount" value="{{ Session::get('cart')->totalPrice }}" />
-											<input type="hidden" name="description" value="Testing stk push on sandbox" />
 											<div class="form-group">
 												<label for="mpesa_code"> Enter your Mpesa Confirmation Code after making the payment </label>
 												<input type="mpesa_code" name="mpesa_code" class="form-control" required />

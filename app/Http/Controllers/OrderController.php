@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\{Cart, Product, PaperClassification, PaperPeriod, PaperType, PaperSpacing, PaperLanguage, PaperFormat, Order, OrderDetail};
+use App\{Cart, Product, PaperClassification, PaperPeriod, PaperType, PaperSpacing, PaperLanguage, PaperFormat, Order, OrderDetail, MpesaStk};
 use Carbon\Carbon;
 use Session;
 
@@ -311,5 +311,27 @@ class OrderController extends Controller
         // dd(Session::get('cart')->items);
 
         return view('order.paymentMpesaConfirmation');
+    }
+
+    public function mpesaConfirmPayment(Request $request)
+    {
+        $this->validate($request, [
+            'mpesa_code' => 'required',
+        ]);
+
+        $payment = MpesaStk::where('MpesaReceiptNumber', $request->input('mpesa_code'))->first();
+        if ($payment) {
+          $amount_paid = (int)$payment->Amount;
+        } else {
+          $amount_paid = 0;
+        }
+
+        $amount_to_pay = (int)$request->input('amount');
+        if ($payment and ($amount_paid == $amount_to_pay)) {
+          return redirect()->route('home')->with(['success'=> 'Payment was successful!']);
+        } else {
+          return redirect()->route('order.paymentMpesaConfirmation')->with(['error'=> 'Payment does not exist!']);
+        }
+
     }
 }

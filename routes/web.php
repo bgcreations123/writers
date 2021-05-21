@@ -67,6 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/shoppingcart', 'OrderController@getCart')->name('shoppingCart');
 	Route::get('/paymentMethod', 'OrderController@paymentMethod')->name('order.paymentMethod');
 	Route::get('/paymentMpesaConfirmation', 'OrderController@paymentMpesaConfirmation')->name('order.paymentMpesaConfirmation');
+	Route::post('/paymentMpesaConfirm', 'OrderController@mpesaConfirmPayment')->name('mpesaConfirmPayment');
 	Route::post('/addToCart/{id}', 'OrderController@getAddToCart')->name('order.getAddToCart');
 	Route::post('/updateItem/{id}', 'OrderController@getUpdateItem')->name('order.getUpdateItem');
 	Route::get('/reducebyone/{id}', 'OrderController@getReduceByOne')->name('reduceByOne');

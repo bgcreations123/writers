@@ -273,7 +273,7 @@ class PaymentController extends Controller
             'PartyA' => $phone_number, // replace this with your phone number
             'PartyB' => intval(config('app.short_code')),
             'PhoneNumber' => $phone_number, // replace this with your phone number
-            'CallBackURL' => 'https://e4b65c450b2a.ngrok.io/api/v1/hlab/stk/push/callback/',
+            'CallBackURL' => 'https://17707ed20950.ngrok.io/api/v1/hlab/stk/push/callback/',
             'AccountReference' => "Electwriting Co ltd",
             'TransactionDesc' => $description,
         ];
@@ -336,21 +336,35 @@ class PaymentController extends Controller
         return $response;
     }
 
+    // {"Body":{"stkCallback":{"MerchantRequestID":"7721-178282-1","CheckoutRequestID":"ws_CO_200520210903046521","ResultCode":1032,"ResultDesc":"Request cancelled by user"}}}
+
     /**
     * M-pesa stk push call back url
     */
     public function mpesaSTKCallBack(Request $request)
     {
-      $content=$request->getContent();
+      $content=json_decode($request->getContent(), true);
       $mpesa_stk = new MpesaStk();
-      $mpesa_stk->MerchantRequestID = $content;
-      // $mpesa_stk->CheckoutRequestID = $content->CheckoutRequestID;
-      // $mpesa_stk->ResultCode = $content->ResultCode;
-      // $mpesa_stk->ResultDesc = $content->ResultDesc;
-      // $mpesa_stk->Amount = $content->CallbackMetadata->Item[0]->Amount;
-      // $mpesa_stk->MpesaReceiptNumber = $content->CallbackMetadata->Item[0]->MpesaReceiptNumber;
-      // $mpesa_stk->TransactionDate = $content->CallbackMetadata->Item[0]->TransactionDate;
-      // $mpesa_stk->PhoneNumber = $content->CallbackMetadata->Item[0]->PhoneNumber;
+      $body = $content['Body']['stkCallback'];
+      $transaction = $body['CallbackMetadata']['Item'];
+      $Amount = '';
+      $MpesaReceiptNumber = '';
+      $TransactionDate = '';
+      $PhoneNumber = '';
+      if ($body['CallbackMetadata']){
+        $Amount = $transaction[0]['Value'];
+        $MpesaReceiptNumber = $transaction[1]['Value'];
+        $TransactionDate = $transaction[3]['Value'];
+        $PhoneNumber = $transaction[4]['Value'];
+      }
+      $mpesa_stk->MerchantRequestID = $body['MerchantRequestID'];
+      $mpesa_stk->CheckoutRequestID = $body['CheckoutRequestID'];
+      $mpesa_stk->ResultCode = $body['ResultCode'];
+      $mpesa_stk->ResultDesc = $body['ResultDesc'];
+      $mpesa_stk->Amount = $Amount;
+      $mpesa_stk->MpesaReceiptNumber = $MpesaReceiptNumber;
+      $mpesa_stk->TransactionDate = $TransactionDate;
+      $mpesa_stk->PhoneNumber = $PhoneNumber;
       $mpesa_stk->save();
     }
 
